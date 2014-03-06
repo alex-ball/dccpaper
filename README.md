@@ -2,21 +2,21 @@
 
 The dccpaper bundle consists of two very similar classes.
 
-ijdc-v9.cls corresponds to the template used by the International Journal of Digital Curation, beginning with volume 9.
+ijdc-v9.cls corresponds to the template used by the [International Journal of Digital Curation](http://www.ijdc.net/index.php/ijdc), beginning with volume 9.
 
-idcc.cls corresponds to the template used for the International Digital Curation Conference, beginning with IDCC15.
+idcc.cls corresponds to the template used for the [International Digital Curation Conference](http://www.dcc.ac.uk/events/international-digital-curation-conference-idcc), beginning with IDCC15.
 
 As the classes are so similar, their common features are abstracted out into dccpaper-base.tex, which should be installed in the runtime tex directory, rather than with the documentation.
 
 The classes are suitable for submissions to the respective review boards, but can also be used to produce the final camera-ready papers.
 
-Please note that the image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, are trademarks of Creative Commons and are subject to the Creative Commons trademark policy: <http://creativecommons.org/policies>
+Please note that the image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, are trademarks of Creative Commons and are subject to the [Creative Commons trademark policy] (http://creativecommons.org/policies)
 
 ## Installation
 
 ### Automated way
 
-A makefile is provided which you can use with the Make utilty:
+A makefile is provided which you can use with the Make utility:
 
   * Running `make` generates the derived files
       * README
@@ -43,6 +43,6 @@ A makefile is provided which you can use with the Make utilty:
 
 Copyright 2014 Digital Curation Centre, University of Edinburgh.
 
-Released under the LaTeX Project Public License v1.3c or later. See <http://www.latex-project.org/lppl.txt> for details.
+Released under the [LaTeX Project Public License v1.3c](http://www.latex-project.org/lppl.txt) or later.
 
 This work is "maintained" (as per LPPL maintenance status) by Alex Ball.
