@@ -1,6 +1,6 @@
-# The dccpaper package: LaTeX classes for submissions to IJDC and IDCC
+# The dccpaper bundle: LaTeX classes for submissions to IJDC and IDCC
 
-The dccpaper package consists of two very similar classes.
+The dccpaper bundle consists of two very similar classes.
 
 ijdc-v9.cls corresponds to the template used by the International Journal of Digital Curation, beginning with volume 9.
 
@@ -10,7 +10,7 @@ As the classes are so similar, their common features are abstracted out into dcc
 
 The classes are suitable for submissions to the respective review boards, but can also be used to produce the final camera-ready papers.
 
-Please note that the image files distributed with this package, dccpaper-by.eps and dccpaper-by.pdf, are trademarks of Creative Commons and are subject to the Creative Commons trademark policy: <http://creativecommons.org/policies>
+Please note that the image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, are trademarks of Creative Commons and are subject to the Creative Commons trademark policy: <http://creativecommons.org/policies>
 
 ## Installation
 
