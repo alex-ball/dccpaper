@@ -10,9 +10,13 @@ As the classes are so similar, their common features are abstracted out into dcc
 
 The classes are suitable for submissions to the respective review boards, but can also be used to produce the final camera-ready papers.
 
-Please note that the image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, are trademarks of Creative Commons and are subject to the [Creative Commons trademark policy] (http://creativecommons.org/policies)
+Please note that the image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, are trademarks of Creative Commons and are subject to the [Creative Commons trademark policy](http://creativecommons.org/policies)
 
 ## Installation
+
+### Managed way
+
+The latest stable release of the dccpaper bundle has been packaged for TeX Live. If you are running TeX Live and have `tlmgr` installed, you can install the bundle simply by running `tlmgr install dccpaper`.
 
 ### Automated way
 
