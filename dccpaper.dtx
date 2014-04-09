@@ -227,7 +227,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{\raggedyright}
 
 %
-% The |\flushleftright| layout restores full justification.
+% The |\flushleftright| layout restores full justification, in case it is
+% needed.
 %
 \newcommand*{\flushleftright}{%
   \let\\\OrigLineBreak
@@ -286,7 +287,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \newcounter{block}
 %
 % The |block| counter will increase once in the preamble, and again when the
-% the information is typeset, so we need to reset it at the beginning of the
+% information is typeset, so we need to reset it at the beginning of the
 % document.
 %
 \AtBeginDocument{\setcounter{block}{0}}
@@ -314,7 +315,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \stepcounter{authors}%
 %
 % Each block has its author names collected in a macro like |\blocki@auth|,
-% and its affiliation collected in a macro like |\blocki@affil|.
+% and its affiliation collected in a macro like |\blocki@affil| (the `i' is a
+% serial number).
 %
 % If this is the first author in a block, we need to create the block and add it 
 % to |\AuthorBlock|; second and subsequent blocks are preceded by a |\quad| of 
@@ -397,9 +399,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \begin{itemize}
 % \item |\volume| sets the volume number, |\thevolume|;
 % \item |\issue| sets the issue number, |\theissue|;
-% \item |\subno| sets the submission number, |\thesubno|;
-% \item these are used to build the DOI, |\thedoi|;
+% \item |\subno| sets the submission number, |\thesubno|.
 % \end{itemize}
+% 
+% These numbers are used to build the DOI, |\thedoi|.
 %
 \newcommand*{\thevolume}{0}
 \newcommand*{\volume}[1]{\renewcommand*{\thevolume}{#1}}
@@ -429,7 +432,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % DCC papers display some important dates. We collect these in |\dccp@dates|, 
 % initially setting the value to something sensible for papers in draft.
 %
-\def\dccp@dates{Draft from \today}
+\def\dccp@dates{\emph{Draft from} \today}
 %
 % Several types of date can be added:
 % \begin{itemize}
@@ -461,11 +464,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %
-% This macro will be useful when switching from the first page geometry to the 
-% regular geometry for the rest of the paper. It is based on code from  Hideo 
-% Umeki's \textsf{geometry} package (2002/07/08 v3.2).
+% The macro |\FixTextHeight| will be useful when switching from the first page
+% geometry to the regular geometry for the rest of the paper. It is based on
+% code from  Hideo Umeki's \textsf{geometry} package (2002/07/08 v3.2).
 %
-\newcommand{\FixTextHeight}{\setlength\@tempdima{\textheight}%
+\newcommand{\FixTextHeight}{%
+  \setlength\@tempdima{\textheight}%
   \addtolength\@tempdima{-\topskip}%
   \@tempcnta\@tempdima
   \@tempcntb\baselineskip
@@ -478,7 +482,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \addtolength\@tempdimb{\baselineskip}%
   \fi
   \addtolength\@tempdimb{\topskip}%
-  \textheight\@tempdimb}
+  \textheight\@tempdimb
+}
 
 %
 % The width of the textblock (on all pages) is 150mm, which on A4 paper implies 
@@ -642,7 +647,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     + \baselineskip
   }
 %
-% \dots\ and provide a macro that will reset the geometry for the remaining 
+% {\dots}and provide a macro that will reset the geometry for the remaining 
 % pages.
 %
   \def\dccp@resetgeometry{%
@@ -722,7 +727,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % An unfortunate side effect of spacing headings like this is that if a 
 % |\subsection| immediately follows a |\section| it forms an unsightly gap. To
 % remedy this, we count how many paragraphs there have been since the last
-% |\section|. Note that as we are not numbering the sections, an automatic
+% |\section|. Note that as we do not normally number the sections, an automatic
 % reset of the |sectionpars| counter within the |section| counter won't work.
 %
 \newcounter{sectionpars}
@@ -829,29 +834,34 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % A DCC paper should either be using \textsf{biblatex} or \textsf{apacite} for
 % references.
 %
-\AtBeginDocument{
-  \@ifpackageloaded{biblatex}{%
-%
 % If \textsf{biblatex} is used, we need to ensure that the references are a
 % normal section rather than an starred one so that they appear in the 
 % PDF bookmarks.
 %
+\AtBeginDocument{
+  \@ifpackageloaded{biblatex}{%
     \defbibheading{bibliography}[\refname]{\section{#1}}%
   }{%
-    \@ifpackageloaded{apacite}{%
 %
-% If \textsf{apacite} is used, we need to set the URL style to normal roman text
-% (not monospaced): as \textsf{apacite} sets this with |\AtBeginDocument|, we 
-% have to reset it after that, |\AfterEndPreamble|. We also pre-empt
+% If \textsf{apacite} is used, we need to reset the URL style to normal roman
+% type (not monospaced): as \textsf{apacite} sets this with |\AtBeginDocument|,
+% we have to reset it after that, |\AfterEndPreamble|. We also pre-empt
 % \textsf{apacite}'s |\providecommand| of |\doi| with our own definition that
 % includes the `doi' URI scheme label in the link, remembering to remove the 
 % one inserted by |\doiprefix|.
 %
+    \@ifpackageloaded{apacite}{%
       \AfterEndPreamble{\urlstyle{APACrm}}%
       \newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\nolinkurl{doi:#1}}}%
       \renewcommand{\doiprefix}{\unskip}%
     }{}%
   }%
+%
+% If \textsf{apacite} is used, we need to ensure that the references are a
+% normal section rather than an starred one so that they appear in the 
+% PDF bookmarks.
+%
+\PassOptionsToPackage{numberedbib}{apacite}
 %
 % Both \textsf{biblatex} and \textsf{apacite} use |\bibitemsep| for the space
 % between bibliography items. Just in case they haven't been loaded, though, we
@@ -862,12 +872,6 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \setlength{\bibitemsep}{1em plus 1ex minus 1ex}%
   \fi
 }
-%
-% If \textsf{apacite} is used, we need to ensure that the references are a
-% normal section rather than an starred one so that they appear in the 
-% PDF bookmarks.
-%
-\PassOptionsToPackage{numberedbib}{apacite}
 
 %
 % We, of course, use \textsf{hyperref} for enhancing the PDF with working links,
@@ -892,11 +896,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % corresponding author.
 %
 \newcommand*{\email}[1]{\href{mailto:#1}{#1}}
-\AtBeginDocument{%
 %
 % Once the user has had a chance to provide the metadata, we can add it to the
 % PDF metadata.
 %
+\AtBeginDocument{%
   \hypersetup
     { pdftitle={\thetitle}
     , pdfauthor={\MainAuthor}
@@ -941,7 +945,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 % We need to make sure that any characters to appear verbatim in the XMP packet
 % are treated as ordinary characters and not active ones. The likely active
-% characters are symbols and punctuation, so should be treated as `other'.
+% characters are symbols and punctuation, so should be treated as `other'
+% (category 12).
 %
 \begingroup
 \catcode`\"=12 
@@ -992,7 +997,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 % Different workflows require the XMP packet to be embedded in different ways.
 %
-% Pdf\TeX\ has can inject objects into PDFs natively.
+% Pdf\TeX\ can inject objects into PDFs natively.
 %
 \newcommand*{\ccxmp@embed@packet@pdftex}{%
   \bgroup
@@ -1006,7 +1011,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 %
 % The |\pdfmark| command defined by \textsf{hyperref} is respected by tools such
-% as |dvipdf|, |dvips|, |dvipsone|, etc.
+% as Dvipdf, Dvips, Dvipsone, etc.
 %
 \newcommand*{\ccxmp@embed@packet@pdfmark}{%
   \pdfmark{%
@@ -1039,9 +1044,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }%
 }
 %
-% |dvipdfm| has its own |\special| command for inserting PDF objects, but it is
-% a bit basic and requires advance knowledge of how long (in characters) the
-% object is.
+% Dvipdfm has its own |\special| command for inserting PDF objects, but
+% it is a bit basic and requires advance knowledge of how long (in characters)
+% the object is.
 %
 % The |\ccxmp@count@spaces| macro counts the number of spaces in its parameter 
 % through a process of iteration, adding this figure to |\@tempcnta|.
@@ -1077,7 +1082,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \expandafter\ccxmp@count@non@spaces#1{}%
 }
 %
-% So now, finally, is the command for embedding the packet using |dvipdfm|.
+% So now, finally, is the command for embedding the packet using Dvipdfm.
 %
 \newcommand*{\ccxmp@embed@packet@dvipdfm}{%
   \ccxmp@string@len{\cc@xmp@packet}%
@@ -1096,8 +1101,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }%
 }
 %
-% \XeTeX\ creates PDFs with |xdvipdfmx|, which has a slightly different 
-% |\special| for inserting objects.
+% \XeTeX\ creates PDFs with Xdvipdfmx, which supports a simpler |\special| for
+% inserting objects that does not require us to count characters.
 %
 \newcommand*{\ccxmp@embed@packet@xetex}{%
   \special{pdf:stream @ccxmp@packet (\cc@xmp@packet)
@@ -1113,9 +1118,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }%
 }
 %
-% We rely on |hyperref| to tell us how the PDF will be generated (after all, it
-% may not be done in the current pass) and use the respective technique to embed 
-% the XMP packet.
+% We rely on \textsf{hyperref} to tell us how the PDF will be generated (after
+% all, it may not be done in the current pass) and use the respective technique
+% to embed the XMP packet.
 %
 \AtBeginDocument{%
   \begingroup
@@ -1438,20 +1443,38 @@ Running `make install' installs the files in the local TeX tree.
 \usepackage{enumitem}
 \usepackage{listings}
 \lstloadlanguages{[LaTeX]TeX}
-\lstset{%
-	columns=fullflexible,
-	basicstyle=\ttfamily,
-	language={[LaTeX]TeX},
-	texcsstyle=*\color{red!75!black},
-	moretexcs={affil,correspondence,submitted,received,revised,accepted,%
-		subno,volume,issue,maketitle,sisetup,toprule,cmidrule,%
-		midrule,bottomrule,DeclareLanguageMapping,printbibliography,
-		addbibresource,subsection,subparagraph},
-	moredelim=**[s][\color{violet}]{[}{]},
-	moredelim=**[s][\color{blue!75!black}]{\{}{\}},
-	mathescape,
-	escapechar=~
-}
+\lstset
+  { columns=fullflexible
+  , basicstyle=\ttfamily
+  , language={[LaTeX]TeX}
+  , texcsstyle=*\color{red!75!black}
+  , moretexcs=
+    { affil
+    , correspondence
+    , submitted
+    , received
+    , revised
+    , accepted
+    , subno
+    , volume
+    , issue
+    , maketitle
+    , sisetup
+    , toprule
+    , cmidrule
+    , midrule
+    , bottomrule
+    , DeclareLanguageMapping
+    , printbibliography
+    , addbibresource
+    , subsection
+    , subparagraph
+    }
+  , moredelim=**[s][\color{violet}]{[}{]}
+  , moredelim=**[s][\color{blue!75!black}]{\{}{\}}
+  , mathescape
+  , escapechar=~
+  }
 \newcommand{\subtext}[1]{\ensuremath\langle\textit{\rmfamily#1}\rangle}
 
 \usepackage[iso,british]{isodate}
@@ -1465,8 +1488,7 @@ Running `make install' installs the files in the local TeX tree.
 \renewcommand*{\TreatAsCode}[1]{%
   \ifPackageCode
   \else
-%    \WriteResult{\string\vspace{1em plus 0.5em minus 0.2em}}
-    \WriteResult{\string\begin{lstlisting}[frame=lines,numbers=left,firstnumber=last]}%
+    \WriteResult{\string\begin{lstlisting}[firstnumber=last]}%
     \PackageCodeTrue
   \fi
   \WriteResult{#1}%
@@ -1474,7 +1496,7 @@ Running `make install' installs the files in the local TeX tree.
 \renewcommand*{\TreatAsComment}[1]{%
   \ifPackageCode
     \WriteResult{\string\end{lstlisting}}%
-%    \WriteResult{\string\vspace{1em plus 0.5em minus 0.2em}}
+    \WriteResult{}
     \PackageCodeFalse
     \EveryComment
   \fi
@@ -1485,7 +1507,7 @@ Running `make install' installs the files in the local TeX tree.
 \renewcommand*{\make_doc_arg}[1]{%
   \makedoc_maybe_autocorr
   \ifnum\value{lstnumber}>\z@
-    \WriteResult{\string\begin{lstlisting}[frame=lines,numbers=left,firstnumber=1]}%
+    \WriteResult{\string\begin{lstlisting}[firstnumber=1]}%
     \PackageCodeTrue
   \else
     \PackageCodeFalse
@@ -1856,28 +1878,31 @@ Refactored for distribution through CTAN, and to allow the addition of the \text
 First public release of \textsf{ijdc-v9} class.
 \end{description}
 
-\section{Implementation}
+\subsection{Implementation}
 
 \lstset
   { aboveskip=1em plus 0.5em minus 0.2em
   , belowskip=1em plus 0.5em minus 0.2em
+  , frame=single
+  , numbers=left
   , numberstyle=\footnotesize\itshape
   , basicstyle=\footnotesize\ttfamily
+  , breaklines=true
   , escapechar=
   }%
 \useNiceVerb
 
-\subsection{ijdc-v9.cls}
+\subsubsection{ijdc-v9.cls}
 
 \renewcommand*{\mdJobName}{ijdc-v9}
 \MakeInputJobDoc[cls]{0}{\ProcessInputWith{PScomment}}
 
-\subsection{idcc.cls}
+\subsubsection{idcc.cls}
 
 \renewcommand*{\mdJobName}{idcc}
 \MakeInputJobDoc[cls]{0}{\ProcessInputWith{PScomment}}
 
-\subsection{dccpaper-base.tex}
+\subsubsection{dccpaper-base.tex}
 
 \renewcommand*{\mdJobName}{dccpaper-base}
 \MakeInputJobDoc[tex]{0}{\ProcessInputWith{PScomment}}
