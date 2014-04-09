@@ -14,7 +14,7 @@ $(NAME).pdf: $(NAME).dtx
 	pdflatex --recorder --interaction=nonstopmode $(NAME).dtx > /dev/null
 	pdflatex --recorder --interaction=nonstopmode $(NAME).dtx > /dev/null
 clean:
-	rm -f $(NAME).{aux,bbl,bcf,blg,doc,fdb_latexmk,fls,glo,gls,hd,idx,ilg,ind,ins,log,out,run.xml}
+	rm -f $(NAME).{aux,bbl,bcf,blg,fdb_latexmk,fls,glo,gls,hd,idx,ilg,ind,ins,log,out,run.xml,synctex.gz} $(NAME)-base.doc ijdc-v9.doc idcc.doc
 distclean: clean
 	rm -f $(NAME).pdf ijdc-v9.cls idcc.cls $(NAME)-base.tex $(NAME)-{biblatex,apacite}.bib README
 inst: all
