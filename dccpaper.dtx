@@ -61,7 +61,7 @@ Manual way
    mind the documentation requires the Biblatex package and the Biber
    tool rather than regular BibTeX. As well as the usual PDF (or DVI)
    and auxiliary files, several others are generated.
-2. Rename README.txt to README (if you like)
+2. Rename README.txt to README (if you like).
 3. Move the files to your TeX tree as follows:
 
    -  ``source/latex/dccpaper``: dccpaper.dtx, dccpaper.ins
@@ -86,10 +86,10 @@ under the conditions of the `LaTeX Project Public License (LPPL)`_,
 either version 1.3c of this license or (at your option) any later
 version.
 
-The image files distributed with this bundle, dccpaper-by.eps and
-dccpaper-by.pdf, derive from the file `by.eps`_ distributed by Creative
-Commons. The image is a trademark of Creative Commons and is subject to
-the `Creative Commons trademark policy`_.
+The image files distributed with this bundle derive from the file
+`by.eps`_ distributed by Creative Commons. The image is a trademark of
+Creative Commons and is subject to the `Creative Commons trademark
+policy`_.
 
 This work is "maintained" (as per LPPL maintenance status) by `Alex
 Ball`_.
@@ -1590,6 +1590,8 @@ The version to which it relates is \UseVersionOf{dccpaper-base.tex}, last revise
 The code for this bundle is maintained at \url{https://github.com/DigitalCurationCentre/dccpaper}.
 
 Versions of the templates are also available that target Microsoft Word and LibreOffice\slash OpenOffice.org.
+
+Please note that the DOI attached to this document is fake and should not be used for identification purposes.
 \end{abstract}
 
 \section{Introduction}
@@ -1905,9 +1907,9 @@ Any acknowledgements should be placed in a section immediately before the refere
 
 \begin{description}
 \item[v1.2] 2014-04-09\\
-Implementation section added.
+Added implementation, installation and licence sections to the Appendix of the documentation. Moved the majority of the file postamble information to the README, and synchronized the latter with the GitHub version.
 \item[v1.1] 2014-03-06\\
-Refactored for distribution through CTAN, and to allow the addition of the \textsf{idcc} class.
+Refactored source for distribution through CTAN, and to allow the addition of the \textsf{idcc} class.
 \item[v1.0] 2013-12-18\\
 First public release of \textsf{ijdc-v9} class.
 \end{description}
@@ -1945,21 +1947,99 @@ First public release of \textsf{ijdc-v9} class.
 
 \subsection{Installation}
 
+\subsubsection{Managed way}
 
+The latest stable release of the dccpaper bundle has been packaged for
+\TeX\ Live and MiK\TeX. If you are running \TeX\ Live and have \texttt{tlmgr}
+installed, you can install the bundle simply by running
+\texttt{tlmgr install dccpaper}. If you are running MiK\TeX, you can
+install the bundle by running \texttt{mpm -{}-install=dccpaper}. Both
+\texttt{tlmgr} and \texttt{mpm} have GUI versions that you might find
+friendlier.
 
-Once you have compiled \textsf{dccpaper.dtx}, move the resulting files to the following locations:
+\subsubsection{Automated way}
+
+A makefile is provided which you can use with the Make utility:
 
 \begin{itemize}
 \item
-\textsf{tex/latex/dccpaper}: \textsf{ijdc-v9.cls}, \textsf{idcc.cls}, \textsf{dccpaper-base.tex}, \textsf{dccpaper-by.eps}, \textsf{dccpaper-by.pdf}
+  Running \texttt{make} generates the derived files
+
+  \begin{itemize}
+  \item
+    README
+  \item
+    dccpaper.pdf
+  \item
+    ijdc-v9.cls
+  \item
+    idcc.cls
+  \item
+    dccpaper-base.tex
+  \item
+    dccpaper-apacite.bib
+  \item
+    dccpaper-biblatex.bib
+  \end{itemize}
 \item
-\textsf{source/latex/dccpaper}: \textsf{dccpaper.dtx}, \textsf{dccpaper.ins}
+  Running \texttt{make inst} installs the files in the user's \TeX\ tree.
 \item
-\textsf{doc/latex/dccpaper}: \textsf{README}, \textsf{dccpaper-biblatex.bib}, \textsf{dccpaper-apacite.bib}
+  Running \texttt{make install} installs the files in the local \TeX\
+  tree.
 \end{itemize}
 
-A makefile is provided to help automate this process.
+\subsubsection{Manual way}
 
+\begin{enumerate}
+\item
+  Compile dccpaper.dtx just as you would a normal \LaTeX\ file. Bear in
+  mind the documentation requires the \textsf{biblatex} package and the Biber
+  tool rather than regular Bib\TeX. As well as the usual PDF (or DVI) and
+  auxiliary files, several others are generated.
+\item
+  Rename README.txt to README (if you like).
+\item
+  Move the files to your \TeX tree as follows:
+
+  \begin{itemize}
+  \item
+    \path{source/latex/dccpaper}: dccpaper.dtx, dccpaper.ins
+  \item
+    \path{tex/latex/dccpaper}: ijdc-v9.cls, idcc.cls,
+    dccpaper-base.tex, dccpaper-by.eps, dccpaper-by.pdf
+  \item
+    \path{doc/latex/dccpaper}: dccpaper.pdf, dccpaper-apacite.bib,
+    dccpaper-biblatex.bib, README
+  \end{itemize}
+\item
+  You may then have to update your installation's file name database
+  before \TeX\ and friends can see the files.
+\end{enumerate}
+
+\subsection{Licence}
+
+Copyright \textcopyright\ 2014 Digital Curation Centre, University of Edinburgh.
+
+This work consists of the image files dccpaper-by.eps and
+dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
+
+The text files contained in this work may be distributed and/or modified
+under the conditions of the
+\href{http://www.latex-project.org/lppl.txt}{LaTeX Project Public
+License (LPPL)}, either version 1.3c of this license or (at your option)
+any later version.
+
+The image files distributed with this bundle derive from the file
+\href{http://mirrors.creativecommons.org/presskit/buttons/88x31/eps/by.eps}{by.eps}
+distributed by Creative Commons. The image is a trademark of Creative
+Commons and is subject to the
+\href{http://creativecommons.org/policies}{Creative Commons trademark
+policy}.
+
+This work is ``maintained'' (as per LPPL maintenance status) by
+\href{http://alexball.me.uk/}{Alex Ball}.
+
+The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 \end{document}
 %</driver>
 % \fi
