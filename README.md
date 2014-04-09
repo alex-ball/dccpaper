@@ -34,7 +34,7 @@ A makefile is provided which you can use with the Make utility:
 ### Manual way
 
  1. Compile dccpaper.dtx just as you would a normal LaTeX file. Bear in mind the documentation requires the Biblatex package and the Biber tool rather than regular BibTeX. As well as the usual PDF (or DVI) and auxiliary files, several others are generated.
- 2. Rename README.txt to README (if you like)
+ 2. Rename README.txt to README (if you like).
  3. Move the files to your TeX tree as follows:
       * `source/latex/dccpaper`: dccpaper.dtx, dccpaper.ins
       * `tex/latex/dccpaper`: ijdc-v9.cls, idcc.cls, dccpaper-base.tex, dccpaper-by.eps, dccpaper-by.pdf
@@ -49,6 +49,6 @@ This work consists of the image files dccpaper-by.eps and dccpaper-by.pdf, the d
 
 The text files contained in this work may be distributed and/or modified under the conditions of the [LaTeX Project Public License (LPPL)](http://www.latex-project.org/lppl.txt), either version 1.3c of this license or (at your option) any later version.
 
-The image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, derive from the file [by.eps](http://mirrors.creativecommons.org/presskit/buttons/88x31/eps/by.eps) distributed by Creative Commons. The image is a trademark of Creative Commons and is subject to the [Creative Commons trademark policy](http://creativecommons.org/policies).
+The image files distributed with this bundle derive from the file [by.eps](http://mirrors.creativecommons.org/presskit/buttons/88x31/eps/by.eps) distributed by Creative Commons. The image is a trademark of Creative Commons and is subject to the [Creative Commons trademark policy](http://creativecommons.org/policies).
 
 This work is "maintained" (as per LPPL maintenance status) by [Alex Ball](http://alexball.me.uk/).
