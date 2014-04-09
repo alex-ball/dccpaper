@@ -450,9 +450,15 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \newcommand*{\received}[1]{%
   \def\dccp@dates{\emph{Received} #1}}
 \newcommand*{\revised}[1]{%
-  \appto\dccp@dates{\space\space\space\textbar\space\space\space\emph{Revision received} #1}}
+  \appto\dccp@dates{%
+    \space\space\space\textbar\space\space\space
+    \emph{Revision received} #1}%
+  }
 \newcommand*{\accepted}[1]{%
-  \appto\dccp@dates{\space\space\space\textbar\space\space\space\emph{Accepted} #1}}
+  \appto\dccp@dates{%
+    \space\space\space\textbar\space\space\space
+    \emph{Accepted} #1}%
+  }
 %
 % IJDC papers need to say if they had a previous life as a conference paper. 
 % This statement goes in |\dccp@conf|, which is initially empty. The user 
@@ -549,10 +555,13 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
       \dccp@publ@msg\par
       \bigskip
       \begin{minipage}[b]{\linewidth - 25mm}
-      Copyright rests with the authors. This work is released under a Creative Commons Attribution 4.0 International Licence. For details please see \url{http://creativecommons.org/licenses/by/4.0/}%
+      Copyright rests with the authors. This work is released under a Creative
+      Commons Attribution 4.0 International Licence. For details please see
+      \url{http://creativecommons.org/licenses/by/4.0/}%
       \end{minipage}\hfill
       \begin{minipage}[b]{19mm}
-        \href{http://creativecommons.org/licenses/by/4.0/}{\includegraphics[width=\hsize]{dccpaper-by}}%
+        \href{http://creativecommons.org/licenses/by/4.0/}%
+          {\includegraphics[width=\hsize]{dccpaper-by}}%
       \end{minipage}
       \par
       \bigskip
@@ -587,15 +596,25 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \def\ps@dccpaper{%
   \def\@oddhead{%
     \begin{minipage}{\textwidth}\frenchspacing
-      {\fontsize{9pt}{11pt}\selectfont\ifx\undefined\dccp@normhead@doi\else\dccp@normhead@doi\fi}\hfill
-      {\MainAuthor}\space\space\space\textcolor{struct}{\textbar}\space\space\space\thepage\par
+      {%
+        \fontsize{9pt}{11pt}\selectfont
+        \ifx\undefined\dccp@normhead@doi\else\dccp@normhead@doi\fi
+      }\hfill
+      {\MainAuthor}\space\space\space
+      \textcolor{struct}{\textbar}\space\space\space
+      \thepage\par
       \vskip6pt\color{struct}{\hrule height 1bp}\par
     \end{minipage}
   }%
   \def\@evenhead{%
     \begin{minipage}{\textwidth}
-      \thepage\space\space\space\textcolor{struct}{\textbar}\space\space\space{\HeadTitle}\hfill
-      {\fontsize{9pt}{11pt}\selectfont\ifx\undefined\dccp@normhead@doi\else\dccp@normhead@doi\fi}\par
+      \thepage\space\space\space
+      \textcolor{struct}{\textbar}\space\space\space
+      {\HeadTitle}\hfill
+      {%
+        \fontsize{9pt}{11pt}\selectfont
+        \ifx\undefined\dccp@normhead@doi\else\dccp@normhead@doi\fi
+      }\par
       \vskip6pt\color{struct}{\hrule height 1bp}\par
     \end{minipage}
   }%
@@ -857,12 +876,6 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     }{}%
   }%
 %
-% If \textsf{apacite} is used, we need to ensure that the references are a
-% normal section rather than an starred one so that they appear in the 
-% PDF bookmarks.
-%
-\PassOptionsToPackage{numberedbib}{apacite}
-%
 % Both \textsf{biblatex} and \textsf{apacite} use |\bibitemsep| for the space
 % between bibliography items. Just in case they haven't been loaded, though, we
 % protect our setting of that length with an |\ifx| test.
@@ -872,6 +885,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \setlength{\bibitemsep}{1em plus 1ex minus 1ex}%
   \fi
 }
+%
+% If \textsf{apacite} is used, we need to ensure that the references are a
+% normal section rather than an starred one so that they appear in the 
+% PDF bookmarks.
+%
+\PassOptionsToPackage{numberedbib}{apacite}
 
 %
 % We, of course, use \textsf{hyperref} for enhancing the PDF with working links,
