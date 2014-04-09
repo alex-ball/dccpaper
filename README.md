@@ -10,26 +10,24 @@ As the classes are so similar, their common features are abstracted out into dcc
 
 The classes are suitable for submissions to the respective review boards, but can also be used to produce the final camera-ready papers.
 
-Please note that the image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, are trademarks of Creative Commons and are subject to the [Creative Commons trademark policy](http://creativecommons.org/policies)
-
 ## Installation
 
 ### Managed way
 
-The latest stable release of the dccpaper bundle has been packaged for TeX Live. If you are running TeX Live and have `tlmgr` installed, you can install the bundle simply by running `tlmgr install dccpaper`.
+The latest stable release of the dccpaper bundle has been packaged for TeX Live and MiKTeX. If you are running TeX Live and have `tlmgr` installed, you can install the bundle simply by running `tlmgr install dccpaper`. If you are running MiKTeX, you can install the bundle by running `mpm --install=dccpaper`. Both `tlmgr` and `mpm` have GUI versions that you might find friendlier.
 
 ### Automated way
 
 A makefile is provided which you can use with the Make utility:
 
   * Running `make` generates the derived files
-      * README
-      * dccpaper.pdf
-      * ijdc-v9.cls
-      * idcc.cls
-      * dccpaper-base.tex
-      * dccpaper-apacite.bib
-      * dccpaper-biblatex.bib
+      - README
+      - dccpaper.pdf
+      - ijdc-v9.cls
+      - idcc.cls
+      - dccpaper-base.tex
+      - dccpaper-apacite.bib
+      - dccpaper-biblatex.bib
   * Running `make inst` installs the files in the user's TeX tree.
   * Running `make install` installs the files in the local TeX tree.
 
@@ -47,6 +45,10 @@ A makefile is provided which you can use with the Make utility:
 
 Copyright 2014 Digital Curation Centre, University of Edinburgh.
 
-Released under the [LaTeX Project Public License v1.3c](http://www.latex-project.org/lppl.txt) or later.
+This work consists of the image files dccpaper-by.eps and dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
 
-This work is "maintained" (as per LPPL maintenance status) by Alex Ball.
+The text files contained in this work may be distributed and/or modified under the conditions of the [LaTeX Project Public License (LPPL)](http://www.latex-project.org/lppl.txt), either version 1.3c of this license or (at your option) any later version.
+
+The image files distributed with this bundle, dccpaper-by.eps and dccpaper-by.pdf, derive from the file [by.eps](http://mirrors.creativecommons.org/presskit/buttons/88x31/eps/by.eps) distributed by Creative Commons. The image is a trademark of Creative Commons and is subject to the [Creative Commons trademark policy](http://creativecommons.org/policies).
+
+This work is "maintained" (as per LPPL maintenance status) by [Alex Ball](http://alexball.me.uk/).
