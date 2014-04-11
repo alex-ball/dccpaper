@@ -1,9 +1,9 @@
 % \iffalse meta-comment
 %<*internal>
-\def\Version{2014/04/09 v1.2}
+\def\Version{2014/04/11 v1.2}
 \iffalse
 %</internal>
-%<ijdc9|idcc|base>\def\Version{2014/04/09 v1.2}
+%<ijdc9|idcc|base>\def\Version{2014/04/11 v1.2}
 %<*readme>
 The dccpaper bundle: LaTeX classes for submissions to IJDC and IDCC
 ===================================================================
@@ -920,8 +920,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % A DCC paper should either be using \textsf{biblatex} or \textsf{apacite} for
 % references.
 %
-% If \textsf{biblatex} is used, we need to ensure that the references are a
-% normal section rather than an starred one so that they appear in the 
+% If \textsf{biblatex} is used, we need to ensure that the reference list
+% heading is a normal section rather than a starred one so it appears in the 
 % PDF bookmarks.
 %
 \AtBeginDocument{
@@ -929,15 +929,107 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \defbibheading{bibliography}[\refname]{\section{#1}}%
   }{%
 %
-% If \textsf{apacite} is used, we need to reset the URL style to normal roman
-% type (not monospaced): as \textsf{apacite} sets this with |\AtBeginDocument|,
-% we have to reset it after that, |\AfterEndPreamble|. We also pre-empt
-% \textsf{apacite}'s |\providecommand| of |\doi| with our own definition that
-% includes the `doi' URI scheme label in the link, remembering to remove the 
-% one inserted by |\doiprefix|.
+% If \textsf{apacite} is used, we can do the same with a package option (see
+% below). But there are a few other adaptations we need to make.
 %
     \@ifpackageloaded{apacite}{%
-      \AfterEndPreamble{\urlstyle{APACrm}}%
+%
+% With \textsf{hyperref} loaded, \textsf{apacite} makes the whole of a citation
+% a link to the reference list item. We patch |\@ifauthorsunequalc@de| so only
+% the year portion gets linked.
+%
+      \def\@ifauthorsunequalc@de#1{%
+        \if@F@cite
+          \@F@citefalse
+        \else
+          \if@Y@cite
+              {\@BAY}%
+          \fi
+          {\@BBC}%
+        \fi
+        \edef\@cite@undefined{?}%
+        \def\BBA{\@BBA}%
+        \if@A@cite
+          %%\hyper@natlinkstart{#1}% We remove this line...
+          {\csname b@\@citeb\APAC@extra@b@citeb\endcsname}%
+          %%\hyper@natlinkend% ...and this one.
+          \if@Y@cite
+              {\@BBAY}%
+          \fi
+        \fi
+        \if@Y@cite
+          \hyper@natlinkstart{#1}%
+          {\csname Y@\@citeb\APAC@extra@b@citeb\endcsname}%
+          \hyper@natlinkend
+        \fi
+        \let\BBA\relax
+      }
+%
+% The Spanish language support file defines a different version of
+% |\@ifauthorsunequalc@de|, which might override the patch we have just
+% introduced. So we employ the same test that \textsf{apacite} uses when
+% deciding whether to load that file; if successful, we patch the Spanish
+% version. Note that as \textsf{apacite} loads language support files
+% |\AtBeginDocument|, we have to do our thing after that, |\AfterEndPreamble|.
+%
+% (Note that as we set the language to British English earlier, this should
+% never be needed, but we try to be resilient to tinkering!)
+%
+      \AfterEndPreamble{%
+        \@ifundefined{iflanguage}{%
+          \relax
+        }{%
+          \edef\APAC@tmp{nohyphenation}%
+          \ifx\languagename\APAC@tmp
+          \else
+            \edef\APAC@tmp{spanish}%
+            \ifx\languagename\APAC@tmp
+              \def\@ifauthorsunequalc@de#1{%
+                \if@F@cite
+                  \@F@citefalse
+                \else
+                  \if@Y@cite
+                      {\@BAY}%
+                  \fi
+                  {\@BBC}%
+                \fi
+                \edef\@cite@undefined{?}%
+                \def\BBA{\@BBA}%
+                \@ifundefined{spanishe@\@citeb\APAC@extra@b@citeb}%
+                  {}% skip
+                  {{% Use `e' instead of `y' in Spanish
+                  \global\let\oldBBA\BBA
+                  \global\def\BBA{e\global\let\BBA\oldBBA}%
+                  }}%
+                \if@A@cite
+                  %%\hyper@natlinkstart{#1}% We remove this line...
+                  {\csname b@\@citeb\APAC@extra@b@citeb\endcsname}%
+                  %%\hyper@natlinkend% ...and this one.
+                  \if@Y@cite
+                      {\@BBAY}%
+                  \fi
+                \fi
+                \if@Y@cite
+                  \hyper@natlinkstart{#1}%
+                  {\csname Y@\@citeb\APAC@extra@b@citeb\endcsname}%
+                  \hyper@natlinkend
+                \fi
+                \let\BBA\relax
+              }%
+            \fi
+          \fi
+        }%
+%
+% Another thing \textsf{apacite} does |\AtBeginDocument| is set the URL style
+% to monospaced. So we reset it back to normal roman type |\AfterEndPreamble|.
+%
+        \urlstyle{APACrm}
+       }%
+%
+% We pre-empt \textsf{apacite}'s |\providecommand| of |\doi| with our own
+% definition that includes the `doi' URI scheme label in the link, remembering
+% to remove the one inserted by |\doiprefix|.
+%
       \newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\nolinkurl{doi:#1}}}%
       \renewcommand{\doiprefix}{\unskip}%
     }{}%
@@ -953,9 +1045,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \fi
 }
 %
-% If \textsf{apacite} is used, we need to ensure that the references are a
-% normal section rather than an starred one so that they appear in the 
-% PDF bookmarks.
+% As mentioned above, if \textsf{apacite} is used, we can use a package option
+% to ensure that the reference list heading appears in the PDF bookmarks.
 %
 \PassOptionsToPackage{numberedbib}{apacite}
 
@@ -1906,8 +1997,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \subsection{Change History}
 
 \begin{description}
-\item[v1.2] 2014-04-09\\
-Added implementation, installation and licence sections to the Appendix of the documentation. Moved the majority of the file postamble information to the README, and synchronized the latter with the GitHub version.
+\item[v1.2] 2014-04-11\\
+Added implementation, installation and licence sections to the Appendix of the documentation. Moved the majority of the file postamble information to the README, and synchronized the latter with the GitHub version. Improved adaptation of \textsf{apacite} referencing to the house style.
 \item[v1.1] 2014-03-06\\
 Refactored source for distribution through CTAN, and to allow the addition of the \textsf{idcc} class.
 \item[v1.0] 2013-12-18\\
