@@ -1480,14 +1480,14 @@ Copyright (C) 2014 Digital Curation Centre, University of Edinburgh
 \usepackage{siunitx,csquotes}
 \usepackage[utf8]{inputenc}
 
-\usepackage[style=apa]{biblatex}
-\addbibresource{dccpaper-biblatex.bib}
-\DeclareLanguageMapping{british}{british-apa}
+%%\usepackage[style=apa]{biblatex}
+%%\addbibresource{dccpaper-biblatex.bib}
+%%\DeclareLanguageMapping{british}{british-apa}
 
-%%\usepackage{apacite}
-%%\bibliographystyle{apacite}
-%%\let\textcite=\citeA
-%%\let\autocite=\cite
+\usepackage{apacite}
+\bibliographystyle{apacite}
+\let\textcite=\citeA
+\let\autocite=\cite
 
 \usepackage{enumitem}
 \usepackage{listings}
@@ -1898,8 +1898,8 @@ The data underlying the results presented in the submission should be placed in 
 
 Any acknowledgements should be placed in a section immediately before the references.\nocite{*}
 
-\printbibliography
-%%\bibliography{dccpaper-apacite.bib}
+%%\printbibliography
+\bibliography{dccpaper-apacite.bib}
 
 \newpage
 \section{Appendix}
