@@ -1590,6 +1590,7 @@ Copyright (C) 2014 Digital Curation Centre, University of Edinburgh
   , texcsstyle=*\color{red!75!black}
   , moretexcs=
     { affil
+    , conference
     , correspondence
     , submitted
     , received
@@ -1783,6 +1784,16 @@ The affiliation (institution, company) of the immediately preceding author(s). T
 \lstinline|\correspondence{$\subtext{name, postal address.}$ Email: \email{$\subtext{email address}$}}|
 \hskip\labelsep
 Name, address and email address of the corresponding author. This information appears in the footer of the cover page.
+\end{description}
+
+If an IJDC submission is a reworked conference paper (that has not already been formally published), for reasons of transparency the name of the conference should be given.
+
+\begin{description}
+\item[]
+\hskip-\labelsep
+\lstinline|\conference{$\subtext{name of conference}$}|
+\hskip\labelsep
+The conference at which the earlier version of the paper was presented, e.g.\ ‘the 10th International Digital Curation Conference’.
 \end{description}
 
 For IDCC papers, authors are invited to record the date on which they made their submission.
