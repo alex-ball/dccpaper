@@ -342,6 +342,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 \newcommand{\MainAuthor}{}
 %
+% The |\dccp@author| command, meanwhile, collects a full list of authors for the
+% PDF metatdata.
+% 
+\newcommand{\dccp@author}{}
+%
 % We define counters for 
 % \begin{itemize}
 % \item the total number of authors defined;
@@ -366,10 +371,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % If this is the first or second |\author| command, we add the name to our 
 % abbreviated list of authors. Otherwise, we replace the name of the second 
 % and subsequent authors with `et al.' in that list.
+% 
+% At the same time, we use a simpler technique to populate |\dccp@author|.
 %
   \ifnum\theauthors=0
+    \def\dccp@author{#1}%
     \def\MainAuthor{#1}%
   \else
+    \appto\dccp@author{, #1}%
     \ifnum\theauthors=1%
       \def\OtherMainAuthors{ and #1}%
       \appto\MainAuthor{\OtherMainAuthors}%
@@ -1082,7 +1091,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{%
   \hypersetup
     { pdftitle={\thetitle}
-    , pdfauthor={\MainAuthor}
+    , pdfauthor={\dccp@author}
     , pdfsubject={\dccp@subject}
     }
 %
