@@ -911,13 +911,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   ]{caption}
 
 %
-% Footnotes should be set right up against the left margin
+% Footnotes should be set right up against the left margin. They should be
+% set hung and in the same half-ragged style as the main text. Also, if
+% multiple footnotes are set at once, the markers should be separated with
+% superscript commas. The \textsf{footmisc} package helps here.
 %
-\renewcommand\@makefntext[1]{%
-  \parindent 1em%
-  \noindent
-  \@makefnmark~#1%
-}
+\RequirePackage[multiple,hang]{footmisc}
+\settowidth{\footnotemargin}{\footnotesize\textsuperscript{99}\space}
+\renewcommand{\footnotelayout}{\raggedyright}
 
 %
 % By default lists are quite loose. These settings help to tighten them.
@@ -1707,6 +1708,7 @@ Certain aspects of the template design have been implemented using third-party p
 
 \begin{itemize}
 \item\textsf{titlesec} is used to format the section headings.
+\item\textsf{footmisc} is used to format the footnotes.
 \item Tables in your document must be formatted according to the design principles promoted and supported by the \textsf{booktabs} package.
 \item\textsf{caption} is used to format the figure and table captions.
 \item\textsf{etoolbox} is used behind the scenes for patching commands.
