@@ -924,16 +924,21 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % its solution is clobbered by \textsf{hyperref}. So after a footnote is set,
 % we check to see if the next token is also a footnote, and if so, slip a comma
 % in before it.\footnote{This solution was provided at 
-% \url{http://tex.stackexchange.com/q/40072}} This needs to be done late,
-% |\AtEndPreamble|.
+% \url{http://tex.stackexchange.com/q/40072}} This tweak needs to be done late,
+% |\AtBeginDocument|. Note that the \textsf{newtx} superior figures are a bit
+% lower than normal superscript text.
 %
 \AtBeginDocument{
   \let\dccp@footnote\footnote
-  \def\dccp@next@token{\relax}
+  \def\dccp@next@token{\relax}%
+  \def\dccp@supercomma{\textsuperscript{,}}%
+  \IfFileExists{newtxtext.sty}%
+    {\def\dccp@supercomma{\raisebox{-0.2ex}{\textsuperscript{,}}}}%
+    {}
 
   \newcommand\dccp@check@for@footnote{%
     \ifx\footnote\dccp@next@token
-      \textsuperscript{,}%
+      \dccp@supercomma
     \fi
   }
 
