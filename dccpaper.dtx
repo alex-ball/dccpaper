@@ -912,13 +912,36 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %
 % Footnotes should be set right up against the left margin. They should be
-% set hung and in the same half-ragged style as the main text. Also, if
-% multiple footnotes are set at once, the markers should be separated with
-% superscript commas. The \textsf{footmisc} package helps here.
+% set hung and in the same half-ragged style as the main text. The 
+% \textsf{footmisc} package helps here.
 %
-\RequirePackage[multiple,hang]{footmisc}
+\RequirePackage[hang]{footmisc}
 \settowidth{\footnotemargin}{\footnotesize\textsuperscript{99}\space}
 \renewcommand{\footnotelayout}{\raggedyright}
+%
+% Also, if multiple footnotes are set at once, the markers should be separated
+% with superscript commas. The \textsf{footmisc} package should help here but
+% its solution is clobbered by \textsf{hyperref}. So after a footnote is set,
+% we check to see if the next token is also a footnote, and if so, slip a comma
+% in before it.\footnote{This solution was provided at 
+% \url{http://tex.stackexchange.com/q/40072}} This needs to be done late,
+% |\AtEndPreamble|.
+%
+\AtBeginDocument{
+  \let\dccp@footnote\footnote
+  \def\dccp@next@token{\relax}
+
+  \newcommand\dccp@check@for@footnote{%
+    \ifx\footnote\dccp@next@token
+      \textsuperscript{,}%
+    \fi
+  }
+
+  \renewcommand\footnote[1]{%
+    \dccp@footnote{#1}%
+    \futurelet\dccp@next@token\dccp@check@for@footnote
+  }
+}
 
 %
 % By default lists are quite loose. These settings help to tighten them.
