@@ -342,6 +342,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 \newcommand{\MainAuthor}{}
 %
+% The |\dccp@author| command, meanwhile, collects a full list of authors for the
+% PDF metatdata.
+% 
+\newcommand{\dccp@author}{}
+%
 % We define counters for 
 % \begin{itemize}
 % \item the total number of authors defined;
@@ -366,10 +371,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % If this is the first or second |\author| command, we add the name to our 
 % abbreviated list of authors. Otherwise, we replace the name of the second 
 % and subsequent authors with `et al.' in that list.
+% 
+% At the same time, we use a simpler technique to populate |\dccp@author|.
 %
   \ifnum\theauthors=0
+    \def\dccp@author{#1}%
     \def\MainAuthor{#1}%
   \else
+    \appto\dccp@author{, #1}%
     \ifnum\theauthors=1%
       \def\OtherMainAuthors{ and #1}%
       \appto\MainAuthor{\OtherMainAuthors}%
@@ -902,12 +911,41 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   ]{caption}
 
 %
-% Footnotes should be set right up against the left margin
+% Footnotes should be set right up against the left margin. They should be
+% set hung and in the same half-ragged style as the main text. The 
+% \textsf{footmisc} package helps here.
 %
-\renewcommand\@makefntext[1]{%
-  \parindent 1em%
-  \noindent
-  \@makefnmark~#1%
+\RequirePackage[hang]{footmisc}
+\settowidth{\footnotemargin}{\footnotesize\textsuperscript{99}\space}
+\renewcommand{\footnotelayout}{\raggedyright}
+%
+% Also, if multiple footnotes are set at once, the markers should be separated
+% with superscript commas. The \textsf{footmisc} package should help here but
+% its solution is clobbered by \textsf{hyperref}. So after a footnote is set,
+% we check to see if the next token is also a footnote, and if so, slip a comma
+% in before it.\footnote{This solution was provided at 
+% \url{http://tex.stackexchange.com/q/40072}} This tweak needs to be done late,
+% |\AtBeginDocument|. Note that the \textsf{newtx} superior figures are a bit
+% lower than normal superscript text.
+%
+\AtBeginDocument{
+  \let\dccp@footnote\footnote
+  \def\dccp@next@token{\relax}%
+  \def\dccp@supercomma{\textsuperscript{,}}%
+  \IfFileExists{newtxtext.sty}%
+    {\def\dccp@supercomma{\raisebox{-0.2ex}{\textsuperscript{,}}}}%
+    {}
+
+  \newcommand\dccp@check@for@footnote{%
+    \ifx\footnote\dccp@next@token
+      \dccp@supercomma
+    \fi
+  }
+
+  \renewcommand\footnote[1]{%
+    \dccp@footnote{#1}%
+    \futurelet\dccp@next@token\dccp@check@for@footnote
+  }
 }
 
 %
@@ -915,6 +953,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 \topsep = \z@
 \partopsep = \z@
+\appto{\enumerate}{\itemsep = 0.5ex plus 0.25ex minus 0.25ex}
+\appto{\itemize}{\itemsep = 0.5ex plus 0.25ex minus 0.25ex}
 
 %
 % A DCC paper should either be using \textsf{biblatex} or \textsf{apacite} for
@@ -1080,7 +1120,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{%
   \hypersetup
     { pdftitle={\thetitle}
-    , pdfauthor={\MainAuthor}
+    , pdfauthor={\dccp@author}
     , pdfsubject={\dccp@subject}
     }
 %
@@ -1590,6 +1630,7 @@ Copyright (C) 2014 Digital Curation Centre, University of Edinburgh
   , texcsstyle=*\color{red!75!black}
   , moretexcs=
     { affil
+    , conference
     , correspondence
     , submitted
     , received
@@ -1695,6 +1736,7 @@ Certain aspects of the template design have been implemented using third-party p
 
 \begin{itemize}
 \item\textsf{titlesec} is used to format the section headings.
+\item\textsf{footmisc} is used to format the footnotes.
 \item Tables in your document must be formatted according to the design principles promoted and supported by the \textsf{booktabs} package.
 \item\textsf{caption} is used to format the figure and table captions.
 \item\textsf{etoolbox} is used behind the scenes for patching commands.
@@ -1783,6 +1825,16 @@ The affiliation (institution, company) of the immediately preceding author(s). T
 \lstinline|\correspondence{$\subtext{name, postal address.}$ Email: \email{$\subtext{email address}$}}|
 \hskip\labelsep
 Name, address and email address of the corresponding author. This information appears in the footer of the cover page.
+\end{description}
+
+If an IJDC submission is a reworked conference paper (that has not already been formally published), for reasons of transparency the name of the conference should be given.
+
+\begin{description}
+\item[]
+\hskip-\labelsep
+\lstinline|\conference{$\subtext{name of conference}$}|
+\hskip\labelsep
+The conference at which the earlier version of the paper was presented, e.g.\ ‘the 10th International Digital Curation Conference’.
 \end{description}
 
 For IDCC papers, authors are invited to record the date on which they made their submission.
