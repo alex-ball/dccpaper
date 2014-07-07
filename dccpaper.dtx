@@ -559,12 +559,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \setlength\@tempdimb{\baselineskip}%
   \multiply\@tempdimb\@tempcnta
   \advance\@tempdima-\@tempdimb
+  \global\advance\footskip\@tempdima
   \multiply\@tempdima\tw@
   \ifdim\@tempdima>\baselineskip
     \addtolength\@tempdimb{\baselineskip}%
+    \global\advance\footskip-\baselineskip
   \fi
   \addtolength\@tempdimb{\topskip}%
-  \textheight\@tempdimb
+  \global\textheight\@tempdimb
 }
 
 %
@@ -575,6 +577,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \setlength{\textwidth}{150mm}
 \setlength{\oddsidemargin}{30mm - \hoffset - 1in}
 \setlength{\evensidemargin}{30mm - \hoffset - 1in}
+%
+% It is rare to have marginal notes, but in case we ever do, we centre them in
+% the margin.
+%
+\setlength{\marginparwidth}{30mm - 2\marginparsep}
 %
 % We also want a distance of 15mm from the top of the page to the top of the 
 % header, and two blank lines between the bottom of the header and the top of 
@@ -720,7 +727,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \newsavebox{\dccp@firstpagehead}
   \sbox\dccp@firstpagehead{\normalfont\TitleHead}
   \newsavebox{\dccp@firstpagefoot}
-  \sbox\dccp@firstpagehead{\normalfont
+  \sbox\dccp@firstpagefoot{\normalfont
     \def\email#1{#1}\def\url#1{#1}\def\href#1#2{#2}\TitleFoot}
   \newsavebox{\dccp@restpagehead}
   \sbox\dccp@restpagehead{\normalfont\NormalHead}
@@ -739,7 +746,6 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     - \headheight
     - \headsep
     - \footskip
-    + \baselineskip
   }
 %
 % {\dots}and provide a macro that will reset the geometry for the remaining 
@@ -747,36 +753,40 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
   \def\dccp@resetgeometry{%
     \setlength{\headheight}{\ht\dccp@restpagehead + \dp\dccp@restpagehead}
+    \global\headheight=\headheight
     \setlength{\footskip}{%
-      2\baselineskip + \ht\dccp@firstpagefoot + \dp\dccp@firstpagefoot
+      2\baselineskip + \ht\dccp@restpagefoot
     }
+    \global\footskip=\footskip
     \setlength{\textheight}{%
       \paperheight
       - 30mm % 15mm top and bottom
       - \headheight
       - \headsep
       - \footskip
-      + \baselineskip
     }
     \FixTextHeight
+    \global\textheight=\textheight
   }
 }
 
 %
-% The |\maketitle| command is redefined to to correct formatting. At the end it
-% resets the geometry, but this only takes effect on the second page. It is here 
-% rather than at the end of the abstract in case the abstract itself spills over 
-% to the second page.
+% The |\maketitle| command is redefined to the correct formatting. At the end it
+% sets a hook that will reset the geometry when the first page is shipped out,
+% i.e.\ with effect from the second page. It is here rather than at the end of
+% the abstract in case the abstract itself spills over to the second page.
 %
+\RequirePackage{atbegshi}
 \renewcommand{\maketitle}{%
   \null\nobreak\vspace*{-0.528\baselineskip}%
   \begingroup
     \centering
-    { \Large\thetitle\par}
+    {\Large\thetitle\par}
     \vspace{0.7\baselineskip}
     \AuthorBlock\par
     \vspace{1.7\baselineskip}
-  \endgroup\dccp@resetgeometry
+  \endgroup
+  \AtBeginShipoutNext{\dccp@resetgeometry}%
 }
 
 %
@@ -1735,11 +1745,12 @@ The \LaTeX\ class \textsf{ijdc-v9} produces camera-ready papers and articles sui
 Certain aspects of the template design have been implemented using third-party packages, aside from those that are required parts of the \LaTeX\ system. Therefore you should ensure that you have these packages installed on your system before attempting to use the class.
 
 \begin{itemize}
-\item\textsf{titlesec} is used to format the section headings.
-\item\textsf{footmisc} is used to format the footnotes.
+\item\textsf{atbegshi} is used for switching geometry between pages.
 \item Tables in your document must be formatted according to the design principles promoted and supported by the \textsf{booktabs} package.
 \item\textsf{caption} is used to format the figure and table captions.
 \item\textsf{etoolbox} is used behind the scenes for patching commands.
+\item\textsf{footmisc} is used to format the footnotes.
+\item\textsf{titlesec} is used to format the section headings.
 \end{itemize}
 
 In some cases the class prefers to use packages that are not part of the base installation (but are nevertheless commonly available in \TeX\ distributions), but will fall back to their base equivalents if necessary.
