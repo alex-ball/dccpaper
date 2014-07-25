@@ -922,10 +922,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %
 % Footnotes should be set right up against the left margin. They should be
-% set hung and in the same half-ragged style as the main text. The 
+% set hung and in the same half-ragged style as the main text. They should also,
+% for neatness, be at the bottom of the page regardless of how short it is. The
 % \textsf{footmisc} package helps here.
 %
-\RequirePackage[hang]{footmisc}
+\RequirePackage[hang,bottom]{footmisc}
 \settowidth{\footnotemargin}{\footnotesize\textsuperscript{99}\space}
 \renewcommand{\footnotelayout}{\raggedyright}
 %
