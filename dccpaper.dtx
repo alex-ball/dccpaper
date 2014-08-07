@@ -2063,8 +2063,7 @@ Any acknowledgements should be placed in a section immediately before the refere
 %%\bibliography{dccpaper-apacite.bib}
 
 \newpage
-\section{Appendix}
-\subsection{Change History}
+\section{Appendix A: Change History}
 
 \begin{description}
 \item[v1.2] 2014-04-11\\
@@ -2075,7 +2074,8 @@ Refactored the source for distribution through CTAN, and to allow the addition o
 First public release of \textsf{ijdc-v9} class.
 \end{description}
 
-\subsection{Implementation}
+\newpage
+\section{Appendix B: Implementation}
 
 \lstset
   { aboveskip=1em plus 0.5em minus 0.2em
@@ -2089,26 +2089,27 @@ First public release of \textsf{ijdc-v9} class.
   }%
 \useNiceVerb
 
-\subsubsection{ijdc-v9.cls}
+\subsection{ijdc-v9.cls}
 
 \renewcommand*{\mdJobName}{ijdc-v9}
 \MakeInputJobDoc[cls]{0}{\ProcessInputWith{PScomment}}
 
-\subsubsection{idcc.cls}
+\subsection{idcc.cls}
 
 \renewcommand*{\mdJobName}{idcc}
 \MakeInputJobDoc[cls]{0}{\ProcessInputWith{PScomment}}
 
-\subsubsection{dccpaper-base.tex}
+\subsection{dccpaper-base.tex}
 
 \renewcommand*{\mdJobName}{dccpaper-base}
 \MakeInputJobDoc[tex]{0}{\ProcessInputWith{PScomment}}
 
 \noNiceVerb
 
-\subsection{Installation}
+\newpage
+\section{Appendix C: Installation}
 
-\subsubsection{Managed way}
+\subsection{Managed way}
 
 The latest stable release of the dccpaper bundle has been packaged for
 \TeX\ Live and MiK\TeX. If you are running \TeX\ Live and have \texttt{tlmgr}
@@ -2118,7 +2119,7 @@ install the bundle by running \texttt{mpm -{}-install=dccpaper}. Both
 \texttt{tlmgr} and \texttt{mpm} have GUI versions that you might find
 friendlier.
 
-\subsubsection{Automated way}
+\subsection{Automated way}
 
 A makefile is provided which you can use with the Make utility:
 
@@ -2149,7 +2150,7 @@ A makefile is provided which you can use with the Make utility:
   tree.
 \end{itemize}
 
-\subsubsection{Manual way}
+\subsection{Manual way}
 
 \begin{enumerate}
 \item
@@ -2177,7 +2178,8 @@ A makefile is provided which you can use with the Make utility:
   before \TeX\ and friends can see the files.
 \end{enumerate}
 
-\subsection{Licence}
+\newpage
+\section{Appendix D: Licence}
 
 Copyright \textcopyright\ 2014 Digital Curation Centre, University of Edinburgh.
 
