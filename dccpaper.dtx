@@ -199,8 +199,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % The |practice| option is redundant, but included for symmetry.
 %
 \DeclareOption{research}{\def\dccp@type{Research Paper}}
+\DeclareOption{data}{\def\dccp@type{Data Paper}}
 \DeclareOption{poster}{\def\dccp@type{Poster}}
 \DeclareOption{demo}{\def\dccp@type{Demonstration}}
+\DeclareOption{bof}{\def\dccp@type{Birds of a Feather}}
 \DeclareOption{workshop}{\def\dccp@type{Workshop}}
 \DeclareOption{practice}{\def\dccp@type{Practice Paper}}
 %
@@ -1787,10 +1789,14 @@ Two types of option are available for \textsf{idcc}. The first relates to the ty
 Use this for full research papers.
 \item[practice]
 Use this for extended abstracts of practice papers, and full practice papers. The class defaults to this state, making this option even more optional than normal.
+\item[data]
+Use this for data paper abstracts and full data papers.
 \item[poster]
 Use this for poster abstracts.
 \item[demo]
 Use this for demonstration proposals.
+\item[bof]
+Use this for Birds of a Feather session abstracts.
 \item[workshop]
 Use this for workshop proposals.
 \end{description}
