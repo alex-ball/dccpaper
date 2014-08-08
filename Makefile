@@ -39,5 +39,5 @@ install: all
 	sudo cp README $(UTREE)/doc/latex/$(NAME)
 zip: all
 	mkdir $(TDIR)
-	cp $(NAME).{pdf,dtx} ijdc-v9.cls idcc.cls $(NAME)-base.tex $(NAME)-by.{eps,pdf} $(NAME)-{biblatex,apacite}.bib README Makefile $(TDIR)
+	cp $(NAME).{pdf,dtx} $(NAME)-by.{eps,pdf} README Makefile $(TDIR)
 	cd $(TEMP); zip -Drq $(PWD)/$(NAME)-$(VERS).zip $(NAME)
