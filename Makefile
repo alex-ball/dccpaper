@@ -1,7 +1,7 @@
 NAME  = dccpaper
 SHELL = bash
 PWD   = $(shell pwd)
-TEMP := $(shell mktemp -d)
+TEMP := $(shell mktemp -d -t tmp.XXXXXXXXXX)
 TDIR  = $(TEMP)/$(NAME)
 VERS  = $(shell ltxfileinfo -v $(NAME).dtx)
 LOCAL = $(shell kpsewhich --var-value TEXMFLOCAL)
