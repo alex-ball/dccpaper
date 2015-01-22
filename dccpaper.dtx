@@ -220,6 +220,29 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \ProcessOptions\relax
 
 %
+% The |demo| option, if passed, would be passed on to the \textsf{graphics}
+% package wreaking havoc with each and every included image. To avoid this,
+% we clear it from the list of class options using
+% \href{http://tex.stackexchange.com/q/33245}{code from Enrico Gregorio}.
+%
+\def\@clearglobaloption#1{%
+  \def\@tempa{#1}%
+  \def\@tempb{\@gobble}%
+  \@for\next:=\@classoptionslist\do{%
+    \ifx\next\@tempa
+      \message{Option \next\space has been hidden from subsequent packages}%
+    \else
+      \edef\@tempb{\@tempb,\next}%
+    \fi
+  }%
+  \let\@classoptionslist\@tempb
+  \expandafter\ifx\@tempb\@gobble
+    \let\@classoptionslist\@empty
+  \fi
+}
+\@clearglobaloption{demo}
+
+%
 % The rest of the formatting happens in the following file.
 %
 \input{dccpaper-base}
