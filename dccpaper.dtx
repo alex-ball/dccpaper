@@ -1632,7 +1632,7 @@ Copyright (C) 2014 Digital Curation Centre, University of Edinburgh
 \revised{10 December 2013}
 \accepted{1 January 2014}
 
-\usepackage{siunitx,csquotes}
+\usepackage{dcolumn,csquotes}
 \usepackage[utf8]{inputenc}
 
 \usepackage[style=apa]{biblatex}
@@ -1989,18 +1989,19 @@ Empty cells can either be left blank or represented by an em dash. A blank cell 
 Captions should end in a full stop\slash period.
 \end{itemize}
 
-Table~\ref{tab:issues} demonstrates these features. The code used to produce the table is shown in Figure~\ref{fig:table} (note that the \textsf{siunitx} package was loaded in the preamble).
+Table~\ref{tab:issues} demonstrates these features. The code used to produce the table is shown in Figure~\ref{fig:table} (note that the \textsf{dcolumn} package was loaded in the preamble).
 
 \begin{table}[ht]
 \caption{Papers and articles published in the IJDC in 2008 and 2009.}
 \label{tab:issues}
-\sisetup{table-number-alignment=center,table-figures-integer=2,table-figures-decimal=0}%
 \centering\small
-\begin{tabular}{lSSS[table-figures-decimal=1]S[table-figures-decimal=1]}
+\begin{tabular}{lD..{2.0}D..{2.0}D..{2.1}D..{2.1}}
 \toprule
  & \multicolumn{2}{c}{Frequency} & \multicolumn{2}{c}{Percentage} \\
 \cmidrule(lr){2-3}\cmidrule(l){4-5}
-Issue & {Peer-reviewed} & {General} & {Peer-reviewed} & {General} \\
+Issue
+ & \multicolumn{1}{c}{Peer-reviewed} & \multicolumn{1}{c}{General}
+ & \multicolumn{1}{c}{Peer-reviewed} & \multicolumn{1}{c}{General} \\
 \midrule
 3(1) &  9 &  7 & 56.3 & 43.8 \\
 3(2) &  5 &  7 & 41.7 & 58.3 \\
@@ -2016,15 +2017,14 @@ Issue & {Peer-reviewed} & {General} & {Peer-reviewed} & {General} \\
 \begin{table}
 \caption{Papers and articles published in the IJDC in 2008 and 2009.}
 \label{tab:issues}
-\sisetup{table-number-alignment=center,table-figures-integer=2,%
-  table-figures-decimal=0}%
 \centering\small
-\begin{tabular}{lSSS[table-figures-decimal=1]%
-  S[table-figures-decimal=1]}
+\begin{tabular}{lD..{2.0}D..{2.0}D..{2.1}D..{2.1}}
 \toprule
- & \multicolumn{2}{c}{Frequency} & \multicolumn{2}{c}{Percentage} \\
+& \multicolumn{2}{c}{Frequency} & \multicolumn{2}{c}{Percentage} \\
 \cmidrule(lr){2-3}\cmidrule(l){4-5}
-Issue & {Peer-reviewed} & {General} & {Peer-reviewed} & {General} \\
+Issue
+& \multicolumn{1}{c}{Peer-reviewed} & \multicolumn{1}{c}{General}
+& \multicolumn{1}{c}{Peer-reviewed} & \multicolumn{1}{c}{General} \\
 \midrule
 3(1) &  9 &  7 & 56.3 & 43.8 \\
 3(2) &  5 &  7 & 41.7 & 58.3 \\
