@@ -331,6 +331,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \everypar{}}
 
 %
+% Pdf\TeX\ 1.40.15 introduced the facility to include dummy interword spaces
+% to improve text extraction and reflow. We test for this facility and use it
+% if available.
+\ifdef{\pdfinterwordspaceon}{\pdfinterwordspaceon}{}
+
+%
 % The classes have some special metadata requirements. We start with the author
 % information.
 %
