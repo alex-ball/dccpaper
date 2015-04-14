@@ -432,7 +432,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
   \ifnum\theauthorsinblock=0%
     \stepcounter{block}%
-    \expandafter\def\csname block\roman{block}@auth\endcsname{#1}%
+    \expandafter\def\csname block\roman{block}@auth\endcsname{\Authfont#1}%
     \ifnum\theblock>1\appto\AuthorBlock{\quad}\fi
     \appto\AuthorBlock{%
       \stepcounter{block}%
@@ -2106,6 +2106,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[next] 2015-04-14\\
+Improved whitespace handling. Fixed bug triggered by \texttt{demo} option. Fixed missing use of \lstinline|\Authfont|.
 \item[v1.3.2] 2015-01-21\\
 Removed dependence on user supplying a title. Fixed bug triggered by numbered sections.
 \item[v1.3.1] 2014-10-14\\
