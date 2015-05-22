@@ -1026,10 +1026,20 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{
   \@ifpackageloaded{biblatex}{%
     \defbibheading{bibliography}[\refname]{\section{#1}}%
+%
+% We also move the ‘doi:’ portion of a DOI inside the hyperlink. 
+%
+    \DeclareFieldFormat{doi}{%
+      \ifhyperref{%
+        \href{http://dx.doi.org/#1}{\nolinkurl{doi:#1}}%
+      }{%
+        \nolinkurl{doi:#1}%
+      }%
+    }
   }{%
 %
-% If \textsf{apacite} is used, we can do the same with a package option (see
-% below). But there are a few other adaptations we need to make.
+% If \textsf{apacite} is used, there are a few other adaptations we need to
+% make.
 %
     \@ifpackageloaded{apacite}{%
 %
