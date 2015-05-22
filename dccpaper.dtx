@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %<*internal|ijdc9|idcc|base>
-\def\Version{2015/01/21 v1.3.2}
+\def\Version{2015/05/22 v1.4}
 %</internal|ijdc9|idcc|base>
 %<*internal>
 \iffalse
@@ -77,7 +77,7 @@ Manual way
 Licence
 -------
 
-Copyright 2014 Digital Curation Centre, University of Edinburgh.
+Copyright 2015 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
@@ -1632,7 +1632,7 @@ See:     http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Copyright (C) 2014 Digital Curation Centre, University of Edinburgh
+Copyright (C) 2015 Digital Curation Centre, University of Edinburgh
 <info@dcc.ac.uk>
 \endpostamble
 
@@ -1823,12 +1823,13 @@ In some cases the class prefers to use packages that are not part of the base in
 
 For referencing, you are encouraged to use either \textsf{biblatex} using the styles provided by \textsf{biblatex-apa} (preferred), or \textsf{apacite}.
 
-\section{Loading the classes}
+\section{Loading the Classes}
+
+\subsection{International Journal of Digital Curation}
 
 The class is loaded in the usual way with 
-\lstinline|\documentclass[$\subtext{options}$]{ijdc-v9}| or \lstinline|\documentclass[$\subtext{options}$]{idcc}|.
-
-The following options are available for \textsf{ijdc-v9}:
+\lstinline|\documentclass[$\subtext{options}$]{ijdc-v9}|.
+The following options are available:
 
 \begin{description}[font=\color{violet}\ttfamily]
 \item[paper]
@@ -1839,7 +1840,11 @@ Use this for general (non-peer-reviewed) articles if you like, but you do not ha
 Use this for an editorial.
 \end{description}
 
-Two types of option are available for \textsf{idcc}. The first relates to the type of submission:
+\subsection{International Digital Curation Conference}
+
+The class is loaded in the usual way with
+\lstinline|\documentclass[$\subtext{options}$]{idcc}|.
+Two types of option are available. The first relates to the type of submission:
 \begin{description}[font=\color{violet}\ttfamily]
 \item[research]
 Use this for full research papers.
@@ -1861,9 +1866,11 @@ The second type of option relates to the conference to which the submission will
 \begin{description}[font=\color{violet}\ttfamily]
 \item[15]
 Use this for the 2015 conference.
+\item[16]
+Use this for the 2016 conference.
 \end{description}
 
-\section{Preamble commands}
+\section{Preamble Commands}
 
 The following commands should be given in the preamble to fill out the document metadata.
 
@@ -1967,7 +1974,7 @@ The number of the IJDC issue in which the submission will be published.
 The year in which the submission will be published.
 \end{description}
 
-\section{Document body}
+\section{Document Body}
 
 When it comes to writing the body of the submission, the template should allow you to use the usual \LaTeX\ markup without much adaptation. So, for example, you would start as in Figure~\ref{fig:start-paper}.
 
@@ -2023,7 +2030,7 @@ Quotations should be put in a \texttt{quote} environment, wrapped in inverted co
 \item
 Table text should be in the \lstinline|\small| font size.
 \item
-Tables should not use vertical lines to separate columns, and ideally should not use horizontal lines to separate rows in the body of the table; white space and text alignment should be sufficient.  See the documentation of the \textsf{booktabs} package for more information.
+Tables should not use vertical lines to separate columns, and ideally should not use horizontal lines to separate rows in the body of the table; white space and text alignment should be sufficient. The top and bottom rules should be drawn with \lstinline|\toprule| and \lstinline|\bottomrule| respectively, with other rules drawn with \lstinline|\midrule| or \lstinline|\cmidrule|. See the documentation of the \textsf{booktabs} package for more information.
 \item
 Text in the body of tables should normally be left-aligned. Numeric data should be aligned at the decimal point among itself but centred with respect to the heading; the \texttt{D} column type from the \textsf{dcolumn} package and the \texttt{S} column type from the \textsf{siunitx} package are particularly useful for this.
 \item
@@ -2122,8 +2129,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
-\item[next] 2015-04-14\\
-Improved whitespace handling. Fixed bug triggered by \texttt{demo} option. Fixed missing use of \lstinline|\Authfont|.
+\item[v1.4] 2015-05-22\\
+Added details of IDCC 2016. Improved whitespace handling. Fixed bug triggered by \texttt{demo} option. Fixed missing use of \lstinline|\Authfont|. Added missing DOI tweak for \textsf{biblatex-apa}.
 \item[v1.3.2] 2015-01-21\\
 Removed dependence on user supplying a title. Fixed bug triggered by numbered sections.
 \item[v1.3.1] 2014-10-14\\
@@ -2243,9 +2250,52 @@ A makefile is provided which you can use with the Make utility:
 \end{enumerate}
 
 \newpage
-\section{Appendix D: Licence}
+\section{Appendix D: Sample Document}
 
-Copyright \textcopyright\ 2014 Digital Curation Centre, University of Edinburgh.
+The following code demonstrates how to use \textsf{dccpaper} to write a IDCC conference paper.
+
+\begin{lstlisting}[frame=single]
+\documentclass[research,15]{idcc}
+
+\title{How to write a conference paper}
+\author{Alex Ball}
+\affil{Digital Curation Centre}
+\author{Fred Bloggs}
+\affil{University of Life}
+
+\submitted{1 October 2014}
+
+\usepackage[style=apa]{biblatex}
+\addbibresource{references.bib}
+\DeclareLanguageMapping{british}{british-apa}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Text of the abstract\dots
+\end{abstract}
+
+\section{Introduction}
+
+The text of the introduction starts here\dots
+
+\section{Conclusions}
+
+The text of the conclusions starts here\dots
+
+\section{Acknowledgements}
+
+Any acknowledgements should be placed here\dots
+
+\printbibliography
+\end{document}
+\end{lstlisting}
+
+\newpage
+\section{Appendix E: Licence}
+
+Copyright \textcopyright\ 2015 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
