@@ -2,11 +2,11 @@
 
 The dccpaper bundle consists of two very similar classes.
 
-ijdc-v9.cls corresponds to the template used by the [International
-Journal of Digital Curation], beginning with volume 9.
+ijdc-v9.cls corresponds to the template used by the
+[International Journal of Digital Curation], beginning with volume 9.
 
-idcc.cls corresponds to the template used for the [International Digital
-Curation Conference], beginning with IDCC15.
+idcc.cls corresponds to the template used for the
+[International Digital Curation Conference], beginning with IDCC15.
 
 As the classes are so similar, their common features are abstracted out
 into dccpaper-base.sty; please do not attempt to use this package
@@ -14,6 +14,9 @@ independently of the above classes.
 
 The classes are suitable for submissions to the respective review
 boards, but can also be used to produce the final camera-ready papers.
+
+[International Journal of Digital Curation]: http://www.ijdc.net/index.php/ijdc
+[International Digital Curation Conference]: http://www.dcc.ac.uk/events/international-digital-curation-conference-idcc
 
 ## Installation
 
@@ -30,31 +33,40 @@ GUI versions that you might find friendlier.
 
 A makefile is provided which you can use with the Make utility:
 
-  * Running `make` generates the derived files
+  * Running `make source` generates the derived files
       - README.md
-      - dccpaper.pdf
       - ijdc-v9.cls
       - idcc.cls
       - dccpaper-base.sty
       - dccpaper-apacite.bib
       - dccpaper-biblatex.bib
+  * Running `make` generates the above files and also dccpaper.pdf.
   * Running `make inst` installs the files in the user's TeX tree.
   * Running `make install` installs the files in the local TeX tree.
 
 ### Manual way
 
- 1. Compile dccpaper.dtx just as you would a normal LaTeX file. Bear in
-    mind the documentation requires the Biblatex package and the Biber
-    tool rather than regular BibTeX. As well as the usual PDF (or DVI)
-    and auxiliary files, several others are generated.
- 2. Move the files to your TeX tree as follows:
-      - `source/latex/dccpaper`: dccpaper.dtx, dccpaper.ins
-      - `tex/latex/dccpaper`: ijdc-v9.cls, idcc.cls, dccpaper-base.sty,
-        dccpaper-by.eps, dccpaper-by.pdf
-      - `doc/latex/dccpaper`: dccpaper.pdf, dccpaper-apacite.bib,
-        dccpaper-biblatex.bib, README.md
+ 1. Run `tex dccpaper.dtx` to generate the source files.
+ 2. Compile dccpaper.dtx with (any version of) LaTeX and Biber to generate the
+    documentation. Due to a dependency on the markdown package, you will need
+    either to use LuaLaTeX or to enable shell escape.
+ 3. Move the files to your TeX tree as follows:
+      - `source/latex/dccpaper`:
+        dccpaper.dtx,
+        dccpaper.ins
+      - `tex/latex/dccpaper`:
+        ijdc-v9.cls,
+        idcc.cls,
+        dccpaper-base.sty,
+        dccpaper-by.eps,
+        dccpaper-by.pdf
+      - `doc/latex/dccpaper`:
+        dccpaper.pdf,
+        dccpaper-apacite.bib,
+        dccpaper-biblatex.bib,
+        README.md
 
- 3. You may then have to update your installation's file name database
+ 4. You may then have to update your installation's file name database
     before TeX and friends can see the files.
 
 ## Licence
@@ -65,21 +77,17 @@ This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
 
 The text files contained in this work may be distributed and/or modified
-under the conditions of the [LaTeX Project Public License (LPPL)],
+under the conditions of the [LaTeX Project Public License (LPPL)][lppl],
 either version 1.3c of this license or (at your option) any later
 version.
 
 The image files distributed with this bundle derive from the file
 [by.eps] distributed by Creative Commons. The image is a trademark of
-Creative Commons and is subject to the [Creative Commons trademark
-policy].
+Creative Commons and is subject to the [Creative Commons trademark policy][cctp].
 
-This work is "maintained" (as per LPPL maintenance status) by [Alex
-Ball].
+This work is “maintained” (as per LPPL maintenance status) by [Alex Ball][me].
 
-[International Journal of Digital Curation]: http://www.ijdc.net/index.php/ijdc
-[International Digital Curation Conference]: http://www.dcc.ac.uk/events/international-digital-curation-conference-idcc
-[LaTeX Project Public License (LPPL)]: http://www.latex-project.org/lppl.txt
-[by.eps]: http://mirrors.creativecommons.org/presskit/buttons/88x31/eps/by.eps
-[Creative Commons trademark policy]: http://creativecommons.org/policies
-[Alex Ball]: http://alexball.me.uk/
+[lppl]: http://www.latex-project.org/lppl.txt "LaTeX Project Public License (LPPL)"
+[by.eps]: http://mirrors.creativecommons.org/presskit/buttons/88x31/eps/by.eps "CC BY licence badge"
+[cctp]: http://creativecommons.org/policies "Creative Commons trademark policy"
+[me]: http://alexball.me.uk/ "Alex Ball"
