@@ -278,14 +278,20 @@ Copyright (C) 2015 Digital Curation Centre, University of Edinburgh
 
 \usepackage[utf8]{luainputenc}
 
+% For typesetting the documentation generally
+\usepackage{doc}
 \usepackage{enumitem}
 \usepackage{listings}
+\colorlet{Command}{red!75!black}
+\colorlet{Environment}{blue!75!black}
+\colorlet{Option}{violet}
+\colorlet{Value}{olive!75!black}
 \lstloadlanguages{[LaTeX]TeX}
 \lstset
   { columns=fullflexible
   , basicstyle=\ttfamily
   , language={[LaTeX]TeX}
-  , texcsstyle=*\color{red!75!black}
+  , texcsstyle=*\color{Command}
   , moretexcs=
     { affil
     , conference
@@ -309,17 +315,34 @@ Copyright (C) 2015 Digital Curation Centre, University of Edinburgh
     , subsection
     , subparagraph
     }
-  , moredelim=**[s][\color{violet}]{[}{]}
-  , moredelim=**[s][\color{blue!75!black}]{\{}{\}}
+  , moredelim=**[s][\color{Option}]{[}{]}
+  , moredelim=**[s][\color{Environment}]{\{}{\}}
   , mathescape
-  , escapechar=~
   }
-\newcommand*{\cs}[1]{\textcolor{red!75!black}{\texttt{\textbackslash#1}}}
-\newcommand{\subtext}[1]{\ensuremath\langle\textit{\rmfamily#1}\rangle}
+\newcommand*{\pkg}[1]{\href{http://www.ctan.org/pkg/#1}{\textsf{#1}}}
+\newcommand*{\cs}[1]{\textcolor{Command}{\texttt{\textbackslash#1}}}
+\newcommand*{\env}[1]{\textcolor{Environment}{\ttfamily #1}}
+\newcommand*{\key}[1]{\textcolor{Option}{\ttfamily #1}}
+\newcommand*{\val}[1]{\textcolor{Value}{\ttfamily #1}}
+\let\myrmfamily=\rmfamily
+\renewcommand*{\meta}[1]{\ensuremath{\langle\textrm{\emph{#1}}\rangle}}
+\def\brackets#1{%
+  \texttt{\textcolor{Environment}{\char`\{}#1\textcolor{Environment}{\char`\}}}}
+\def\marg#1{%
+  \textcolor{Environment}{\ttfamily\char`\{}\meta{#1}\textcolor{Environment}{\ttfamily\char`\}}}
+\def\sqbrackets#1{%
+  \texttt{\textcolor{Option}{[}#1\textcolor{Option}{]}}}
+\def\oarg#1{%
+  \textcolor{Option}{\ttfamily\char`\{}\meta{#1}\textcolor{Option}{\ttfamily\char`\}}}
+\makeatletter
+\let\PrintMacroName=\@gobble
+\let\PrintEnvName=\@gobble
+\makeatother
+\newenvironment{optionkey}[1]{}{}
+\newenvironment{optionvalue}[1]{}{}
 
 % For typesetting the implementation
 \usepackage{metalogo}
-\usepackage{doc}
 % This bit inspired by ydoc
 \makeatletter
 \newwrite\ydocwrite
@@ -427,9 +450,9 @@ Copyright (C) 2015 Digital Curation Centre, University of Edinburgh
 \maketitle
 
 \begin{abstract}
-This is the documentation for the \textsf{dccpaper} bundle, consisting of the following classes:
+This is the documentation for the \pkg{dccpaper} bundle, consisting of the following classes:
 \begin{itemize}
-\item\textsf{ijdc-v9}, which corresponds to the template used by the International Journal of Digital Curation, beginning with volume 9. 
+\item\textsf{ijdc-v9}, which corresponds to the template used by the International Journal of Digital Curation, beginning with volume 9.
 \item\textsf{idcc}, which corresponds to the template used for the International Digital Curation Conference, beginning with IDCC15.
 \end{itemize}
 
@@ -451,34 +474,34 @@ The \LaTeX\ class \textsf{ijdc-v9} produces camera-ready papers and articles sui
 Certain aspects of the template design have been implemented using third-party packages, aside from those that are required parts of the \LaTeX\ system. Therefore you should ensure that you have these packages installed on your system before attempting to use the class.
 
 \begin{itemize}
-\item\textsf{atbegshi} is used for switching geometry between pages.
-\item Tables in your document must be formatted according to the design principles promoted and supported by the \textsf{booktabs} package.
-\item\textsf{caption} is used to format the figure and table captions.
-\item\textsf{etoolbox} is used behind the scenes for patching commands.
-\item\textsf{footmisc} is used to format the footnotes.
-\item\textsf{titlesec} is used to format the section headings.
+\item\pkg{atbegshi} is used for switching geometry between pages.
+\item Tables in your document must be formatted according to the design principles promoted and supported by the \pkg{booktabs} package.
+\item\pkg{caption} is used to format the figure and table captions.
+\item\pkg{etoolbox} is used behind the scenes for patching commands.
+\item\pkg{footmisc} is used to format the footnotes.
+\item\pkg{titlesec} is used to format the section headings.
 \end{itemize}
 
 In some cases the class prefers to use packages that are not part of the base installation (but are nevertheless commonly available in \TeX\ distributions), but will fall back to their base equivalents if necessary.
 
 \begin{itemize}
 \item
-\textsf{newtx} will be used if available in place of \textsf{times}.
+\pkg{newtx} will be used if available in place of \pkg{times}.
 \item
-\textsf{xcolor} will be used if available in place of \textsf{color}.
+\pkg{xcolor} will be used if available in place of \pkg{color}.
 \end{itemize}
 
-For referencing, you are encouraged to use either \textsf{biblatex} using the styles provided by \textsf{biblatex-apa} (preferred), or \textsf{apacite}.
+For referencing, you are encouraged to use either \pkg{biblatex} using the styles provided by \pkg{biblatex-apa} (preferred), or \pkg{apacite}.
 
 \section{Loading the Classes}
 
 \subsection{International Journal of Digital Curation}
 
-The class is loaded in the usual way with 
-\lstinline|\documentclass[$\subtext{options}$]{ijdc-v9}|.
+The class is loaded in the usual way with
+\lstinline|\documentclass[$\meta{options}$]{ijdc-v9}|.
 The following options are available:
 
-\begin{description}[font=\normalfont\color{violet}\texttt]
+\begin{description}[font=\normalfont\key]
 \item[paper]
 Use this for peer-reviewed papers.
 \item[article]
@@ -490,9 +513,9 @@ Use this for an editorial.
 \subsection{International Digital Curation Conference}
 
 The class is loaded in the usual way with
-\lstinline|\documentclass[$\subtext{options}$]{idcc}|.
+\lstinline|\documentclass[$\meta{options}$]{idcc}|.
 Two types of option are available. The first relates to the type of submission:
-\begin{description}[font=\normalfont\color{violet}\texttt]
+\begin{description}[font=\normalfont\key]
 \item[research]
 Use this for full research papers.
 \item[practice]
@@ -510,7 +533,7 @@ Use this for workshop proposals.
 \end{description}
 
 The second type of option relates to the conference to which the submission will be made:
-\begin{description}[font=\normalfont\color{violet}\texttt]
+\begin{description}[font=\normalfont\key]
 \item[15]
 Use this for the 2015 conference.
 \item[16]
@@ -528,7 +551,7 @@ The following command should be used in all submissions.
 \begin{description}
 \item[]
 \hskip-\labelsep
-\lstinline|\title[$\subtext{short version}$]{$\subtext{full version}$}|
+\lstinline|\title[$\meta{name}$]{$\meta{full version}$}|
 \hskip\labelsep
 The long version of the title is shown on the cover page of the submission, while the short version appears in the (even page) headers.
 \end{description}
@@ -538,7 +561,7 @@ The following commands should be given in general articles and IDCC submissions.
 \begin{description}
 \item[]
 \hskip-\labelsep
-\lstinline|\author{$\subtext{name}$}|
+\lstinline|\author{$\meta{name}$}|
 \hskip\labelsep
 The name of one author. Repeat the command for each additional author.
 
@@ -546,13 +569,13 @@ It is customary in IJDC and IDCC papers to group authors by institution. Within 
 
 \item[]
 \hskip-\labelsep
-\lstinline|\affil{$\subtext{name}$}|
+\lstinline|\affil{$\meta{name}$}|
 \hskip\labelsep
 The affiliation (institution, company) of the immediately preceding author(s). This command may be repeated as necessary.
 
 \item[]
 \hskip-\labelsep
-\lstinline|\correspondence{$\subtext{name, postal address.}$ Email: \email{$\subtext{email address}$}}|
+\lstinline|\correspondence{$\meta{name, postal address.}$ Email: \email{$\meta{email address}$}}|
 \hskip\labelsep
 Name, address and email address of the corresponding author. This information appears in the footer of the cover page.
 \end{description}
@@ -562,7 +585,7 @@ If an IJDC submission is a reworked conference paper (that has not already been 
 \begin{description}
 \item[]
 \hskip-\labelsep
-\lstinline|\conference{$\subtext{name of conference}$}|
+\lstinline|\conference{$\meta{name of conference}$}|
 \hskip\labelsep
 The conference at which the earlier version of the paper was presented, e.g.\ ‘the 10th International Digital Curation Conference’.
 \end{description}
@@ -572,7 +595,7 @@ For IDCC papers, authors are invited to record the date on which they made their
 \begin{description}
 \item[]
 \hskip-\labelsep
-\lstinline|\submitted{$\subtext{date}$}|
+\lstinline|\submitted{$\meta{date}$}|
 \hskip\labelsep
 The date on which the initial submission was made to the conference by the authors.
 \end{description}
@@ -582,43 +605,43 @@ Some additional commands are used by the editorial team when preparing a submiss
 \begin{description}
 \item[]
 \hskip-\labelsep
-\lstinline|\received{$\subtext{date}$}|
+\lstinline|\received{$\meta{date}$}|
 \hskip\labelsep
 The date on which the initial submission was received by the editorial team (IJDC papers only).
 
 \item[]
 \hskip-\labelsep
-\lstinline|\revised{$\subtext{date}$}|
+\lstinline|\revised{$\meta{date}$}|
 \hskip\labelsep
 The date on which the latest revision was received by the editorial team.
 
 \item[]
 \hskip-\labelsep
-\lstinline|\accepted{$\subtext{date}$}|
+\lstinline|\accepted{$\meta{date}$}|
 \hskip\labelsep
 The date on which the submission was accepted for publication.
 
 \item[]
 \hskip-\labelsep
-\lstinline|\subno{$\subtext{number}$}|
+\lstinline|\subno{$\meta{number}$}|
 \hskip\labelsep
 The submission number allocated by the IJDC Open Journal System.
 
 \item[]
 \hskip-\labelsep
-\lstinline|\volume{$\subtext{number}$}|
+\lstinline|\volume{$\meta{number}$}|
 \hskip\labelsep
 The number of the IJDC volume in which the submission will be published.
 
 \item[]
 \hskip-\labelsep
-\lstinline|\issue{$\subtext{number}$}|
+\lstinline|\issue{$\meta{number}$}|
 \hskip\labelsep
 The number of the IJDC issue in which the submission will be published.
 
 \item[]
 \hskip-\labelsep
-\lstinline|\date{$\subtext{year}$}|
+\lstinline|\date{$\meta{year}$}|
 \hskip\labelsep
 The year in which the submission will be published.
 \end{description}
@@ -679,9 +702,9 @@ Quotations should be put in a \texttt{quote} environment, wrapped in inverted co
 \item
 Table text should be in the \lstinline|\small| font size.
 \item
-Tables should not use vertical lines to separate columns, and ideally should not use horizontal lines to separate rows in the body of the table; white space and text alignment should be sufficient. The top and bottom rules should be drawn with \lstinline|\toprule| and \lstinline|\bottomrule| respectively, with other rules drawn with \lstinline|\midrule| or \lstinline|\cmidrule|. See the documentation of the \textsf{booktabs} package for more information.
+Tables should not use vertical lines to separate columns, and ideally should not use horizontal lines to separate rows in the body of the table; white space and text alignment should be sufficient. The top and bottom rules should be drawn with \lstinline|\toprule| and \lstinline|\bottomrule| respectively, with other rules drawn with \lstinline|\midrule| or \lstinline|\cmidrule|. See the documentation of the \pkg{booktabs} package for more information.
 \item
-Text in the body of tables should normally be left-aligned. Numeric data should be aligned at the decimal point among itself but centred with respect to the heading; the \texttt{D} column type from the \textsf{dcolumn} package and the \texttt{S} column type from the \textsf{siunitx} package are particularly useful for this.
+Text in the body of tables should normally be left-aligned. Numeric data should be aligned at the decimal point among itself but centred with respect to the heading; the \texttt{D} column type from the \pkg{dcolumn} package and the \texttt{S} column type from the \pkg{siunitx} package are particularly useful for this.
 \item
 Where decked (subdivided) headings are used, there should be a border beneath the upper-level heading (column spanner) indicating to which of the lower-level headings it applies.
 \item
@@ -690,7 +713,7 @@ Empty cells can either be left blank or represented by an em dash. A blank cell 
 Captions should end in a full stop\slash period.
 \end{itemize}
 
-Table~\ref{tab:issues} demonstrates these features. The code used to produce the table is shown in Figure~\ref{fig:table} (note that the \textsf{dcolumn} package was loaded in the preamble).
+Table~\ref{tab:issues} demonstrates these features. The code used to produce the table is shown in Figure~\ref{fig:table} (note that the \pkg{dcolumn} package was loaded in the preamble).
 
 \begin{table}[ht]
 \caption{Papers and articles published in the IJDC in 2008 and 2009.}
@@ -744,20 +767,20 @@ Note the different relative positions of the table and figure captions.
 
 \subsection{Reference List and Citations}
 
-To use \textsf{biblatex} for your reference list, add the following to your preamble:
+To use \pkg{biblatex} for your reference list, add the following to your preamble:
 \begin{lstlisting}
 \usepackage[style=apa]{biblatex}
-\addbibresource{$\subtext{bib file}$.bib}
+\addbibresource{$\meta{bib file}$.bib}
 \DeclareLanguageMapping{british}{british-apa}
 \end{lstlisting}
 and include \lstinline|\printbibliography| at the end of the document.
 
-To use \textsf{apacite} for your reference list, add the following to your preamble: 
+To use \pkg{apacite} for your reference list, add the following to your preamble:
 \begin{lstlisting}
 \usepackage{apacite}
 \bibliographystyle{apacite}
 \end{lstlisting}
-and include \lstinline|\bibliography{$\subtext{bib file}$}| at the end of the document.
+and include \lstinline|\bibliography{$\meta{bib file}$}| at the end of the document.
 
 In-text citations are given parenthetically in author–date format. If author forms part of the narrative, as with \textcite{rinaldo.etal2011rsc}, only the date is added in parenthesis, otherwise both author and date are given \autocite{smith.etal2003das}. Where multiple citations are given at once, the order should be the same as in the reference list, i.e.\ alphabetically by author, with co-authored works coming after singly-authored works, then chronologically \autocite{borgman.etal2006bdl, dcc2005dcp, mazairac.beetzIPboq, santini2004sas, santini2004saa, smith.etal2003das, witten.frank2005dmp}. Please consult the documentation of the package you are using for how to achieve this.
 
@@ -765,7 +788,7 @@ Please do not cite entire websites through the reference list mechanism. Instead
 
 Please provide digital object identifiers (DOIs) for referenced items where available.
 
-The data underlying the results presented in the submission should be placed in an appropriate custodial environment and cited \autocite{waterton.etal2013ual}, with the reference placed in the reference list. The \textsf{biblatex-apa} package provides a \texttt{data} entry type which should be used for datasets; the \texttt{entrysubtype} value should be \enquote{\texttt{Data set}} or similar. If using \textsf{apacite}, use the \texttt{misc} entry type with a \texttt{type} value of \enquote{\texttt{Data set}} or similar.
+The data underlying the results presented in the submission should be placed in an appropriate custodial environment and cited \autocite{waterton.etal2013ual}, with the reference placed in the reference list. The \pkg{biblatex-apa} package provides a \texttt{data} entry type which should be used for datasets; the \texttt{entrysubtype} value should be \enquote{\texttt{Data set}} or similar. If using \pkg{apacite}, use the \texttt{misc} entry type with a \texttt{type} value of \enquote{\texttt{Data set}} or similar.
 
 \section{Acknowledgements}
 
@@ -783,7 +806,7 @@ Added details of IDCC 2017. Slightly refactored code to convert dccpaper-base.te
 \item[v1.4.1] 2015-06-22\\
 Fixed bug preventing compilation in DVI mode.
 \item[v1.4] 2015-05-22\\
-Added details of IDCC 2016. Improved whitespace handling. Fixed bug triggered by \texttt{demo} option. Fixed missing use of \lstinline|\Authfont|. Added missing DOI tweak for \textsf{biblatex-apa}.
+Added details of IDCC 2016. Improved whitespace handling. Fixed bug triggered by \texttt{demo} option. Fixed missing use of \lstinline|\Authfont|. Added missing DOI tweak for \pkg{biblatex-apa}.
 \item[v1.3.2] 2015-01-21\\
 Removed dependence on user supplying a title. Fixed bug triggered by numbered sections.
 \item[v1.3.1] 2014-10-14\\
@@ -791,7 +814,7 @@ Fixed typographical error relating to details of IDCC 2015.
 \item[v1.3] 2014-08-07\\
 Added documentation of \lstinline|\conference| command. Improved display of footnotes, footnote markers and \texttt{itemize}\slash \texttt{enumerate} lists. Fixed a bug in the handling of author information. Fixed and improved how the transition from first to subsequent page geometry is achieved. Updated the details of IDCC 2015.
 \item[v1.2] 2014-04-11\\
-Added implementation, installation and licence sections to the Appendix of the documentation. Moved the majority of the file postamble information to the README, and synchronized the latter with the GitHub version. Improved the adaptation of \textsf{apacite} referencing to the house style.
+Added implementation, installation and licence sections to the Appendix of the documentation. Moved the majority of the file postamble information to the README, and synchronized the latter with the GitHub version. Improved the adaptation of \pkg{apacite} referencing to the house style.
 \item[v1.1] 2014-03-06\\
 Refactored the source for distribution through CTAN, and to allow the addition of the \textsf{idcc} class.
 \item[v1.0] 2013-12-18\\
@@ -878,7 +901,7 @@ A makefile is provided which you can use with the Make utility:
 \newpage
 \section{Appendix D: Sample Document}
 
-The following code demonstrates how to use \textsf{dccpaper} to write a IDCC conference paper.
+The following code demonstrates how to use \pkg{dccpaper} to write a IDCC conference paper.
 
 \begin{lstlisting}[frame=single]
 \documentclass[research,15]{idcc}
@@ -961,6 +984,8 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 % \subsection{ijdc-v9.cls}
 % \setcounter{lstnumber}{21}
 %
+% \begin{macro}{dccp@type}
+% \begin{macro}{dccp@editorial}
 % The type of paper is recorded in \cs{dccp@type}. The possible values are
 % `General Article', `Peer-Reviewed Paper', or `Editorial'.
 % The latter is provided through the constant \cs{dccp@editorial} so we can
@@ -970,10 +995,16 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 \def\dccp@type{General Article}
 \def\dccp@editorial{Editorial}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
-% These three options set \cs{dccp@type} appropriately. The |editorial|
+% \begin{optionkey}{editorial}
+% \begin{optionkey}{paper}
+% \begin{optionkey}{article}
+% These three options set \cs{dccp@type} appropriately. The \key{editorial}
 % option additionally switches page numbers to roman numerals.
-% The |article| option is redundant, but included for symmetry.
+% The \key{article} option is redundant, but included for symmetry with
+% \key{paper}.
 %
 %    \begin{macrocode}
 \DeclareOption{editorial}{\let\dccp@type=\dccp@editorial%
@@ -987,9 +1018,18 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 \ProcessOptions\relax
 
 %    \end{macrocode}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
 %
-% These definitions are used to fill out the headers and footers. They include 
-% some details that are defined in \textsf{dccpaper-base.sty} and provided by
+% \begin{macro}{dccp@publ@long}
+% \begin{macro}{dccp@publ@short}
+% \begin{macro}{dccp@publ@msg}
+% \begin{macro}{dccp@titlefoot@bib}
+% \begin{macro}{dccp@titlefoot@doi}
+% \begin{macro}{dccp@normhead@doi}
+% These definitions are used to fill out the headers and footers. They include
+% some details that are defined in \textsf{dccpaper-base} and provided by
 % the user: \cs{thedate}, \cs{thevolume}, \cs{theissue}, \cs{thelastpage}, \cs{thedoi}.
 %
 %    \begin{macrocode}
@@ -1010,16 +1050,24 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 \def\dccp@normhead@doi{doi:\thedoi}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
-% \cs{dccp@subject} will be used for the PDF subject, and will specify the journal 
+% \cs{dccp@subject} will be used for the PDF subject, and will specify the journal
 % and the issue.
 %
+% \begin{macro}{dccp@subject}
 %    \begin{macrocode}
 \def\dccp@subject{\dccp@publ@long, \thedate, Vol.\ \thevolume, Iss.\ \theissue}
 
 %    \end{macrocode}
+% \end{macro}
 %
-% The class is based on the \textsf{article} class, and uses A4 paper.
+% The class is based on the \pkg{article} class, and uses A4 paper.
 %
 %    \begin{macrocode}
 \LoadClass[a4paper,12pt,twoside]{article}
@@ -1039,6 +1087,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \subsection{idcc.cls}
 % \setcounter{lstnumber}{21}
 %
+% \begin{macro}{dccp@publ@long}
+% \begin{macro}{dccp@publ@short}
+% \begin{macro}{dccp@publ@msg}
 % These definitions are used to fill out the headers and footers.
 % The ones for \cs{dccp@publ@short} and \cs{dccp@publ@msg} are a fallback,
 % defined here but ordinarily overridden using a package option.
@@ -1046,10 +1097,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \begin{macrocode}
 \def\dccp@publ@long{International Digital Curation Conference}
 \def\dccp@publ@short{IDCC}
-\def\dccp@publ@msg{The \dccp@publ@long\ takes place on [TBC] in [TBC]. URL: 
+\def\dccp@publ@msg{The \dccp@publ@long\ takes place on [TBC] in [TBC]. URL:
 \url{http://www.dcc.ac.uk/events/international-digital-curation-conference-idcc}}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
+% \begin{macro}{dccp@subject}
 % \cs{dccp@subject} will be used for the PDF subject. The value here is again a
 % fallback, ordinarily overridden using a package option.
 %
@@ -1057,16 +1112,26 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \def\dccp@subject{\dccp@publ@long}
 
 %    \end{macrocode}
+% \end{macro}
 %
-% Paper type is recorded in \cs{dccp@type}. The values can be 
+% \begin{macro}{dccp@type}
+% Paper type is recorded in \cs{dccp@type}. The values can be
 % `Research Paper', `Practice Paper', `Poster', `Demonstration', or `Workshop'.
 %
 %    \begin{macrocode}
 \def\dccp@type{Practice Paper}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{optionkey}{research}
+% \begin{optionkey}{data}
+% \begin{optionkey}{poster}
+% \begin{optionkey}{demo}
+% \begin{optionkey}{bof}
+% \begin{optionkey}{workshop}
+% \begin{optionkey}{practice}
 % These options set the value of \cs{dccp@type} appropriately.
-% The |practice| option is redundant, but included for symmetry.
+% The \key{practice} option is redundant, but included for symmetry.
 %
 %    \begin{macrocode}
 \DeclareOption{research}{\def\dccp@type{Research Paper}}
@@ -1077,7 +1142,17 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \DeclareOption{workshop}{\def\dccp@type{Workshop}}
 \DeclareOption{practice}{\def\dccp@type{Practice Paper}}
 %    \end{macrocode}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
 %
+% \begin{optionkey}{15}
+% \begin{optionkey}{16}
+% \begin{optionkey}{17}
 % The details for each conference are slightly different, so they each have an
 % associated option for overriding the fallback definitions for
 % \cs{dccp@publ@short}, \cs{dccp@publ@msg} and \cs{dccp@subject}.
@@ -1104,8 +1179,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \ProcessOptions\relax
 
 %    \end{macrocode}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
 %
-% The |demo| option, if passed, would be passed on to the \textsf{graphics}
+% \begin{macro}{@clearglobaloption}
+% The \key{demo} option, if passed, would be passed on to the \pkg{graphics}
 % package wreaking havoc with each and every included image. To avoid this,
 % we clear it from the list of class options using
 % \href{http://tex.stackexchange.com/q/33245}{code from Enrico Gregorio}.
@@ -1129,8 +1208,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \@clearglobaloption{demo}
 
 %    \end{macrocode}
+% \end{macro}
 %
-% The class is based on the \textsf{article} class, and uses A4 paper.
+% The class is based on the \pkg{article} class, and uses A4 paper.
 %
 %    \begin{macrocode}
 \LoadClass[a4paper,12pt,twoside]{article}
@@ -1150,7 +1230,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \subsection{dccpaper-base.sty}
 % \setcounter{lstnumber}{21}
 %
-% The \textsf{dccpaper} classes are deliberately very similar. This package 
+% The \pkg{dccpaper} classes are deliberately very similar. This package
 % contains the common code.
 %
 % We use British English orthography.
@@ -1159,16 +1239,16 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \RequirePackage[british]{babel}
 %    \end{macrocode}
 %
-% The macro patching commands from \textsf{etoolbox} come in useful for handling 
-% author and date information, and also for compatibility with \textsf{apacite}.
+% The macro patching commands from \pkg{etoolbox} come in useful for handling
+% author and date information, and also for compatibility with \pkg{apacite}.
 %
 %    \begin{macrocode}
 \RequirePackage{etoolbox}
 %    \end{macrocode}
 %
-% The \textsf{dccpaper} classes use Times as the main text font. We prefer 
-% \textsf{newtx} as it provides support for mathematics, but the standard 
-% \textsf{times} package will do. In case they are needed, we also provide 
+% The \pkg{dccpaper} classes use Times as the main text font. We prefer
+% \pkg{newtx} as it provides support for mathematics, but the standard
+% \pkg{times} package will do. In case they are needed, we also provide
 % Helvetica for the sans serif font and Computer Modern Teletype for the
 % monospaced.
 %
@@ -1181,8 +1261,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \renewcommand{\ttdefault}{cmtt}
 %    \end{macrocode}
 %
-% We will need support for included graphics and colour. The structural elements 
-% are a medium turquoise, while the links are slightly darker to make them 
+% We will need support for included graphics and colour. The structural elements
+% are a medium turquoise, while the links are slightly darker to make them
 % easier to read on screen.
 %
 %    \begin{macrocode}
@@ -1202,11 +1282,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \end{macrocode}
 %
 % Ragged right text is easier to read on screen, but fully justified text looks
-% better. The \cs{raggedyright} layout from Peter Wilson's \textsf{memoir} class 
+% better. The \cs{raggedyright} layout from Peter Wilson's \pkg{memoir} class
 % (2005/09/25 v1.618) is an excellent compromise. The code below replicates it.
 %
-% First we save the original definitions of |\\| and \cs{parindent} as 
-% \cs{OrigLineBreak} and \cs{RaggedParindent} respectively.
+% First we save the original definitions of \cs{\textbackslash} and
+% \cs{parindent} as \cs{OrigLineBreak} and \cs{RaggedParindent} respectively.
 %
 %    \begin{macrocode}
 \let\OrigLineBreak\\
@@ -1215,7 +1295,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
-% The \cs{raggedyright} layout more or less lays text out as with full 
+% \begin{macro}{raggedyright}
+% The \cs{raggedyright} layout more or less lays text out as with full
 % justification, but then lets the shorter lines relax a bit from the right
 % margin. It is the default for DCC papers.
 %
@@ -1228,7 +1309,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{\raggedyright}
 
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{flushleftright}
 % The \cs{flushleftright} layout restores full justification, in case it is
 % needed.
 %
@@ -1241,6 +1324,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \everypar{}}
 
 %    \end{macrocode}
+% \end{macro}
 %
 % Pdf\TeX\ 1.40.15 introduced the facility to include dummy interword spaces
 % to improve text extraction and reflow. We test for this facility and use it
@@ -1257,25 +1341,33 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % The classes have some special metadata requirements. We start with the author
 % information.
 %
-% The macro \cs{thecorrespondence} is used in the title page footer for the name, 
+% \begin{macro}{thecorrespondence}
+% \begin{macro}{correspondence}
+% The macro \cs{thecorrespondence} is used in the title page footer for the name,
 % postal address and email address of the corresponding author.
 %
 %    \begin{macrocode}
 \def\thecorrespondence{}
 \newcommand*{\correspondence}[1]{\def\thecorrespondence{#1}}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
-% The handling of authors here is inspired by Patrick W Daly's \textsf{authblk}, 
-% (2001/02/27 1.3), and defines the familiar user commands. Authors are 
+% The handling of authors here is inspired by Patrick W Daly's \pkg{authblk},
+% (2001/02/27 1.3), and defines the familiar user commands. Authors are
 % presented in blocks, one affiliation but perhaps several authors per block.
 %
+% \begin{macro}{Authfont}
+% \begin{macro}{Affilfont}
+% \begin{macro}{affilsep}
+% \begin{macro}{authblksep}
 % We make the presentation of the author information configurable (just in case)
 % with some hooks and lengths:
 % \begin{itemize}
 % \item \cs{Authfont} is the font used for author names;
 % \item \cs{Affilfont} is the font used for affiliations;
 % \item \cs{affilsep} is the line spacing between author names and affiliations;
-% \item \cs{authblksep} is the line spacing between author name/affiliation 
+% \item \cs{authblksep} is the line spacing between author name/affiliation
 %       blocks.
 % \end{itemize}
 %
@@ -1285,28 +1377,38 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \newlength{\affilsep}\setlength{\affilsep}{0pt}
 \newlength{\authblksep}\setlength{\authblksep}{1.5\baselineskip}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
+% \begin{macro}{AuthorBlock}
 % The \cs{AuthorBlock} command will be used to collect all the author information.
 %
 %    \begin{macrocode}
 \newcommand{\AuthorBlock}{}
 %    \end{macrocode}
+% \end{macro}
 %
-% The \cs{MainAuthor} command collects abbreviated author information for use in 
+% \begin{macro}{MainAuthor}
+% The \cs{MainAuthor} command collects abbreviated author information for use in
 % the headers.
 %
 %    \begin{macrocode}
 \newcommand{\MainAuthor}{}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{dccp@author}
 % The \cs{dccp@author} command, meanwhile, collects a full list of authors for the
 % PDF metatdata.
 %
 %    \begin{macrocode}
 \newcommand{\dccp@author}{}
 %    \end{macrocode}
+% \end{macro}
 %
-% We define counters for 
+% We define counters for
 % \begin{itemize}
 % \item the total number of authors defined;
 % \item the number of authors in the current block;
@@ -1327,16 +1429,17 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{\setcounter{block}{0}}
 %    \end{macrocode}
 %
+% \begin{macro}{author}
 % The new definition of the author command starts here.
 %
 %    \begin{macrocode}
 \renewcommand{\author}[1]{%
 %    \end{macrocode}
 %
-% If this is the first or second \cs{author} command, we add the name to our 
-% abbreviated list of authors. Otherwise, we replace the name of the second 
+% If this is the first or second \cs{author} command, we add the name to our
+% abbreviated list of authors. Otherwise, we replace the name of the second
 % and subsequent authors with `et al.' in that list.
-% 
+%
 % At the same time, we use a simpler technique to populate \cs{dccp@author}.
 %
 %    \begin{macrocode}
@@ -1361,9 +1464,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % and its affiliation collected in a macro like \cs{blocki@affil} (the `i' is a
 % serial number).
 %
-% If this is the first author in a block, we need to create the block and add it 
-% to \cs{AuthorBlock}; second and subsequent blocks are preceded by a \cs{quad} of 
-% space. 
+% If this is the first author in a block, we need to create the block and add it
+% to \cs{AuthorBlock}; second and subsequent blocks are preceded by a \cs{quad} of
+% space.
 %
 %    \begin{macrocode}
   \ifnum\theauthorsinblock=0%
@@ -1392,7 +1495,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \stepcounter{authorsinblock}%
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{affil}
 % The \cs{affil} command adds an affiliation to the current block and closes it by
 % resetting the |authorsinblock| counter.
 %
@@ -1403,15 +1508,19 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{macro}
 %
-% The \cs{HeadTitle} collects the abbreviated title for use in the headers.  
+% \begin{macro}{HeadTitle}
+% The \cs{HeadTitle} collects the abbreviated title for use in the headers.
 %
 %    \begin{macrocode}
 \newcommand*{\HeadTitle}{}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{title}
 % We wrap the normal \cs{title} command with code to populate \cs{HeadTitle} with
-% the optional argument if provided, or the mandatory one otherwise. We also 
+% the optional argument if provided, or the mandatory one otherwise. We also
 % provide a persistent \cs{thetitle} macro, stripped of any \cs{thanks}.
 %
 %    \begin{macrocode}
@@ -1430,7 +1539,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \endgroup\endgroup
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{thetitle}
 % To prevent \LaTeX\ throwing an error if no title is supplied, we supply a
 % fallback value and issue a warning instead.
 %
@@ -1443,9 +1554,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{macro}
 %
-% We make \cs{thedate} persistent, borrowing the technique used in Peter Wilson's 
-% \textsf{memoir} class (2005/09/25 v1.618).
+% \begin{macro}{date}
+% \begin{macro}{thedate}
+% We make \cs{thedate} persistent, borrowing the technique used in Peter Wilson's
+% \pkg{memoir} class (2005/09/25 v1.618).
 %
 %    \begin{macrocode}
 \pretocmd{\date}{\begingroup\let\footnote\@gobble}{}{}%
@@ -1456,6 +1570,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \endgroup\endgroup%
 }{}{}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
 % We ensure \cs{thedate} is defined using a dummy date.
 %
@@ -1464,13 +1580,20 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
+% \begin{macro}{thevolume}
+% \begin{macro}{volume}
+% \begin{macro}{theissue}
+% \begin{macro}{issue}
+% \begin{macro}{thesubno}
+% \begin{macro}{subno}
+% \begin{macro}{thedoi}
 % IJDC articles have extra bibliographic information:
 % \begin{itemize}
 % \item \cs{volume} sets the volume number, \cs{thevolume};
 % \item \cs{issue} sets the issue number, \cs{theissue};
 % \item \cs{subno} sets the submission number, \cs{thesubno}.
 % \end{itemize}
-% 
+%
 % These numbers are used to build the DOI, \cs{thedoi}.
 %
 %    \begin{macrocode}
@@ -1482,9 +1605,17 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \newcommand*{\subno}[1]{\renewcommand*{\thesubno}{#1}}
 \newcommand*{\thedoi}{10.2218/ijdc.v\thevolume i\theissue .\thesubno}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
-% They also display the page range. The following code was borrowed from Peter 
-% Wilson's \textsf{memoir} class (2005/09/25 v1.618). It defines a counter 
+% \begin{macro}{dol@stpage}
+% They also display the page range. The following code was borrowed from Peter
+% Wilson's \pkg{memoir} class (2005/09/25 v1.618). It defines a counter
 % |lastpage| which, on the second run, will contain the number of the last page.
 %
 %    \begin{macrocode}
@@ -1501,21 +1632,28 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{\AtEndDocument{\clearpage\dol@stpage}}
 
 %    \end{macrocode}
+% \end{macro}
 %
-% DCC papers display some important dates. We collect these in \cs{dccp@dates}, 
+% \begin{macro}{dccp@dates}
+% DCC papers display some important dates. We collect these in \cs{dccp@dates},
 % initially setting the value to something sensible for papers in draft.
 %
 %    \begin{macrocode}
 \def\dccp@dates{\emph{Draft from} \today}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{submitted}
+% \begin{macro}{received}
+% \begin{macro}{revised}
+% \begin{macro}{accepted}
 % Several types of date can be added:
 % \begin{itemize}
 % \item \cs{submitted} for when the authors submitted the paper (intended for
 %       IDCC papers).
-% \item \cs{received} for when the paper was received by the editorial board 
+% \item \cs{received} for when the paper was received by the editorial board
 %       (intended for IJDC papers).
-% \item \cs{revised} for when the most recent version was received by the 
+% \item \cs{revised} for when the most recent version was received by the
 %       editorial board.
 % \item \cs{accepted} for when the paper was accepted by the editorial board.
 % \end{itemize}
@@ -1536,9 +1674,15 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \emph{Accepted} #1}%
   }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
-% IJDC papers need to say if they had a previous life as a conference paper. 
-% This statement goes in \cs{dccp@conf}, which is initially empty. The user 
+% \begin{macro}{dccp@conf}
+% \begin{macro}{conference}
+% IJDC papers need to say if they had a previous life as a conference paper.
+% This statement goes in \cs{dccp@conf}, which is initially empty. The user
 % command for setting this text is \cs{conference}.
 %
 %    \begin{macrocode}
@@ -1548,10 +1692,13 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
+% \begin{macro}{FixTextHeight}
 % The macro \cs{FixTextHeight} will be useful when switching from the first page
 % geometry to the regular geometry for the rest of the paper. It is based on
-% code from  Hideo Umeki's \textsf{geometry} package (2002/07/08 v3.2).
+% code from  Hideo Umeki's \pkg{geometry} package (2002/07/08 v3.2).
 %
 %    \begin{macrocode}
 \newcommand{\FixTextHeight}{%
@@ -1574,10 +1721,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{macro}
 %
-% The width of the textblock (on all pages) is 150mm, which on A4 paper implies 
+% The width of the textblock (on all pages) is 150mm, which on A4 paper implies
 % margins of 30mm each. (Making both horizontal margins the same in a two-sided
-% context makes the paper more pleasant to read on screen). 
+% context makes the paper more pleasant to read on screen).
 %
 %    \begin{macrocode}
 \setlength{\textwidth}{150mm}
@@ -1592,8 +1740,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \setlength{\marginparwidth}{30mm - 2\marginparsep}
 %    \end{macrocode}
 %
-% We also want a distance of 15mm from the top of the page to the top of the 
-% header, and two blank lines between the bottom of the header and the top of 
+% We also want a distance of 15mm from the top of the page to the top of the
+% header, and two blank lines between the bottom of the header and the top of
 % the textblock.
 %
 %    \begin{macrocode}
@@ -1602,20 +1750,25 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
+% \begin{macro}{dccp@editorial}
 % IJDC editorials have slightly different headers and footers. This requires
 % testing for \cs{dccp@editorial} if it exists. In case it doesn't, we provide it.
 %
 %    \begin{macrocode}
 \providecommand{\dccp@editorial}{Editorial}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{ps@title}
+% \begin{macro}{TitleHead}
+% \begin{macro}{TitleFoot}
 % The height of the footer can vary a lot. To keep it a fixed distance from the
-% bottom of the page rather than the top, we need to vary the \cs{textheight} 
-% accordingly. This means we need to measure the height of the footer. (The 
+% bottom of the page rather than the top, we need to vary the \cs{textheight}
+% accordingly. This means we need to measure the height of the footer. (The
 % header is more predictable but we may as well measure it while we are at it).
 %
-% Here we define the header and footer of the title page (i.e.\ the 
-% \textsf{title} page style), making sure we save them to auxiliary macros 
+% Here we define the header and footer of the title page (i.e.\ the
+% \val{title} page style), making sure we save them to auxiliary macros
 % \cs{TitleHead} and \cs{TitleFoot} so we can measure them.
 %
 %    \begin{macrocode}
@@ -1675,24 +1828,30 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \let\TitleFoot=\@oddfoot
 }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
-% We set the normal page style to \textsf{title} here so that \cs{TitleHead} and
-% \cs{TitleFoot} are defined, but we will override it with the \textsf{dccpaper} 
+% We set the normal page style to \val{title} here so that \cs{TitleHead} and
+% \cs{TitleFoot} are defined, but we will override it with the \val{dccpaper}
 % page style later.
 %
 %    \begin{macrocode}
 \pagestyle{title}
 %    \end{macrocode}
 %
-% The first page should use the \textsf{title} page style, however.
+% The first page should use the \val{title} page style, however.
 %
 %    \begin{macrocode}
 \AtBeginDocument{\thispagestyle{title}}
 
 %    \end{macrocode}
 %
-% Here are the normal headers and footers (i.e.\ the \textsf{dccpaper} page 
-% style). We save them to \cs{NormalHead} and \cs{NormalFoot}, again so we can 
+% \begin{macro}{ps@dccpaper}
+% \begin{macro}{NormalHead}
+% \begin{macro}{NormalFoot}
+% Here are the normal headers and footers (i.e.\ the \val{dccpaper} page
+% style). We save them to \cs{NormalHead} and \cs{NormalFoot}, again so we can
 % measure them.
 %
 %    \begin{macrocode}
@@ -1737,11 +1896,18 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \pagestyle{dccpaper}
 
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
-% We need to wait until the author has supplied the necessary information before 
-% we can do our measuring and set the remainder of the geometry, so we do it at 
-% the end of the preamble. First we put our saved macros into boxes we can 
-% measure (i.e.\ \cs{dccp@firstpagehead}, \cs{dccp@firstpagefoot}, 
+% \begin{macro}{dccp@firstpagehead}
+% \begin{macro}{dccp@firstpagefoot}
+% \begin{macro}{dccp@restpagehead}
+% \begin{macro}{dccp@restpagefoot}
+% We need to wait until the author has supplied the necessary information before
+% we can do our measuring and set the remainder of the geometry, so we do it at
+% the end of the preamble. First we put our saved macros into boxes we can
+% measure (i.e.\ \cs{dccp@firstpagehead}, \cs{dccp@firstpagefoot},
 % \cs{dccp@restpagehead}, \cs{dccp@restpagefoot}).
 %
 %    \begin{macrocode}
@@ -1756,6 +1922,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \newsavebox{\dccp@restpagefoot}
   \sbox\dccp@restpagefoot{\normalfont\NormalFoot}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % We can now set the geometry of the title page\dots
 %
@@ -1773,7 +1943,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }
 %    \end{macrocode}
 %
-% {\dots}and provide a macro that will reset the geometry for the remaining 
+% \begin{macro}{dccp@resetgeometry}
+% {\dots}and provide a macro that will reset the geometry for the remaining
 % pages.
 %
 %    \begin{macrocode}
@@ -1797,7 +1968,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{maketitle}
 % The \cs{maketitle} command is redefined to the correct formatting. At the end it
 % sets a hook that will reset the geometry when the first page is shipped out,
 % i.e.\ with effect from the second page. It is here rather than at the end of
@@ -1818,10 +1991,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{macro}
 %
-% The \textsf{abstract} environment is redefined in terms of an environment 
-% \textsf{widequote}, which mimics the \textsf{quote} environment, but is a bit 
-% wider. We also provide a hook, \cs{afterabstract}, so that if some annotation 
+% \begin{environment}{widequote}
+% \begin{macro}{afterabstract}
+% \begin{environment}{abstract}
+% The \env{abstract} environment is redefined in terms of an environment
+% \env{widequote}, which mimics the \env{quote} environment, but is a bit
+% wider. We also provide a hook, \cs{afterabstract}, so that if some annotation
 % needs to be appended to the title page after the abstract, we can do that.
 %
 %    \begin{macrocode}
@@ -1846,11 +2023,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{environment}
+% \end{macro}
+% \end{environment}
 %
-% We use the \textsf{titlesec} package to give headings the correct formatting.
+% We use the \pkg{titlesec} package to give headings the correct formatting.
 % The settings below try to space out headings so they occupy an integer number
-% of normal lines (an attempt at grid typesetting). They are a little 
-% complicated because we want it to work even if the heading appears at the top 
+% of normal lines (an attempt at grid typesetting). They are a little
+% complicated because we want it to work even if the heading appears at the top
 % of the page.
 %
 %    \begin{macrocode}
@@ -1862,7 +2042,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \titlespacing{\subparagraph}{\parindent}{\baselineskip}{0pt}
 %    \end{macrocode}
 %
-% An unfortunate side effect of spacing headings like this is that if a 
+% \begin{macro}{dccp@old@ep}
+% An unfortunate side effect of spacing headings like this is that if a
 % \cs{subsection} immediately follows a \cs{section} it forms an unsightly gap. To
 % remedy this, we count how many paragraphs there have been since the last
 % \cs{section}. Note that as we do not normally number the sections, an automatic
@@ -1872,13 +2053,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \newcounter{sectionpars}
 \let\dccp@old@ep\everypar
 \newtoks\everypar
-\dccp@old@ep{\the\everypar\stepcounter{sectionpars}} 
+\dccp@old@ep{\the\everypar\stepcounter{sectionpars}}
 %    \end{macrocode}
+% \end{macro}
 %
 % We need to manually reset |sectionpars| when \cs{section} is called. Also,
 % the normal font size is 12pt/14.5pt, while \cs{Large} is 17pt/22pt;
 % so the \cs{Large} line height = 1.5172 $\times$ normal line height. Nevertheless
-% it seems to work better if we let the heading eat 0.528\cs{baselineskip} into 
+% it seems to work better if we let the heading eat 0.528\cs{baselineskip} into
 % the 2\cs{baselineskip} of padding above it.
 %
 %    \begin{macrocode}
@@ -1897,8 +2079,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \end{macrocode}
 %
 % The others use a \cs{normalsize} font so that makes life easier. The format
-% for \cs{subsection} command includes conditional spacing: if the |sectionpars| 
-% counter equals 2, this means the heading immediately follows a \cs{section}, so 
+% for \cs{subsection} command includes conditional spacing: if the |sectionpars|
+% counter equals 2, this means the heading immediately follows a \cs{section}, so
 % less white space is needed.
 %
 %    \begin{macrocode}
@@ -1942,8 +2124,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
-% To help with the display of tables we load the \textsf{array} and 
-% \textsf{booktabs} packages. As we don't like lines between rows in the table
+% To help with the display of tables we load the \pkg{array} and
+% \pkg{booktabs} packages. As we don't like lines between rows in the table
 % body, we stretch them out a bit so that white space does the job instead.
 %
 %    \begin{macrocode}
@@ -1952,7 +2134,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
-% We use the \textsf{caption} package to give captions the right format.
+% We use the \pkg{caption} package to give captions the right format.
 %
 %    \begin{macrocode}
 \RequirePackage
@@ -1966,24 +2148,30 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
+% \begin{macro}{footnotelayout}
 % Footnotes should be set right up against the left margin. They should be
 % set hung and in the same half-ragged style as the main text. They should also,
 % for neatness, be at the bottom of the page regardless of how short it is. The
-% \textsf{footmisc} package helps here.
+% \pkg{footmisc} package helps here.
 %
 %    \begin{macrocode}
 \RequirePackage[hang,bottom]{footmisc}
 \settowidth{\footnotemargin}{\footnotesize\textsuperscript{99}\space}
 \renewcommand{\footnotelayout}{\raggedyright}
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{dccp@footnote}
+% \begin{macro}{dccp@next@token}
+% \begin{macro}{dccp@supercomma}
+% \begin{macro}{dccp@check@for@footnote}
 % Also, if multiple footnotes are set at once, the markers should be separated
-% with superscript commas. The \textsf{footmisc} package should help here but
-% its solution is clobbered by \textsf{hyperref}. So after a footnote is set,
+% with superscript commas. The \pkg{footmisc} package should help here but
+% its solution is clobbered by \pkg{hyperref}. So after a footnote is set,
 % we check to see if the next token is also a footnote, and if so, slip a comma
-% in before it.\footnote{This solution was provided at 
+% in before it.\footnote{This solution was provided at
 % \url{http://tex.stackexchange.com/q/40072}} This tweak needs to be done late,
-% \cs{AtBeginDocument}. Note that the \textsf{newtx} superior figures are a bit
+% \cs{AtBeginDocument}. Note that the \pkg{newtx} superior figures are a bit
 % lower than normal superscript text.
 %
 %    \begin{macrocode}
@@ -2008,6 +2196,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 }
 
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % By default lists are quite loose. These settings help to tighten them.
 %
@@ -2019,11 +2211,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
-% A DCC paper should either be using \textsf{biblatex} or \textsf{apacite} for
+% A DCC paper should either be using \pkg{biblatex} or \pkg{apacite} for
 % references.
 %
-% If \textsf{biblatex} is used, we need to ensure that the reference list
-% heading is a normal section rather than a starred one so it appears in the 
+% If \pkg{biblatex} is used, we need to ensure that the reference list
+% heading is a normal section rather than a starred one so it appears in the
 % PDF bookmarks.
 %
 %    \begin{macrocode}
@@ -2032,7 +2224,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \defbibheading{bibliography}[\refname]{\section{#1}}%
 %    \end{macrocode}
 %
-% We also move the ‘doi:’ portion of a DOI inside the hyperlink. 
+% We also move the ‘doi:’ portion of a DOI inside the hyperlink.
 %
 %    \begin{macrocode}
     \DeclareFieldFormat{doi}{%
@@ -2045,14 +2237,15 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }{%
 %    \end{macrocode}
 %
-% If \textsf{apacite} is used, there are a few other adaptations we need to
+% If \pkg{apacite} is used, there are a few other adaptations we need to
 % make.
 %
 %    \begin{macrocode}
     \@ifpackageloaded{apacite}{%
 %    \end{macrocode}
 %
-% With \textsf{hyperref} loaded, \textsf{apacite} makes the whole of a citation
+% \begin{macro}{@ifauthorsunequalc@de}
+% With \pkg{hyperref} loaded, \pkg{apacite} makes the whole of a citation
 % a link to the reference list item. We patch \cs{@ifauthorsunequalc@de} so only
 % the year portion gets linked.
 %
@@ -2084,12 +2277,13 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
         \let\BBA\relax
       }
 %    \end{macrocode}
+% \end{macro}
 %
 % The Spanish language support file defines a different version of
 % \cs{@ifauthorsunequalc@de}, which might override the patch we have just
-% introduced. So we employ the same test that \textsf{apacite} uses when
+% introduced. So we employ the same test that \pkg{apacite} uses when
 % deciding whether to load that file; if successful, we patch the Spanish
-% version. Note that as \textsf{apacite} loads language support files
+% version. Note that as \pkg{apacite} loads language support files
 % \cs{AtBeginDocument}, we have to do our thing after that, \cs{AfterEndPreamble}.
 %
 % (Note that as we set the language to British English earlier, this should
@@ -2142,7 +2336,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
         }%
 %    \end{macrocode}
 %
-% Another thing \textsf{apacite} does \cs{AtBeginDocument} is set the URL style
+% Another thing \pkg{apacite} does \cs{AtBeginDocument} is set the URL style
 % to monospaced. So we reset it back to normal roman type \cs{AfterEndPreamble}.
 %
 %    \begin{macrocode}
@@ -2150,7 +2344,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
        }%
 %    \end{macrocode}
 %
-% We pre-empt \textsf{apacite}'s \cs{providecommand} of \cs{doi} with our own
+% \begin{macro}{doi}
+% \begin{macro}{doiprefix}
+% We pre-empt \pkg{apacite}'s \cs{providecommand} of \cs{doi} with our own
 % definition that includes the `doi' URI scheme label in the link, remembering
 % to remove the one inserted by \cs{doiprefix}.
 %
@@ -2160,8 +2356,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     }{}%
   }%
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
-% Both \textsf{biblatex} and \textsf{apacite} use \cs{bibitemsep} for the space
+% \begin{macro}{bibitemsep}
+% Both \pkg{biblatex} and \pkg{apacite} use \cs{bibitemsep} for the space
 % between bibliography items. Just in case they haven't been loaded, though, we
 % protect our setting of that length with an \cs{ifx} test.
 %
@@ -2172,8 +2371,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \fi
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% As mentioned above, if \textsf{apacite} is used, we can use a package option
+% As mentioned above, if \pkg{apacite} is used, we can use a package option
 % to ensure that the reference list heading appears in the PDF bookmarks.
 %
 %    \begin{macrocode}
@@ -2181,7 +2381,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 %
-% We, of course, use \textsf{hyperref} for enhancing the PDF with working links,
+% We, of course, use \pkg{hyperref} for enhancing the PDF with working links,
 % bookmarks, metadata, etc.
 %
 %    \begin{macrocode}
@@ -2203,12 +2403,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \urlstyle{rm}
 %    \end{macrocode}
 %
-% We provide an \cs{email} command for displaying the email address of the 
+% \begin{macro}{email}
+% We provide an \cs{email} command for displaying the email address of the
 % corresponding author.
 %
 %    \begin{macrocode}
 \newcommand*{\email}[1]{\href{mailto:#1}{#1}}
 %    \end{macrocode}
+% \end{macro}
 %
 % Once the user has had a chance to provide the metadata, we can add it to the
 % PDF metadata.
@@ -2222,8 +2424,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     }
 %    \end{macrocode}
 %
-% The APA has its own style for line breaks in URLs. The \textsf{apacite} 
-% package provides the code for this, but in case \textsf{biblatex} is used
+% The APA has its own style for line breaks in URLs. The \pkg{apacite}
+% package provides the code for this, but in case \pkg{biblatex} is used
 % instead, we repeat the settings (from 2013/07/21 v6.03) here.
 %
 %    \begin{macrocode}
@@ -2255,10 +2457,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \end{macrocode}
 %
 % We now embed the Creative Commons licence information in the PDF using an XMP
-% packet. To do this, we employ the same technique as Scott Pakin's 
-% \textsf{hyperxmp} (2014/01/02 v2.4). In order to avoid avoid a bug whereby
-% Adobe Acrobat confuses the XMP author information and the regular author 
-% information, though, we \emph{only} embed the licence information. 
+% packet. To do this, we employ the same technique as Scott Pakin's
+% \pkg{hyperxmp} (2014/01/02 v2.4). In order to avoid avoid a bug whereby
+% Adobe Acrobat confuses the XMP author information and the regular author
+% information, though, we \emph{only} embed the licence information.
 %
 % We need to make sure that any characters to appear verbatim in the XMP packet
 % are treated as ordinary characters and not active ones. The likely active
@@ -2267,8 +2469,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 %    \begin{macrocode}
 \begingroup
-\catcode`\"=12 
-\catcode`\&=12 
+\catcode`\"=12
+\catcode`\&=12
 \catcode`\#=12
 \catcode`\<=12
 \catcode`\>=12
@@ -2281,14 +2483,16 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \AtBeginDocument{%
 %    \end{macrocode}
 %
+% \begin{macro}{sp}
 % For convenience we define \cs{sp} to be a level of indent, translating to three
 % spaces.
 %
 %    \begin{macrocode}
   \def\sp{\space\space\space}
 %    \end{macrocode}
+% \end{macro}
 %
-% The text of the XMP packet is recorded in \cs{cc@xmp@packet}. We use |^^J| to 
+% The text of the XMP packet is recorded in \cs{cc@xmp@packet}. We use |^^J| to
 % break lines.
 %
 %    \begin{macrocode}
@@ -2322,6 +2526,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 % Different workflows require the XMP packet to be embedded in different ways.
 %
+% \begin{macro}{ccxmp@embed@packet@pdftex}
 % Pdf\TeX\ can inject objects into PDFs natively.
 %
 %    \begin{macrocode}
@@ -2336,8 +2541,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \egroup
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% The \cs{pdfmark} command defined by \textsf{hyperref} is respected by tools such
+% \begin{macro}{ccxmp@embed@packet@pdfmark}
+% The \cs{pdfmark} command defined by \pkg{hyperref} is respected by tools such
 % as Dvipdf, Dvips, Dvipsone, etc.
 %
 %    \begin{macrocode}
@@ -2372,12 +2579,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }%
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % Dvipdfm has its own \cs{special} command for inserting PDF objects, but
 % it is a bit basic and requires advance knowledge of how long (in characters)
 % the object is.
 %
-% The \cs{ccxmp@count@spaces} macro counts the number of spaces in its parameter 
+% \begin{macro}{ccxmp@count@spaces}
+% The \cs{ccxmp@count@spaces} macro counts the number of spaces in its parameter
 % through a process of iteration, adding this figure to \cs{@tempcnta}.
 %
 %    \begin{macrocode}
@@ -2391,8 +2600,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \fi
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% The \cs{ccxmp@count@non@spaces} command counts the number of non-spaces in its 
+% \begin{macro}{ccxmp@count@non@spaces}
+% The \cs{ccxmp@count@non@spaces} command counts the number of non-spaces in its
 % argument through a process of iteration, adding this figure to \cs{@tempcnta}.
 %
 %    \begin{macrocode}
@@ -2405,8 +2616,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \fi
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% The \cs{ccxmp@string@len} command sets \cs{@tempcnta} to the number of characters 
+% \begin{macro}{ccxmp@string@len}
+% The \cs{ccxmp@string@len} command sets \cs{@tempcnta} to the number of characters
 % (spaces + non-spaces) in its argument.
 %
 %    \begin{macrocode}
@@ -2416,7 +2629,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \expandafter\ccxmp@count@non@spaces#1{}%
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{ccxmp@embed@packet@dvipdfm}
 % So now, finally, is the command for embedding the packet using Dvipdfm.
 %
 %    \begin{macrocode}
@@ -2437,7 +2652,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }%
 }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{ccxmp@embed@packet@xetex}
 % \XeTeX\ creates PDFs with Xdvipdfmx, which supports a simpler \cs{special} for
 % inserting objects that does not require us to count characters.
 %
@@ -2456,8 +2673,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }%
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% We rely on \textsf{hyperref} to tell us how the PDF will be generated (after
+% We rely on \pkg{hyperref} to tell us how the PDF will be generated (after
 % all, it may not be done in the current pass) and use the respective technique
 % to embed the XMP packet.
 %
