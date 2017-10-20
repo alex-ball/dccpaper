@@ -25,7 +25,7 @@ $(NAME).pdf: $(NAME).dtx ijdc-v9.cls $(NAME)-biblatex.bib $(NAME)-by.pdf
 
 clean:
 	rm -f $(NAME).{aux,bbl,bcf,blg,fdb_latexmk,fls,glo,gls,hd,idx,ilg,ind,ins,lsttemp,log,markdown.in,markdown.lua,markdown.out,out,run.xml,synctex.gz} $(NAME)-base.doc ijdc-v9.doc idcc.doc
-	rm -rf _markdown-$(NAME)
+	rm -rf _markdown_$(NAME)
 
 distclean: clean
 	rm -f $(NAME).pdf ijdc-v9.cls idcc.cls $(NAME)-base.sty $(NAME)-{biblatex,apacite}.bib

@@ -85,7 +85,7 @@ The image files distributed with this bundle derive from the file
 [by.eps] distributed by Creative Commons. The image is a trademark of
 Creative Commons and is subject to the [Creative Commons trademark policy][cctp].
 
-This work is “maintained” (as per LPPL maintenance status) by [Alex Ball][me].
+This work is “maintained” (as per LPPL maintenance status) by [Alex Ball][me].
 
 [lppl]: http://www.latex-project.org/lppl.txt "LaTeX Project Public License (LPPL)"
 [by.eps]: http://mirrors.creativecommons.org/presskit/buttons/88x31/eps/by.eps "CC BY licence badge"
