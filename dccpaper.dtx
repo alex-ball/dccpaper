@@ -717,12 +717,12 @@ Where decked (subdivided) headings are used, there should be a border beneath th
 \item
 Empty cells can either be left blank or represented by an em dash. A blank cell indicates non-applicability, while an em dash signifies that the data was not collected or has been omitted.
 \item
-Captions should end in a full stop\slash period.
+Captions should end in a full stop\slash period and appear above the table.
 \end{itemize}
 
-Table~\ref{tab:issues} demonstrates these features. The code used to produce the table is shown in Figure~\ref{fig:table} (note that the \pkg{dcolumn} package was loaded in the preamble).
+Table~\ref{tab:issues} on the following page demonstrates these features. The code used to produce the table is shown in Figure~\ref{fig:table} (the \pkg{dcolumn} package was loaded in the preamble). Note the different relative positions of the table and figure captions.
 
-\begin{table}[ht]
+\begin{table}[p!]
 \caption{Papers and articles published in the IJDC in 2008 and 2009.}
 \label{tab:issues}
 \centering\small
@@ -743,7 +743,7 @@ Issue
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[p!]
 \begin{lstlisting}[frame=single]
 \begin{table}
 \caption{Papers and articles published in the IJDC in 2008 and 2009.}
@@ -770,30 +770,36 @@ Issue
 \label{fig:table}
 \end{figure}
 
-Note the different relative positions of the table and figure captions.
-
 \subsection{Reference List and Citations}
 
+As mentioned above, you are encouraged to use either \pkg{biblatex-apa} (with \pkg{biblatex}\slash\pkg{biber}) or \pkg{apacite} (with Bib\TeX) to generate your reference list and citations.
+
+\begin{itemize}
+\item
 To use \pkg{biblatex} for your reference list, add the following to your preamble:
 \begin{lstlisting}
 \usepackage[style=apa]{biblatex}
 \addbibresource{$\meta{bib file}$.bib}
+\end{lstlisting}
+Prior to the release of \pkg{biblatex-apa} v7.5, you also needed this line:
+\begin{lstlisting}
 \DeclareLanguageMapping{british}{british-apa}
 \end{lstlisting}
-and include \lstinline|\printbibliography| at the end of the document.
-
+Include \lstinline|\printbibliography| at the end of the document to print the list.
+\item
 To use \pkg{apacite} for your reference list, add the following to your preamble:
 \begin{lstlisting}
 \usepackage{apacite}
 \bibliographystyle{apacite}
 \end{lstlisting}
 and include \lstinline|\bibliography{$\meta{bib file}$}| at the end of the document.
+\end{itemize}
 
 In-text citations are given parenthetically in author–date format. If author forms part of the narrative, as with \textcite{rinaldo.etal2011rsc}, only the date is added in parenthesis, otherwise both author and date are given \autocite{smith.etal2003das}. Where multiple citations are given at once, the order should be the same as in the reference list, i.e.\ alphabetically by author, with co-authored works coming after singly-authored works, then chronologically \autocite{borgman.etal2006bdl, dcc2005dcp, mazairac.beetzIPboq, santini2004sas, santini2004saa, smith.etal2003das, witten.frank2005dmp}. Please consult the documentation of the package you are using for how to achieve this.
 
-Please do not cite entire websites through the reference list mechanism. Instead, provide the title of the website (in English) and the URL in a footnote.\footnote{Digital Curation Centre: \url{http://www.dcc.ac.uk/}} If the title of the website is not clear from the visible pages, the contents of the HTML title element may be used. Other explanatory notes, whether about the body text or cited items, should also be given as footnotes rather than as endnotes or reference list annotations.\footnote{This avoids unnecessary page turning or scrolling.}
+Please \textbf{do not cite entire websites} through the reference list mechanism. Instead, provide the title of the website (in English) and the URL in a footnote.\footnote{Digital Curation Centre: \url{http://www.dcc.ac.uk/}} If the title of the website is not clear from the visible pages, the contents of the HTML title element may be used. Other explanatory notes, whether about the body text or cited items, should also be given as footnotes rather than as endnotes or reference list annotations.\footnote{This avoids unnecessary page turning or scrolling.}
 
-Please provide digital object identifiers (DOIs) for referenced items where available.
+Please \textbf{provide digital object identifiers} (DOIs) for referenced items where available.
 
 The data underlying the results presented in the submission should be placed in an appropriate custodial environment and cited \autocite{waterton.etal2013ual}, with the reference placed in the reference list. The \pkg{biblatex-apa} package provides a \texttt{data} entry type which should be used for datasets; the \texttt{entrysubtype} value should be \enquote{\texttt{Data set}} or similar. If using \pkg{apacite}, use the \texttt{misc} entry type with a \texttt{type} value of \enquote{\texttt{Data set}} or similar.
 
