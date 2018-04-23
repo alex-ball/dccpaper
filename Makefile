@@ -22,13 +22,23 @@ $(NAME).pdf: $(NAME).dtx ijdc-v9.cls $(NAME)-biblatex.bib $(NAME)-by.pdf
 	biber $(NAME)
 	lualatex -recorder -interaction=batchmode $(NAME).dtx >/dev/null
 	lualatex -recorder -interaction=batchmode $(NAME).dtx >/dev/null
+	@echo "Compilation of PDF finished."
+
+apacitetest.pdf: clean $(NAME).dtx ijdc-v9.cls $(NAME)-apacite.bib $(NAME)-by.pdf
+	lualatex -recorder -interaction=batchmode '\newif\ifapacite\input $(NAME).dtx' >/dev/null
+	bibtex $(NAME)
+	lualatex -recorder -interaction=batchmode '\newif\ifapacite\input $(NAME).dtx' >/dev/null
+	lualatex -recorder -interaction=batchmode '\newif\ifapacite\input $(NAME).dtx' >/dev/null
+	mv $(NAME).pdf apacitetest.pdf
+	$(MAKE) clean
+	@echo "Compilation of PDF finished."
 
 clean:
 	rm -f $(NAME).{aux,bbl,bcf,blg,fdb_latexmk,fls,glo,gls,hd,idx,ilg,ind,ins,lsttemp,log,markdown.in,markdown.lua,markdown.out,out,run.xml,synctex.gz} $(NAME)-base.doc ijdc-v9.doc idcc.doc
 	rm -rf _markdown_$(NAME)
 
 distclean: clean
-	rm -f $(NAME).pdf ijdc-v9.cls idcc.cls $(NAME)-base.sty $(NAME)-{biblatex,apacite}.bib
+	rm -f $(NAME).pdf apacitetest.pdf ijdc-v9.cls idcc.cls $(NAME)-base.sty $(NAME)-{biblatex,apacite}.bib
 
 inst: all
 	mkdir -p $(UTREE)/{tex,source,doc}/latex/$(NAME)
