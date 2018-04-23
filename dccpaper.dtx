@@ -1057,7 +1057,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \thedate, Vol.\ \thevolume, Iss.\ \theissue, \thepage--\thelastpage.%
 }
 \def\dccp@titlefoot@doi{%
-  \url{http://dx.doi.org/\thedoi}\\
+  \url{https://doi.org/\thedoi}\\
   DOI: \thedoi
 }
 \def\dccp@normhead@doi{doi:\thedoi}
@@ -2249,7 +2249,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \begin{macrocode}
     \DeclareFieldFormat{doi}{%
       \ifhyperref{%
-        \href{http://dx.doi.org/#1}{\nolinkurl{doi:#1}}%
+        \href{https://doi.org/#1}{\nolinkurl{doi:#1}}%
       }{%
         \nolinkurl{doi:#1}%
       }%
@@ -2371,7 +2371,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % to remove the one inserted by \cs{doiprefix}.
 %
 %    \begin{macrocode}
-      \newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\nolinkurl{doi:#1}}}%
+      \newcommand{\doi}[1]{\href{https://doi.org/#1}{\nolinkurl{doi:#1}}}%
       \renewcommand{\doiprefix}{\unskip}%
     }{}%
   }%
