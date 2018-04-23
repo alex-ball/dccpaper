@@ -520,34 +520,28 @@ The class is loaded in the usual way with
 Two types of option are available. The first relates to the type of submission:
 \begin{description}[font=\normalfont\key]
 \item[research]
-Use this for full research papers.
+Use this for research paper submissions.
 \item[practice]
-Use this for extended abstracts of practice papers, and full practice papers. The class defaults to this state, making this option even more optional than normal.
+Use this for practice paper submissions. The class defaults to this state, making this option even more optional than normal.
+\item[lightning]
+Use this for lightning talk proposals.
 \item[data]
-Use this for data paper abstracts and full data papers.
+(Legacy.) Use this for data paper abstracts and full data papers.
 \item[poster]
-Use this for poster abstracts.
+Use this for poster proposals.
 \item[demo]
 Use this for demonstration proposals.
 \item[bof]
-Use this for Birds of a Feather session abstracts.
+(Legacy.) Use this for Birds of a Feather session proposals.
 \item[workshop]
 Use this for workshop proposals.
 \end{description}
 
 The second type of option relates to the conference to which the submission will be made:
-\begin{multicols}{2}
-\begin{description}[font=\normalfont\key]
-\item[15]
-Use this for the 2015 conference.
-\item[16]
-Use this for the 2016 conference.
-\item[17]
-Use this for the 2017 conference.
-\item[18]
-Use this for the 2018 conference.
+\begin{description}[font=\normalfont]
+\item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}]
+Use this to select the year of the conference, e.g.\@ \key{19} for 2019.
 \end{description}
-\end{multicols}
 
 \section{Preamble Commands}
 
@@ -674,7 +668,7 @@ The text of the introduction starts here\dots
 \label{fig:start-paper}
 \end{figure}
 
-Please note that if submitting an abstract or proposal to the IDCC instead of a full paper, you should \emph{not} use the \texttt{abstract} environment. Instead, start with a section headed `Abstract' as in Figure~\ref{fig:start-abstract}. Further guidance on how to write such submissions is given on the conference website.
+Please note that if submitting a proposal to the IDCC instead of a paper, you should \emph{not} use the \texttt{abstract} environment. Instead, start with a section headed `Abstract' as in Figure~\ref{fig:start-abstract}. Further guidance on how to write such submissions is given on the conference website.
 
 \begin{figure}[ht]
 \begin{lstlisting}[frame=single]
@@ -683,9 +677,9 @@ Please note that if submitting an abstract or proposal to the IDCC instead of a 
 
 \section{Abstract}
 
-The text of the abstract or proposal starts here\dots
+The text of the proposal starts here\dots
 \end{lstlisting}
-\caption{Sample code for the beginning of an IDCC abstract or proposal.}
+\caption{Sample code for the beginning of an IDCC proposal.}
 \label{fig:start-abstract}
 \end{figure}
 
@@ -817,6 +811,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v1.7] 2018-05-01\\
+Added details of IDCC 2019.
 \item[v1.6] 2017-10-20\\
 Added details of IDCC 2018. Allowed files to be unpacked by \TeX\ without compiling. Refactored some documentation commands for efficiency.
 \item[v1.5] 2016-08-05\\
@@ -1142,6 +1138,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \end{macro}
 %
 % \begin{optionkey}{research}
+% \begin{optionkey}{lightning}
 % \begin{optionkey}{data}
 % \begin{optionkey}{poster}
 % \begin{optionkey}{demo}
@@ -1153,6 +1150,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 %    \begin{macrocode}
 \DeclareOption{research}{\def\dccp@type{Research Paper}}
+\DeclareOption{lightning}{\def\dccp@type{Lightning Talk}}
 \DeclareOption{data}{\def\dccp@type{Data Paper}}
 \DeclareOption{poster}{\def\dccp@type{Poster}}
 \DeclareOption{demo}{\def\dccp@type{Demonstration}}
@@ -1167,11 +1165,13 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
+% \end{optionkey}
 %
 % \begin{optionkey}{15}
 % \begin{optionkey}{16}
 % \begin{optionkey}{17}
 % \begin{optionkey}{18}
+% \begin{optionkey}{19}
 % The details for each conference are slightly different, so they each have an
 % associated option for overriding the fallback definitions for
 % \cs{dccp@publ@short}, \cs{dccp@publ@msg} and \cs{dccp@subject}.
@@ -1201,9 +1201,16 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     2018 in Barcelona. URL: \url{http://www.dcc.ac.uk/events/idcc18/}}
   \def\dccp@subject{13th \dccp@publ@long, 2018}
 }
+\DeclareOption{19}{%
+  \def\dccp@publ@short{IDCC19}
+  \def\dccp@publ@msg{The 14th \dccp@publ@long\ takes place on 4--7 February
+    2019 in Melbourne. URL: \url{http://www.dcc.ac.uk/events/idcc19/}}
+  \def\dccp@subject{14th \dccp@publ@long, 2019}
+}
 \ProcessOptions\relax
 
 %    \end{macrocode}
+% \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
