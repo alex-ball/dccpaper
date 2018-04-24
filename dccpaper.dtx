@@ -1360,14 +1360,22 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \end{macro}
 %
 % Pdf\TeX\ 1.40.15 introduced the facility to include dummy interword spaces
-% to improve text extraction and reflow. We test for this facility and use it
-% if available.
+% to improve text extraction and reflow. It would be really, really nice if
+% we could switch this on if available, but unfortunately it triggers a
+% long-standing bug in MikTeX: https://tex.stackexchange.com/q/318425
 %
 %    \begin{macrocode}
 \RequirePackage{ifpdf}
-\ifpdf
-  \ifdef{\pdfinterwordspaceon}{\pdfinterwordspaceon}{}
-\fi
+\newtoggle{dccp@dummyspaces}
+\def\fixspaces{\toggletrue{dccp@dummyspaces}}
+\def\nofixspaces{\togglefalse{dccp@dummyspaces}}
+\AtBeginDocument{%
+\iftoggle{dccp@dummyspaces}{%
+  \ifpdf
+    \ifdef{\pdfinterwordspaceon}{\pdfinterwordspaceon}{}%
+  \fi
+}{}%
+}
 
 %    \end{macrocode}
 %
@@ -1635,7 +1643,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \newcommand*{\theissue}{0}
 \newcommand*{\issue}[1]{\renewcommand*{\theissue}{#1}}
 \newcommand*{\thesubno}{0}
-\newcommand*{\subno}[1]{\renewcommand*{\thesubno}{#1}}
+\newcommand*{\subno}[1]{\renewcommand*{\thesubno}{#1}\fixspaces}
 \newcommand*{\thedoi}{10.2218/ijdc.v\thevolume i\theissue .\thesubno}
 %    \end{macrocode}
 % \end{macro}
