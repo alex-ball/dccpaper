@@ -517,12 +517,20 @@ Use this for an editorial.
 
 The class is loaded in the usual way with
 \lstinline|\documentclass[$\meta{options}$]{idcc}|.
-Two types of option are available. The first relates to the type of submission:
+Two types of option are available. The first relates to the conference to which the submission will be made:
+\begin{description}[font=\normalfont]
+  \item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}]
+  Use this to select the year of the conference, e.g.\@ \key{19} for 2019.
+\end{description}
+
+The second relates to the type of submission:
 \begin{description}[font=\normalfont\key]
+\item[abstract]
+Use this for research and practice paper extended abstracts. It is normally the default.
 \item[research]
-Use this for research paper submissions.
+Use this for full research papers.
 \item[practice]
-Use this for practice paper submissions. The class defaults to this state, making this option even more optional than normal.
+Use this for full practice papers. This becomes the default if you select one of the options for the 2015 to 2018 conferences inclusive.
 \item[lightning]
 Use this for lightning talk proposals.
 \item[data]
@@ -535,12 +543,6 @@ Use this for demonstration proposals.
 (Legacy.) Use this for Birds of a Feather session proposals.
 \item[workshop]
 Use this for workshop proposals.
-\end{description}
-
-The second type of option relates to the conference to which the submission will be made:
-\begin{description}[font=\normalfont]
-\item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}]
-Use this to select the year of the conference, e.g.\@ \key{19} for 2019.
 \end{description}
 
 \section{Preamble Commands}
@@ -647,9 +649,10 @@ The number of the IJDC issue in which the submission will be published.
 The year in which the submission will be published.
 \end{description}
 
+\newpage
 \section{Document Body}
 
-When it comes to writing the body of the submission, the template should allow you to use the usual \LaTeX\ markup without much adaptation. So, for example, you would start as in Figure~\ref{fig:start-paper}.
+When it comes to writing the body of the submission, the template should allow you to use the usual \LaTeX\ markup without much adaptation. So, for example, for a full paper or an IDCC extended abstract, you would start as in Figure~\ref{fig:start-paper}.
 
 \begin{figure}[ht]
 \begin{lstlisting}[frame=single]
@@ -664,11 +667,11 @@ Text of the abstract\dots
 
 The text of the introduction starts here\dots
 \end{lstlisting}
-\caption{Sample code for the beginning of an IJDC submission or IDCC full paper.}
+\caption{Sample code for the beginning of an IJDC submission or IDCC paper.}
 \label{fig:start-paper}
 \end{figure}
 
-Please note that if submitting a proposal to the IDCC instead of a paper, you should \emph{not} use the \texttt{abstract} environment. Instead, start with a section headed `Abstract' as in Figure~\ref{fig:start-abstract}. Further guidance on how to write such submissions is given on the conference website.
+Please note that if submitting a poster, lightning talk or demonstration proposal to the IDCC instead of a paper, you should \emph{not} use the \texttt{abstract} environment. Instead, start with a section headed `Abstract' as in Figure~\ref{fig:start-abstract} (for posters or lightning talks) or Figure~\ref{fig:start-demo} (for demonstrations). Further guidance on how to write such submissions is given on the conference website.
 
 \begin{figure}[ht]
 \begin{lstlisting}[frame=single]
@@ -683,6 +686,66 @@ The text of the proposal starts here\dots
 \label{fig:start-abstract}
 \end{figure}
 
+If submitting a workshop proposal to the IDCC, there is a specific set of information you need to include. Figure~\ref{fig:workshop} provides the bare bones of the template you will need to complete, but please refer to the corresponding Word template for guidance on how to complete it.
+
+\begin{figure}[p]
+  \begin{lstlisting}[frame=single]
+  \begin{document}
+  \maketitle
+  \begin{description}
+  \item[Demo Organiser(s):]~\\
+  Name, position, organization.
+  \end{description}
+  \section{Abstract}
+  
+  The text of the proposal starts here\dots
+  \end{lstlisting}
+  \caption{Sample code for the beginning of an IDCC demonstration proposal.}
+  \label{fig:start-demo}
+\end{figure}
+
+\begin{figure}[p]
+\begin{lstlisting}[frame=single]
+\begin{document}
+\begin{description}
+\item[Workshop Organiser(s):]~\\
+Name, position, organization.
+
+\item[Workshop title:]~\\ 
+Title.
+
+\item[Brief description:]~\\
+60 words or fewer.
+
+\item[Long description:]~\\
+About 500 words.
+
+\item[Room layout/workshop style:]~\\
+Cabaret, classroom, boardroom, other.
+
+\item[Minimum/maximum number of delegates:]~\\
+Minimum for viability, maximum for workability. 
+
+\item[Number of speakers:]~\\
+Number.
+
+\item[Equipment requirements:]~\\
+Projectors, sound, flipcharts, whiteboards etc.
+
+\item[Workshop length:]~\\
+Half day or full day.
+
+\item[Funding model:]~\\
+Fully funded, part funded (subsidised) or delegate fee.
+\end{description}
+\end{document}
+\end{lstlisting}
+\caption{Template for an IDCC workshop proposal.}
+\label{fig:workshop}
+\end{figure}
+
+\clearpage
+\noindent
 IJDC and IDCC papers follow the formatting conventions specified by the \textcite{apa6ed}, with a few minor changes. There are some instances where this affects how you write your submission.
 
 \subsection{Headings}
@@ -812,7 +875,7 @@ Any acknowledgements should be placed in a section immediately before the refere
 
 \begin{description}
 \item[v1.7] 2018-05-01\\
-Added details of IDCC 2019.
+Added details of IDCC 2019, along with new formatting and submission types.
 \item[v1.6] 2017-10-20\\
 Added details of IDCC 2018. Allowed files to be unpacked by \TeX\ without compiling. Refactored some documentation commands for efficiency.
 \item[v1.5] 2016-08-05\\
