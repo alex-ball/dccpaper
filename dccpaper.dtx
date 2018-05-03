@@ -276,8 +276,6 @@ Copyright (C) 2015 Digital Curation Centre, University of Edinburgh
 \documentclass{ijdc-v9}
 \let\DccpaperMaketitle=\maketitle
 
-\usepackage[utf8]{luainputenc}
-
 % For typesetting the documentation generally
 \usepackage{doc}
 \usepackage{enumitem}
@@ -417,7 +415,7 @@ Copyright (C) 2015 Digital Curation Centre, University of Edinburgh
 \usepackage{dcolumn,csquotes}
 \usepackage[iso,british]{isodate}
 \usepackage[expansion=false]{microtype}
-\DisableLigatures{family=tt*}
+\ifXeTeX\else\DisableLigatures{family=tt*}\fi
 \usepackage[tightLists=false]{markdown}
 \markdownSetup{rendererPrototypes={%
  link = {#1\footnote{\ifx\empty#4\empty\else#4:
@@ -483,18 +481,21 @@ Certain aspects of the template design have been implemented using third-party p
 \item\pkg{etoolbox} is used behind the scenes for patching commands.
 \item\pkg{footmisc} is used to format the footnotes.
 \item\pkg{titlesec} is used to format the section headings.
+\item\pkg{iftex} is used to test which \TeX\ engine you are using.
+If you use Lua\LaTeX\ or \XeLaTeX\, you will also need \pkg{fontspec}.
 \end{itemize}
 
 In some cases the class prefers to use packages that are not part of the base installation (but are nevertheless commonly available in \TeX\ distributions), but will fall back to their base equivalents if necessary.
 
 \begin{itemize}
 \item
-\pkg{newtx} will be used if available in place of \pkg{times}.
+\pkg{newtx} will be used if available in place of \pkg{times}, and
+\pkg{tgheros} will be used in place of \pkg{helvet}.
 \item
 \pkg{xcolor} will be used if available in place of \pkg{color}.
 \end{itemize}
 
-For referencing, you are encouraged to use either \pkg{biblatex} using the styles provided by \pkg{biblatex-apa} (preferred), or \pkg{apacite}.
+For referencing, you are encouraged to use either \pkg{biblatex-apa} (preferred) or \pkg{apacite}.
 
 \section{Loading the Classes}
 
@@ -1167,7 +1168,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % The rest of the formatting happens in the following file.
 %
 %    \begin{macrocode}
-\usepackage{dccpaper-base}
+\RequirePackage{dccpaper-base}
 %    \end{macrocode}
 % \iffalse
 %</ijdc9>
@@ -1352,7 +1353,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % The rest of the formatting happens in the following file.
 %
 %    \begin{macrocode}
-\usepackage{dccpaper-base}
+\RequirePackage{dccpaper-base}
 %    \end{macrocode}
 % \iffalse
 %</idcc>
@@ -1385,12 +1386,40 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % monospaced.
 %
 %    \begin{macrocode}
-\RequirePackage[T1]{fontenc}
-\IfFileExists{newtxtext.sty}%
-  {\RequirePackage{newtxtext,newtxmath}}%
-  {\RequirePackage{times}}
-\RequirePackage[scaled=0.92]{helvet}
-\renewcommand{\ttdefault}{cmtt}
+\RequirePackage{iftex}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+  \IfFileExists{newtxtext.sty}%
+    {\RequirePackage{newtxtext,newtxmath}}%
+    {\RequirePackage{times}}
+  \IfFileExists{tgheros.sty}%
+    {\ifx\undefined\qhv@scale\RequirePackage[scale=0.92]{tgheros}\fi}
+    {\RequirePackage[scaled=0.92]{helvet}}
+  \renewcommand{\ttdefault}{cmtt}
+\else
+  \RequirePackage[no-math]{fontspec}
+  \IfFileExists{newtxtext.sty}{%
+    \setmainfont{TeXGyreTermesX}
+    \RequirePackage{newtxmath}
+  }{%
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{times}
+    \renewcommand{\ttdefault}{cmtt}
+  }
+  \IfFontExistsTF{texgyreheros-regular.otf}{%
+    \setsansfont{texgyreheros}%
+      [ Extension = .otf
+      , UprightFont = *-regular
+      , ItalicFont = *-italic
+      , BoldFont = *-bold
+      , BoldItalicFont = *-bolditalic
+      , Scale = 0.92
+      ]
+  }{%
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[scaled=0.92]{helvet}
+  }
+\fi
 %    \end{macrocode}
 %
 % We will need support for included graphics and colour. The structural elements
@@ -2530,7 +2559,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % bookmarks, metadata, etc.
 %
 %    \begin{macrocode}
-\usepackage
+\RequirePackage
   [ colorlinks=true
   , linkcolor=black
   , anchorcolor=black
