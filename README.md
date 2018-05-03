@@ -71,7 +71,7 @@ A makefile is provided which you can use with the Make utility:
 
 ## Licence
 
-Copyright 2017 Digital Curation Centre, University of Edinburgh.
+Copyright 2018 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
