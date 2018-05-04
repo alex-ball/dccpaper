@@ -1431,13 +1431,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
-\ifdcp@proposal
-  \definecolor[named]{struct}{rgb}{0.862,0.420,0.184}
-  \definecolor[named]{links}{rgb}{0.862,0.420,0.184}
-\else
-  \definecolor[named]{struct}{rgb}{0,0.5,0.5}
-  \definecolor[named]{links}{rgb}{0,0.4,0.4}
-\fi
+\definecolor[named]{struct}{rgb}{0,0.5,0.5}
+\definecolor[named]{links}{rgb}{0,0.4,0.4}
 %    \end{macrocode}
 %
 % We will calculate some lengths later.
