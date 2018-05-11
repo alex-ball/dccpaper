@@ -1431,7 +1431,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
       , Scale = 0.92
       ]
   }{%
-    \usepackage[T1]{fontenc}
+    \IfFileExists{newtxtext.sty}{%
+      \appto\sffamily{\fontencoding{T1}\selectfont}%
+    }{}
     \usepackage[scaled=0.92]{helvet}
   }
 \fi
