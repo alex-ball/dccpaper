@@ -489,7 +489,7 @@ In some cases the class prefers to use packages that are not part of the base in
 
 \begin{itemize}
 \item
-\pkg{newtx} will be used if available in place of \pkg{times}, and
+\pkg{newtx} will be used if available in place of \pkg{mathptmx}, and
 \pkg{tgheros} will be used in place of \pkg{helvet}.
 \item
 \pkg{xcolor} will be used if available in place of \pkg{color}.
@@ -1381,29 +1381,44 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 % The \pkg{dccpaper} classes use Times as the main text font. We prefer
 % \pkg{newtx} as it provides support for mathematics, but the standard
-% \pkg{times} package will do. In case they are needed, we also provide
+% \pkg{mathptmx} package will do. In case they are needed, we also provide
 % Helvetica for the sans serif font and Computer Modern Teletype for the
 % monospaced.
 %
 %    \begin{macrocode}
-\RequirePackage{iftex}
 \ifPDFTeX
-  \RequirePackage[T1]{fontenc}
-  \IfFileExists{newtxtext.sty}%
-    {\RequirePackage{newtxtext,newtxmath}}%
-    {\RequirePackage{times}}
-  \IfFileExists{tgheros.sty}%
-    {\ifx\undefined\qhv@scale\RequirePackage[scale=0.92]{tgheros}\fi}
-    {\RequirePackage[scaled=0.92]{helvet}}
+  \usepackage[T1]{fontenc}
+  \IfFileExists{newtxtext.sty}{%
+    \usepackage{newtxtext,newtxmath}
+  }{%
+    \usepackage{mathptmx}}
+  \IfFileExists{tgheros.sty}{%
+    \ifx\undefined\qhv@scale
+      \usepackage[scale=0.92]{tgheros}\else
+      \def\qhv@scale{0.92}\fi
+  }{%
+    \usepackage[scaled=0.92]{helvet}}
   \renewcommand{\ttdefault}{cmtt}
 \else
-  \RequirePackage[no-math]{fontspec}
+  \usepackage{fontspec}
   \IfFileExists{newtxtext.sty}{%
     \setmainfont{TeXGyreTermesX}
-    \RequirePackage{newtxmath}
+    \usepackage{newtxmath}
+    \AtBeginDocument{%
+      \Umathcode`0="7 "0 `0
+      \Umathcode`1="7 "0 `1
+      \Umathcode`2="7 "0 `2
+      \Umathcode`3="7 "0 `3
+      \Umathcode`4="7 "0 `4
+      \Umathcode`5="7 "0 `5
+      \Umathcode`6="7 "0 `6
+      \Umathcode`7="7 "0 `7
+      \Umathcode`8="7 "0 `8
+      \Umathcode`9="7 "0 `9
+    }
   }{%
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage{times}
+    \usepackage[T1]{fontenc}
+    \usepackage{mathptmx}
     \renewcommand{\ttdefault}{cmtt}
   }
   \IfFontExistsTF{texgyreheros-regular.otf}{%
@@ -1416,8 +1431,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
       , Scale = 0.92
       ]
   }{%
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage[scaled=0.92]{helvet}
+    \usepackage[T1]{fontenc}
+    \usepackage[scaled=0.92]{helvet}
   }
 \fi
 %    \end{macrocode}
