@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %<*internal|ijdc9|idcc|base>
-\def\Version{2018/05/01 v1.7}
+\def\Version{2018/05/14 v1.7.1}
 %</internal|ijdc9|idcc|base>
 %<*internal>
 \iffalse
@@ -875,6 +875,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v1.7.1] 2018-05-14\\
+Fixed loading of maths fonts. Reverted experimental formatting.
 \item[v1.7] 2018-05-01\\
 Added details of IDCC 2019, along with new formatting and submission types.
 \item[v1.6] 2017-10-20\\
@@ -1380,46 +1382,116 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \end{macrocode}
 %
 % The \pkg{dccpaper} classes use Times as the main text font. We prefer
-% \pkg{newtx} as it provides support for mathematics, but the standard
-% \pkg{mathptmx} package will do. In case they are needed, we also provide
-% Helvetica for the sans serif font and Computer Modern Teletype for the
-% monospaced.
+% \pkg{newtx} as it is available in both legacy form (for PDF\LaTeX) and OTF
+% (for Lua\LaTeX and \XeLaTeX), but the standard \pkg{mathptmx} package will do.
+% In case they are needed, we also provide \TeX\ Gyre Heros\slash Helvetica for
+% the sans serif font and Latin\slash Computer Modern Teletype for the
+% monospaced. The code is a little complicated to cope with several variations of
+% what people might have installed.
+%
+% Unfortunately, \textsf{newtxmath} (since v1.55) loads \pkg{etextools} which breaks
+% \pkg{biblatex}, so we save \cs{forlistloop} and restore it later.
 %
 %    \begin{macrocode}
+\let\origforlistloop\forlistloop
+\PassOptionsToPackage{noerroretextools=true}{biblatex}
+%    \end{macrocode}
+%
+% Things are straightforward when PDF\LaTeX\ is used. Note that \textsf{newtxtext}
+% emulates \pkg{tgheros} so all we have to do is set the scaling factor. It also
+% switches the monospaced font, so we switch it back.
+%
+%    \begin{macrocode}
+\RequirePackage{iftex}
 \ifPDFTeX
-  \usepackage[T1]{fontenc}
+  \RequirePackage[T1]{fontenc}
   \IfFileExists{newtxtext.sty}{%
-    \usepackage{newtxtext,newtxmath}
+    \RequirePackage{newtxtext,newtxmath}
   }{%
-    \usepackage{mathptmx}}
+    \RequirePackage{mathptmx}}
   \IfFileExists{tgheros.sty}{%
     \ifx\undefined\qhv@scale
-      \usepackage[scale=0.92]{tgheros}\else
+      \RequirePackage[scale=0.92]{tgheros}\else
       \def\qhv@scale{0.92}\fi
   }{%
-    \usepackage[scaled=0.92]{helvet}}
+    \RequirePackage[scaled=0.92]{helvet}}
   \renewcommand{\ttdefault}{cmtt}
+%    \end{macrocode}
+%
+% To avoid problems with input and output encodings, if \LuaTeX\ or \XeLaTeX\ is used,
+% we switch to using the \textsf{newtxtext} OTF font for text, if available.
+%
+%    \begin{macrocode}
 \else
-  \usepackage{fontspec}
+  \RequirePackage{fontspec}
   \IfFileExists{newtxtext.sty}{%
     \setmainfont{TeXGyreTermesX}
-    \usepackage{newtxmath}
+%    \end{macrocode}
+%
+% Using \textsf{newtxmath} for mathematics generally works, but the package assumes
+% certain characters will fall back to text equivalents, which works under T1 encoding
+% but not under the TU encoding used by \pkg{fontspec}. This solution is from egreg's
+% answer on TeX.se: \url{https://tex.stackexchange.com/a/394139}.
+%
+%    \begin{macrocode}
+    \RequirePackage{newtxmath}
+    \DeclareSymbolFont{oldoperators}{OT1}{ntxtlf}{m}{n}
+    \SetSymbolFont{oldoperators}{bold}{OT1}{ntxtlf}{b}{n}
     \AtBeginDocument{%
-      \Umathcode`0="7 "0 `0
-      \Umathcode`1="7 "0 `1
-      \Umathcode`2="7 "0 `2
-      \Umathcode`3="7 "0 `3
-      \Umathcode`4="7 "0 `4
-      \Umathcode`5="7 "0 `5
-      \Umathcode`6="7 "0 `6
-      \Umathcode`7="7 "0 `7
-      \Umathcode`8="7 "0 `8
-      \Umathcode`9="7 "0 `9
+\DeclareMathSymbol{0}{\mathalpha}{operators}{`0}%
+\DeclareMathSymbol{1}{\mathalpha}{operators}{`1}%
+\DeclareMathSymbol{2}{\mathalpha}{operators}{`2}%
+\DeclareMathSymbol{3}{\mathalpha}{operators}{`3}%
+\DeclareMathSymbol{4}{\mathalpha}{operators}{`4}%
+\DeclareMathSymbol{5}{\mathalpha}{operators}{`5}%
+\DeclareMathSymbol{6}{\mathalpha}{operators}{`6}%
+\DeclareMathSymbol{7}{\mathalpha}{operators}{`7}%
+\DeclareMathSymbol{8}{\mathalpha}{operators}{`8}%
+\DeclareMathSymbol{9}{\mathalpha}{operators}{`9}%
+\DeclareMathSymbol{\Gamma}{\mathalpha}{oldoperators}{"00}%
+\DeclareMathSymbol{\Delta}{\mathalpha}{oldoperators}{"01}%
+\DeclareMathSymbol{\Theta}{\mathalpha}{oldoperators}{"02}%
+\DeclareMathSymbol{\Lambda}{\mathalpha}{oldoperators}{"03}%
+\DeclareMathSymbol{\Xi}{\mathalpha}{oldoperators}{"04}%
+\DeclareMathSymbol{\Pi}{\mathalpha}{oldoperators}{"05}%
+\DeclareMathSymbol{\Sigma}{\mathalpha}{oldoperators}{"06}%
+\DeclareMathSymbol{\Upsilon}{\mathalpha}{oldoperators}{"07}%
+\DeclareMathSymbol{\Phi}{\mathalpha}{oldoperators}{"08}%
+\DeclareMathSymbol{\Psi}{\mathalpha}{oldoperators}{"09}%
+\DeclareMathSymbol{\Omega}{\mathalpha}{oldoperators}{"0A}%
+\DeclareMathSymbol{!}{\mathclose}{operators}{"21}%
+\DeclareMathSymbol{+}{\mathbin}{operators}{"2B}%
+\DeclareMathSymbol{:}{\mathrel}{operators}{"3A}%
+\DeclareMathSymbol{;}{\mathpunct}{operators}{"3B}%
+\DeclareMathSymbol{=}{\mathrel}{operators}{"3D}%
+\DeclareMathSymbol{?}{\mathclose}{operators}{"3F}%
+\DeclareMathDelimiter{(}{\mathopen} {operators}{"28}{largesymbols}{"00}%
+\DeclareMathDelimiter{)}{\mathclose}{operators}{"29}{largesymbols}{"01}%
+\DeclareMathDelimiter{[}{\mathopen} {operators}{"5B}{largesymbols}{"02}%
+\DeclareMathDelimiter{]}{\mathclose}{operators}{"5D}{largesymbols}{"03}%
+\DeclareMathAccent{\acute}{\mathalpha}{operators}{"B4}%
+\ifLuaTeX\DeclareMathAccent{\grave}{\mathalpha}{operators}{"60}\fi
+\DeclareMathAccent{\ddot}{\mathalpha}{operators}{"A8}%
+\DeclareMathAccent{\tilde}{\mathalpha}{oldoperators}{"7E}%
+\DeclareMathAccent{\bar}{\mathalpha}{oldoperators}{"16}%
+\DeclareMathAccent{\breve}{\mathalpha}{oldoperators}{"15}%
+\DeclareMathAccent{\check}{\mathalpha}{oldoperators}{"14}%
+\DeclareMathAccent{\hat}{\mathalpha}{oldoperators}{"5E}%
+\DeclareMathAccent{\dot}{\mathalpha}{oldoperators}{"5F}%
+\DeclareMathAccent{\mathring}{\mathalpha}{oldoperators}{"17}%
+\DeclareMathSymbol{\mathdollar}{\mathord}{operators}{"24}%
     }
+%    \end{macrocode}
+%
+% If \pkg{newtx} is not installed we admit defeat and revert to \pkg{mathptmx}.
+% If \TeX\ Gyre Heros is available in OTF form we use that, otherwise we fall
+% back to \pkg{helvet}; we use a gentle hack to force the the right encoding.
+% The monospaced font is left untouched as the \pkg{fontspec} default.
+%
+%    \begin{macrocode}
   }{%
-    \usepackage[T1]{fontenc}
-    \usepackage{mathptmx}
-    \renewcommand{\ttdefault}{cmtt}
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{mathptmx}
   }
   \IfFontExistsTF{texgyreheros-regular.otf}{%
     \setsansfont{texgyreheros}%
@@ -1434,9 +1506,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \IfFileExists{newtxtext.sty}{%
       \appto\sffamily{\fontencoding{T1}\selectfont}%
     }{}
-    \usepackage[scaled=0.92]{helvet}
+    \RequirePackage[scaled=0.92]{helvet}
   }
 \fi
+\let\forlistloop\origforlistloop
 %    \end{macrocode}
 %
 % We will need support for included graphics and colour. The structural elements
