@@ -1389,8 +1389,9 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % monospaced. The code is a little complicated to cope with several variations of
 % what people might have installed.
 %
-% Unfortunately, \textsf{newtxmath} (since v1.55) loads \pkg{etextools} which breaks
-% \pkg{biblatex}, so we save \cs{forlistloop} and restore it later.
+% Unfortunately, \textsf{newtxmath} v1.55 loads \pkg{etextools} which breaks
+% \pkg{biblatex}, so we save \cs{forlistloop} and restore it later. The
+% fix is harmless if an earlier or later version of \textsf{newtxmath} is used.
 %
 %    \begin{macrocode}
 \let\origforlistloop\forlistloop
