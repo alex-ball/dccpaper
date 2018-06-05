@@ -1389,14 +1389,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % monospaced. The code is a little complicated to cope with several variations of
 % what people might have installed.
 %
-% Unfortunately, \textsf{newtxmath} v1.55 loads \pkg{etextools} which breaks
-% \pkg{biblatex}, so we save \cs{forlistloop} and restore it later. The
-% fix is harmless if an earlier or later version of \textsf{newtxmath} is used.
-%
-%    \begin{macrocode}
-\let\origforlistloop\forlistloop
-\PassOptionsToPackage{noerroretextools=true}{biblatex}
-%    \end{macrocode}
+% Please note that \textsf{newtxmath} v1.55 is incompatible with \pkg{biblatex},
+% but earlier and later versions (starting v1.551) are compatible.
 %
 % Things are straightforward when PDF\LaTeX\ is used. Note that \textsf{newtxtext}
 % emulates \pkg{tgheros} so all we have to do is set the scaling factor. It also
@@ -1510,7 +1504,6 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     \RequirePackage[scaled=0.92]{helvet}
   }
 \fi
-\let\forlistloop\origforlistloop
 %    \end{macrocode}
 %
 % We will need support for included graphics and colour. The structural elements
