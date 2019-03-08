@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %<*internal|ijdc9|idcc|base>
-\def\Version{2018/05/14 v1.7.1}
+\def\Version{2019/03/08 v1.8}
 %</internal|ijdc9|idcc|base>
 %<*internal>
 \iffalse
@@ -240,7 +240,7 @@ See:     http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Copyright (C) 2018 Digital Curation Centre, University of Edinburgh
+Copyright (C) 2019 Digital Curation Centre, University of Edinburgh
 <info@dcc.ac.uk>
 \endpostamble
 
@@ -414,6 +414,8 @@ Copyright (C) 2018 Digital Curation Centre, University of Edinburgh
 
 \usepackage{dcolumn,csquotes}
 \usepackage[iso,british]{isodate}
+% The following line is only needed for microtype 2.7a
+\usepackage{luatexbase}
 \usepackage[expansion=false]{microtype}
 \ifXeTeX\else\DisableLigatures{family=tt*}\fi
 \usepackage[tightLists=false]{markdown}
@@ -520,8 +522,8 @@ The class is loaded in the usual way with
 \lstinline|\documentclass[$\meta{options}$]{idcc}|.
 Two types of option are available. The first relates to the conference to which the submission will be made:
 \begin{description}[font=\normalfont]
-  \item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}]
-  Use this to select the year of the conference, e.g.\@ \key{19} for 2019.
+  \item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}, \key{20}]
+  Use this to select the year of the conference, e.g.\@ \key{20} for 2020.
 \end{description}
 
 The second relates to the type of submission:
@@ -672,7 +674,9 @@ The text of the introduction starts here\dots
 \label{fig:start-paper}
 \end{figure}
 
-Please note that if submitting a poster, lightning talk or demonstration proposal to the IDCC instead of a paper, you should \emph{not} use the \texttt{abstract} environment. Instead, start with a section headed `Abstract' as in Figure~\ref{fig:start-abstract} (for posters or lightning talks) or Figure~\ref{fig:start-demo} (for demonstrations). Further guidance on how to write such submissions is given on the conference website.
+Please note that if submitting a poster, lightning talk or demonstration proposal to the IDCC instead of a paper, you should \emph{not} use the \texttt{abstract} environment. Instead, start with a section headed `Abstract' as in Figure~\ref{fig:start-abstract} (for posters or lightning talks) or Figure~\ref{fig:start-demo} (overleaf, for demonstrations). Further guidance on how to write such submissions is given on the conference website.
+
+If submitting a workshop proposal, please see the second document template in \hyperref[sec:samples]{Appendix~D}.
 
 \begin{figure}[ht]
 \begin{lstlisting}[frame=single]
@@ -687,65 +691,24 @@ The text of the proposal starts here\dots
 \label{fig:start-abstract}
 \end{figure}
 
-If submitting a workshop proposal to the IDCC, there is a specific set of information you need to include. Figure~\ref{fig:workshop} provides the bare bones of the template you will need to complete, but please refer to the corresponding Word template for guidance on how to complete it.
-
-\begin{figure}[p]
-  \begin{lstlisting}[frame=single]
-  \begin{document}
-  \maketitle
-  \begin{description}
-  \item[Demo Organiser(s):]~\\
-  Name, position, organization.
-  \end{description}
-  \section{Abstract}
-  
-  The text of the proposal starts here\dots
-  \end{lstlisting}
-  \caption{Sample code for the beginning of an IDCC demonstration proposal.}
-  \label{fig:start-demo}
-\end{figure}
-
-\begin{figure}[p]
+\begin{figure}[ht]
 \begin{lstlisting}[frame=single]
 \begin{document}
+\maketitle
+
 \begin{description}
-\item[Workshop Organiser(s):]~\\
+\item[Demo Organiser(s):]~\\
 Name, position, organization.
-
-\item[Workshop title:]~\\ 
-Title.
-
-\item[Brief description:]~\\
-60 words or fewer.
-
-\item[Long description:]~\\
-About 500 words.
-
-\item[Room layout/workshop style:]~\\
-Cabaret, classroom, boardroom, other.
-
-\item[Minimum/maximum number of delegates:]~\\
-Minimum for viability, maximum for workability. 
-
-\item[Number of speakers:]~\\
-Number.
-
-\item[Equipment requirements:]~\\
-Projectors, sound, flipcharts, whiteboards etc.
-
-\item[Workshop length:]~\\
-Half day or full day.
-
-\item[Funding model:]~\\
-Fully funded, part funded (subsidised) or delegate fee.
 \end{description}
-\end{document}
+
+\section{Abstract}
+
+The text of the proposal starts here\dots
 \end{lstlisting}
-\caption{Template for an IDCC workshop proposal.}
-\label{fig:workshop}
+\caption{Sample code for the beginning of an IDCC demonstration proposal.}
+\label{fig:start-demo}
 \end{figure}
 
-\clearpage
 \noindent
 IJDC and IDCC papers follow the formatting conventions specified by the \textcite{apa6ed}, with a few minor changes. There are some instances where this affects how you write your submission.
 
@@ -875,6 +838,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v1.8] 2019-03-08\\
+Added details of IDCC 2020.
 \item[v1.7.1] 2018-05-14\\
 Fixed loading of maths fonts. Reverted experimental formatting.
 \item[v1.7] 2018-05-01\\
@@ -979,24 +944,25 @@ A makefile is provided which you can use with the Make utility:
 \end{markdown*}
 
 \newpage
-\section{Appendix D: Sample Document}
+\section{Appendix D: Sample Documents}
+\label{sec:samples}
 
-The following code demonstrates how to use \pkg{dccpaper} to write a IDCC conference paper.
+The following code demonstrates how to use \pkg{dccpaper} to write an IDCC conference paper.
 
 \begin{lstlisting}[frame=single]
 \documentclass[research,15]{idcc}
 
 \title{How to write a conference paper}
-\author{Alex Ball}
-\affil{Digital Curation Centre}
-\author{Fred Bloggs}
-\affil{University of Life}
+\author{First Author}
+\affil{First Author's Affiliation}
+\author{Second Author}
+\affil{Second Author's Affiliation}
+\correspondence{Your Name, Institution, Postal address. Email: \email{ab@example.com}}
 
 \submitted{1 October 2014}
 
 \usepackage[style=apa]{biblatex}
 \addbibresource{references.bib}
-\DeclareLanguageMapping{british}{british-apa}
 
 \begin{document}
 \maketitle
@@ -1022,6 +988,59 @@ Any acknowledgements should be placed here\dots
 \end{lstlisting}
 
 \newpage
+If submitting a workshop proposal to the IDCC, there is a specific set of information you need to include. The following code provides the bare bones of the template you will need to fill out, but please refer to the corresponding Word template for guidance on how to complete it.
+
+\begin{lstlisting}[frame=single]
+\documentclass[workshop,19]{idcc}
+
+\title{Getting your workshop accepted}
+\author{First Author}
+\affil{First Author's Affiliation}
+\author{Second Author}
+\affil{Second Author's Affiliation}
+\correspondence{Your Name, Institution, Postal address. Email: \email{ab@example.com}}
+
+\submitted{1 July 2018}
+
+\usepackage[style=apa]{biblatex}
+\addbibresource{references.bib}
+
+\begin{document}
+\begin{description}
+\item[Workshop Organiser(s):]~\\
+Name, position, organization.
+
+\item[Workshop title:]~\\
+Title.
+
+\item[Brief description:]~\\
+60 words or fewer.
+
+\item[Long description:]~\\
+About 500 words.
+
+\item[Room layout/workshop style:]~\\
+Cabaret, classroom, boardroom, other.
+
+\item[Minimum/maximum number of delegates:]~\\
+Minimum for viability, maximum for workability.
+
+\item[Number of speakers:]~\\
+Number.
+
+\item[Equipment requirements:]~\\
+Projectors, sound, flipcharts, whiteboards etc.
+
+\item[Workshop length:]~\\
+Half day or full day.
+
+\item[Funding model:]~\\
+Fully funded, part funded (subsidised) or delegate fee.
+\end{description}
+\end{document}
+\end{lstlisting}
+
+\newpage
 \section{Appendix E: Licence}
 
 \begin{markdown*}{hybrid=true}
@@ -1029,7 +1048,7 @@ Any acknowledgements should be placed here\dots
 %<readme>## Licence
 %<readme>
 %<*driver|readme>
-Copyright 2018 Digital Curation Centre, University of Edinburgh.
+Copyright 2019 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
@@ -1270,6 +1289,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \begin{optionkey}{17}
 % \begin{optionkey}{18}
 % \begin{optionkey}{19}
+% \begin{optionkey}{20}
 % The details for each conference are slightly different, so they each have an
 % associated option for overriding the fallback definitions for
 % \cs{dccp@publ@short}, \cs{dccp@publ@msg} and \cs{dccp@subject}.
@@ -1309,9 +1329,16 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     2019 in Melbourne. URL: \url{http://www.dcc.ac.uk/events/idcc19/}}
   \def\dccp@subject{14th \dccp@publ@long, 2019}
 }
+\DeclareOption{20}{%
+  \def\dccp@publ@short{IDCC20}
+  \def\dccp@publ@msg{The 15th \dccp@publ@long\ takes place on 17--20 February
+    2020 in Dublin. URL: \url{http://www.dcc.ac.uk/events/idcc20/}}
+  \def\dccp@subject{15th \dccp@publ@long, 2020}
+}
 \ProcessOptions\relax
 
 %    \end{macrocode}
+% \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
