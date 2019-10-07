@@ -414,8 +414,6 @@ Copyright (C) 2019 Digital Curation Centre, University of Edinburgh
 
 \usepackage{dcolumn,csquotes}
 \usepackage[iso,british]{isodate}
-% The following line is only needed for microtype 2.7a
-\usepackage{luatexbase}
 \usepackage[expansion=false]{microtype}
 \ifXeTeX\else\DisableLigatures{family=tt*}\fi
 \usepackage[tightLists=false]{markdown}
@@ -1401,11 +1399,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \RequirePackage[british]{babel}
 %    \end{macrocode}
 %
-% The macro patching commands from \pkg{etoolbox} come in useful for handling
-% author and date information, and also for compatibility with \pkg{apacite}.
+% The macro patching commands from \pkg{etoolbox} and \pkg{xpatch} come in
+% useful for handling author and date information, and also for
+% compatibility with \pkg{apacite}.
 %
 %    \begin{macrocode}
-\RequirePackage{etoolbox}
+\RequirePackage{etoolbox,xpatch}
 %    \end{macrocode}
 %
 % The \pkg{dccpaper} classes use Times as the main text font. We prefer
@@ -1842,8 +1841,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \pkg{memoir} class (2005/09/25 v1.618).
 %
 %    \begin{macrocode}
-\pretocmd{\date}{\begingroup\let\footnote\@gobble}{}{}%
-\apptocmd{\date}{%
+\xpretocmd{\date}{\begingroup\let\footnote\@gobble}{}{}%
+\xapptocmd{\date}{%
   \begingroup
     \renewcommand{\thanks}[1]{}
     \protected@xdef\thedate{#1}
