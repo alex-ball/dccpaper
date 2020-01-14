@@ -15,16 +15,16 @@ all:	$(NAME).pdf clean
 source: $(NAME).dtx
 	tex -interaction=batchmode $(NAME).dtx >/dev/null
 
-ijdc-v9.cls idcc.cls $(NAME)-base.sty $(NAME)-apacite.bib $(NAME)-biblatex.bib README.md: source
+ijdc-v9.cls ijdc-v14.cls idcc.cls $(NAME)-base.sty $(NAME)-apacite.bib $(NAME)-biblatex.bib README.md: source
 
-$(NAME).pdf: $(NAME).dtx ijdc-v9.cls $(NAME)-biblatex.bib $(NAME)-by.pdf
+$(NAME).pdf: $(NAME).dtx ijdc-v9.cls ijdc-v14.cls $(NAME)-biblatex.bib $(NAME)-by.pdf
 	lualatex -recorder -interaction=batchmode $(NAME).dtx >/dev/null
 	biber $(NAME)
 	lualatex -recorder -interaction=batchmode $(NAME).dtx >/dev/null
 	lualatex -recorder -interaction=batchmode $(NAME).dtx >/dev/null
 	@echo "Compilation of PDF finished."
 
-apacitetest.pdf: clean $(NAME).dtx ijdc-v9.cls $(NAME)-apacite.bib $(NAME)-by.pdf
+apacitetest.pdf: clean $(NAME).dtx ijdc-v9.cls ijdc-v14.cls $(NAME)-apacite.bib $(NAME)-by.pdf
 	lualatex -recorder -interaction=batchmode '\newif\ifapacite\input $(NAME).dtx' >/dev/null
 	bibtex $(NAME)
 	lualatex -recorder -interaction=batchmode '\newif\ifapacite\input $(NAME).dtx' >/dev/null
@@ -38,12 +38,12 @@ clean:
 	rm -rf _markdown_$(NAME)
 
 distclean: clean
-	rm -f $(NAME).pdf apacitetest.pdf ijdc-v9.cls idcc.cls $(NAME)-base.sty $(NAME)-{biblatex,apacite}.bib
+	rm -f $(NAME).pdf apacitetest.pdf ijdc-v9.cls ijdc-v14.cls idcc.cls $(NAME)-base.sty $(NAME)-{biblatex,apacite}.bib
 
 inst: all
 	mkdir -p $(UTREE)/{tex,source,doc}/latex/$(NAME)
 	cp $(NAME).dtx $(UTREE)/source/latex/$(NAME)
-	cp {ijdc-v9,idcc}.cls $(NAME)-base.sty $(NAME)-by.{eps,pdf} $(UTREE)/tex/latex/$(NAME)
+	cp {ijdc-v9,ijdc-v14,idcc}.cls $(NAME)-base.sty $(NAME)-by.{eps,pdf} $(UTREE)/tex/latex/$(NAME)
 	cp $(NAME).pdf $(NAME)-{biblatex,apacite}.bib README.md $(UTREE)/doc/latex/$(NAME)
 	mktexlsr
 uninst:
@@ -53,7 +53,7 @@ uninst:
 install: all
 	sudo mkdir -p $(LOCAL)/{tex,source,doc}/latex/$(NAME)
 	sudo cp $(NAME).dtx $(LOCAL)/source/latex/$(NAME)
-	sudo cp {ijdc-v9,idcc}.cls $(NAME)-base.sty $(NAME)-by.{eps,pdf} $(LOCAL)/tex/latex/$(NAME)
+	sudo cp {ijdc-v9,ijdc-v14,idcc}.cls $(NAME)-base.sty $(NAME)-by.{eps,pdf} $(LOCAL)/tex/latex/$(NAME)
 	sudo cp $(NAME).pdf $(NAME)-{biblatex,apacite}.bib README.md $(LOCAL)/doc/latex/$(NAME)
 	mktexlsr
 uninstall:
@@ -62,7 +62,7 @@ uninstall:
 
 zip: all
 	mkdir $(TDIR)
-	cp {ijdc-v9,idcc}.cls $(NAME)-base.sty $(NAME)-by.{eps,pdf} $(NAME).{dtx,pdf} README.md Makefile $(TDIR)
+	cp {ijdc-v9,ijdc-v14,idcc}.cls $(NAME)-base.sty $(NAME)-by.{eps,pdf} $(NAME).{dtx,pdf} README.md Makefile $(TDIR)
 	cd $(TEMP); zip -Drq $(PWD)/$(NAME)-$(VERS).zip $(NAME)
 
 ctan: all
