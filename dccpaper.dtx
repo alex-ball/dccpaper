@@ -1,17 +1,20 @@
 % \iffalse meta-comment
-%<*internal|ijdc9|idcc|base>
-\def\Version{2019/10/07 v1.8.1}
-%</internal|ijdc9|idcc|base>
+%<*internal|ijdc9|ijdc14|idcc|base>
+\def\Version{2020/01/14 v2.0}
+%</internal|ijdc9|ijdc14|idcc|base>
 %<*internal>
 \iffalse
 %</internal>
 %<*readme>
 # The dccpaper bundle: LaTeX classes for submissions to IJDC and IDCC
 
-The dccpaper bundle consists of two very similar classes.
+The dccpaper bundle consists of three very similar classes.
+
+ijdc-v14.cls corresponds to the template used by the
+[International Journal of Digital Curation], beginning with volume 14.
 
 ijdc-v9.cls corresponds to the template used by the
-[International Journal of Digital Curation], beginning with volume 9.
+[International Journal of Digital Curation] for volumes 9 to 13 inclusive.
 
 idcc.cls corresponds to the template used for the
 [International Digital Curation Conference], beginning with IDCC15.
@@ -27,11 +30,15 @@ boards, but can also be used to produce the final camera-ready papers.
 [International Digital Curation Conference]: http://www.dcc.ac.uk/events/international-digital-curation-conference-idcc
 
 %</readme>
-%<ijdc9|idcc|base>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<ijdc9|ijdc14|idcc|base>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<*ijdc9>
 \ProvidesClass{ijdc-v9}
-    [\Version\space Class for submissions to the International Journal of Digital Curation, volume 9 onwards.]
+    [\Version\space Class for submissions to the International Journal of Digital Curation, volumes 9--13 inclusive.]
 %</ijdc9>
+%<*ijdc14>
+\ProvidesClass{ijdc-v14}
+    [\Version\space Class for submissions to the International Journal of Digital Curation, volume 14 onwards.]
+%</ijdc14>
 %<*idcc>
 \ProvidesClass{idcc}
     [\Version\space Class for submissions to the International Digital Curation Conference.]
@@ -240,13 +247,14 @@ See:     http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Copyright (C) 2019 Digital Curation Centre, University of Edinburgh
+Copyright (C) 2020 Digital Curation Centre, University of Edinburgh
 <info@dcc.ac.uk>
 \endpostamble
 
 \usedir{tex/latex/dccpaper}
 \generate{
   \file{ijdc-v9.cls}{\from{\jobname.dtx}{ijdc9}}
+  \file{ijdc-v14.cls}{\from{\jobname.dtx}{ijdc14}}
   \file{idcc.cls}{\from{\jobname.dtx}{idcc}}
   \file{dccpaper-base.sty}{\from{\jobname.dtx}{base}}
 }
@@ -273,7 +281,7 @@ Copyright (C) 2019 Digital Curation Centre, University of Edinburgh
 %<*driver>
 \ProvidesFile{dccpaper.dtx}
     [\Version\ Classes for submissions to IJDC and IDCC]
-\documentclass{ijdc-v9}
+\documentclass{ijdc-v14}
 \let\DccpaperMaketitle=\maketitle
 
 % For typesetting the documentation generally
@@ -453,7 +461,8 @@ Copyright (C) 2019 Digital Curation Centre, University of Edinburgh
 \begin{abstract}
 This is the documentation for the \pkg{dccpaper} bundle, consisting of the following classes:
 \begin{itemize}
-\item\textsf{ijdc-v9}, which corresponds to the template used by the International Journal of Digital Curation, beginning with volume 9.
+\item\textsf{ijdc-v14}, which corresponds to the template used by the International Journal of Digital Curation, beginning with volume 14.
+\item\textsf{ijdc-v9}, which corresponds to the template used by the International Journal of Digital Curation for volumes 9 and 13 inclusive.
 \item\textsf{idcc}, which corresponds to the template used for the International Digital Curation Conference, beginning with IDCC15.
 \end{itemize}
 
@@ -468,7 +477,7 @@ Please note that the DOI attached to this document is fake and should not be use
 
 \section{Introduction}
 
-The \LaTeX\ class \textsf{ijdc-v9} produces camera-ready papers and articles suitable for inclusion in the International Journal of Digital Curation, with applicability from volume 9 onwards. The similar \textsf{idcc} class can be used for submissions to the International Digital Curation Conference, beginning with the 2015 conference. This document explains how to use these classes.
+The \LaTeX\ class \textsf{ijdc-v14} produces camera-ready papers and articles suitable for inclusion in the International Journal of Digital Curation, with applicability from volume 14 onwards. This is a minor change to the template used for volumes 9--13, which remains available as \textsf{ijdc-v9}. The similar \textsf{idcc} class can be used for submissions to the International Digital Curation Conference, beginning with the 2015 conference. This document explains how to use these classes.
 
 \section{Dependencies}
 
@@ -489,6 +498,15 @@ In some cases the class prefers to use packages that are not part of the base in
 
 \begin{itemize}
 \item
+If using the \textsf{ijdc-v14} class or the \textsf{idcc} class for conferences from
+2020, the main text font will be the first available out of Baskerville, BaskervilleF
+(\pkg{baskervillef}), Baskervaldx (\pkg{baskervaldx}), Baskervald (\pkg{baskervaldadf}),
+or the standard Computer Modern/Latin Modern.
+The sans-serif font will be the first available out of Lucida Sans, Go Sans
+(\pkg{gofonts}) or Helvetica (\pkg{helvet}).
+\item
+If using the \textsf{ijdc-v9} class or the \textsf{idcc} class for conferences up
+to 2019,
 \pkg{newtx} will be used if available in place of \pkg{mathptmx}, and
 \pkg{tgheros} will be used in place of \pkg{helvet}.
 \item
@@ -502,16 +520,18 @@ For referencing, you are encouraged to use either \pkg{biblatex-apa} (preferred)
 \subsection{International Journal of Digital Curation}
 
 The class is loaded in the usual way with
-\lstinline|\documentclass[$\meta{options}$]{ijdc-v9}|.
+\lstinline|\documentclass[$\meta{options}$]{ijdc-v14}|.
 The following options are available:
 
 \begin{description}[font=\normalfont\key]
 \item[paper]
-Use this for peer-reviewed papers.
+Use this for research papers.
 \item[article]
-Use this for general (non-peer-reviewed) articles if you like, but you do not have to as the class defaults to this state.
+Use this for general articles if you like, but you do not have to as the class defaults to this state.
 \item[editorial]
 Use this for an editorial.
+\item[preprint]
+Use this for a conference preprint.
 \end{description}
 
 \subsection{International Digital Curation Conference}
@@ -836,6 +856,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v2.0] 2020-01-14\\
+Added new formatting for IJDC volume 14 and IDCC 20.
 \item[v1.8.1] 2019-10-07\\
 Updated to work with changed \LaTeX\ internals.
 \item[v1.8] 2019-03-08\\
@@ -1048,7 +1070,7 @@ Fully funded, part funded (subsidised) or delegate fee.
 %<readme>## Licence
 %<readme>
 %<*driver|readme>
-Copyright 2019 Digital Curation Centre, University of Edinburgh.
+Copyright 2020 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
@@ -1077,16 +1099,16 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 %</driver>
 % \fi
 % \iffalse
-%<*ijdc9>
+%<*ijdc9|ijdc14>
 % \fi
 %
-% \subsection{ijdc-v9.cls}
+% \subsection{ijdc-v14.cls and ijdc-v9.cls}
 % \setcounter{lstnumber}{21}
 %
 % \begin{macro}{dccp@type}
 % \begin{macro}{dccp@editorial}
 % The type of paper is recorded in \cs{dccp@type}. The possible values are
-% `General Article', `Peer-Reviewed Paper', or `Editorial'.
+% `General Article', `Research Paper' (was `Peer-Reviewed Paper'), or `Editorial'.
 % The latter is provided through the constant \cs{dccp@editorial} so we can
 % test for it later with ease.
 %
@@ -1113,10 +1135,9 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 % \begin{optionkey}{editorial}
 % \begin{optionkey}{paper}
 % \begin{optionkey}{article}
-% These three options set \cs{dccp@type} appropriately. The \key{editorial}
+% \begin{optionkey}{preprint}
+% These four options set \cs{dccp@type} appropriately. The \key{editorial}
 % option additionally switches page numbers to roman numerals.
-% The \key{article} option is redundant, but included for symmetry with
-% \key{paper}.
 %
 %    \begin{macrocode}
 \DeclareOption{editorial}{\let\dccp@type=\dccp@editorial%
@@ -1125,11 +1146,40 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
     \renewcommand{\thelastpage}{\@roman\c@lastpage}%
   }%
 }
+%    \end{macrocode}
+% \iffalse
+%<*ijdc14>
+% \fi
+%
+% The |ijdc-v14| template uses the term `Research Paper'.
+%
+%    \begin{macrocode}
+\DeclareOption{paper}{\def\dccp@type{Research Paper}}
+%    \end{macrocode}
+% \iffalse
+%</ijdc14>
+%<*ijdc9>
+% \fi
+%
+% \addtocounter{lstnumber}{-1}
+% The |ijdc-v9| template uses the term `Peer-Reviewed Paper'.
+%    \begin{macrocode}
 \DeclareOption{paper}{\def\dccp@type{Peer-Reviewed Paper}}
+%    \end{macrocode}
+% \iffalse
+%</ijdc9>
+% \fi
+%
+% The \key{article} option is redundant, but included for symmetry with
+% \key{paper}.
+%
+%    \begin{macrocode}
+\DeclareOption{preprint}{\def\dccp@type{Conference Preprint}}
 \DeclareOption{article}{\def\dccp@type{General Article}}
 \ProcessOptions\relax
 
 %    \end{macrocode}
+% \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
@@ -1178,6 +1228,36 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 
 %    \end{macrocode}
 % \end{macro}
+% \iffalse
+%<*ijdc14>
+% \fi
+%
+% \begin{macro}{dccp@variant}
+% Different fonts are used depending on the volume. The |ijdc-v14| template
+% uses Baskerville as the main text font.
+%
+%    \begin{macrocode}
+\def\dccp@variant{baskerville}
+
+%    \end{macrocode}
+%
+% \iffalse
+%</ijdc14>
+%<*ijdc9>
+% \fi
+%
+% \addtocounter{lstnumber}{-2}
+% The |ijdc-v9| template uses Times.
+%
+%    \begin{macrocode}
+\def\dccp@variant{times}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \iffalse
+%</ijdc9>
+% \fi
 %
 % The class is based on the \pkg{article} class, and uses A4 paper.
 %
@@ -1192,7 +1272,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \RequirePackage{dccpaper-base}
 %    \end{macrocode}
 % \iffalse
-%</ijdc9>
+%</ijdc9|ijdc14>
 %<*idcc>
 % \fi
 %
@@ -1284,6 +1364,15 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \end{optionkey}
 % \end{optionkey}
 %
+% \begin{macro}{dccp@variant}
+% Different fonts are used depending on the year of the conference. Since 2020,
+% Baskerville is used as the main text font. Previously, Times was used.
+%
+%    \begin{macrocode}
+\def\dccp@variant{baskerville}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{optionkey}{15}
 % \begin{optionkey}{16}
 % \begin{optionkey}{17}
@@ -1301,6 +1390,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   2015 in London. URL: \url{http://www.dcc.ac.uk/events/idcc15/}}
   \def\dccp@subject{10th \dccp@publ@long, 2015}
   \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@variant{times}
 }
 \DeclareOption{16}{%
   \def\dccp@publ@short{IDCC16}
@@ -1308,6 +1398,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   2016 in Amsterdam. URL: \url{http://www.dcc.ac.uk/events/idcc16/}}
   \def\dccp@subject{11th \dccp@publ@long, 2016}
   \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@variant{times}
 }
 \DeclareOption{17}{%
   \def\dccp@publ@short{IDCC17}
@@ -1315,6 +1406,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   2017 in Edinburgh. URL: \url{http://www.dcc.ac.uk/events/idcc17/}}
   \def\dccp@subject{12th \dccp@publ@long, 2017}
   \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@variant{times}
 }
 \DeclareOption{18}{%
   \def\dccp@publ@short{IDCC18}
@@ -1322,12 +1414,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     2018 in Barcelona. URL: \url{http://www.dcc.ac.uk/events/idcc18/}}
   \def\dccp@subject{13th \dccp@publ@long, 2018}
   \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@variant{times}
 }
 \DeclareOption{19}{%
   \def\dccp@publ@short{IDCC19}
   \def\dccp@publ@msg{The 14th \dccp@publ@long\ takes place on 4--7 February
     2019 in Melbourne. URL: \url{http://www.dcc.ac.uk/events/idcc19/}}
   \def\dccp@subject{14th \dccp@publ@long, 2019}
+  \def\dccp@variant{times}
 }
 \DeclareOption{20}{%
   \def\dccp@publ@short{IDCC20}
@@ -1409,47 +1503,148 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \RequirePackage{etoolbox,xpatch}
 %    \end{macrocode}
 %
-% The \pkg{dccpaper} classes use Times as the main text font. We prefer
-% \pkg{newtx} as it is available in both legacy form (for PDF\LaTeX) and OTF
-% (for Lua\LaTeX and \XeLaTeX), but the standard \pkg{mathptmx} package will do.
-% In case they are needed, we also provide \TeX\ Gyre Heros\slash Helvetica for
-% the sans serif font and Latin\slash Computer Modern Teletype for the
-% monospaced. The code is a little complicated to cope with several variations of
-% what people might have installed.
+% The code for setting fonts is a little complicated to cope with several
+% variations of what people might have installed, plus the two typographical
+% variants of the IJDC and IDCC templates. Generally speaking, we use OTF fonts
+% with Lua\LaTeX\ and \XeLaTeX, Type 1 fonts with PDF\LaTeX, and
+% \textsf{newtxmath} for mathematics.
 %
 % Please note that \textsf{newtxmath} v1.55 is incompatible with \pkg{biblatex},
 % but earlier and later versions (starting v1.551) are compatible.
 %
-% Things are straightforward when PDF\LaTeX\ is used. Note that \textsf{newtxtext}
-% emulates \pkg{tgheros} so all we have to do is set the scaling factor. It also
-% switches the monospaced font, so we switch it back.
+% Here is the font selection cascade when PDF\LaTeX\ is used. Our options are
+% limited by the support files available through CTAN. Users of the
+% Lucida fonts from TUG are invited to feed back on whether this works
+% successfully or not.
 %
 %    \begin{macrocode}
 \RequirePackage{iftex}
 \ifPDFTeX
   \RequirePackage[T1]{fontenc}
-  \IfFileExists{newtxtext.sty}{%
-    \RequirePackage{newtxtext,newtxmath}
+  \ifdefstring{\dccp@variant}{baskerville}{%
+    \IfFileExists{baskervillef.sty}{
+      \RequirePackage{baskervillef}
+      \RequirePackage[baskerville,vvarbb]{newtxmath}
+    }{
+      \IfFileExists{Baskervaldx.sty}{
+        \RequirePackage{baskervaldx}
+        \RequirePackage[baskervaldx,vvarbb]{newtxmath}
+      }{
+        \IfFileExists{baskervald.sty}{
+          \RequirePackage{baskervald}
+          \RequirePackage[baskervaldx,vvarbb]{newtxmath}
+        }{}
+      }
+    }
+    \IfFileExists{lsr.pfb}{%
+      \renewcommand{\sfdefault}{hls}
+      \def\hls@scale{0.83}
+    }{%
+      \IfFileExists{GoSans.sty}{%
+        \RequirePackage[scale=.8]{GoSans}
+      }{%
+        \RequirePackage[scaled=0.85]{helvet}}}
   }{%
-    \RequirePackage{mathptmx}}
-  \IfFileExists{tgheros.sty}{%
-    \ifx\undefined\qhv@scale
-      \RequirePackage[scale=0.92]{tgheros}\else
-      \def\qhv@scale{0.92}\fi
-  }{%
-    \RequirePackage[scaled=0.92]{helvet}}
-  \renewcommand{\ttdefault}{cmtt}
 %    \end{macrocode}
 %
-% To avoid problems with input and output encodings, if \LuaTeX\ or \XeLaTeX\ is used,
-% we switch to using the \textsf{newtxtext} OTF font for text, if available.
+% When \textsf{newtxtext} is use, it emulates \pkg{tgheros} so all we have to do
+% is set the scaling factor; but it also switches the monospaced font, so we
+% have to switch it back.
+%
+%    \begin{macrocode}
+    \IfFileExists{newtxtext.sty}{%
+      \RequirePackage{newtxtext,newtxmath}
+    }{%
+      \RequirePackage{mathptmx}}
+    \IfFileExists{tgheros.sty}{%
+      \ifx\undefined\qhv@scale
+        \RequirePackage[scale=0.92]{tgheros}\else
+        \def\qhv@scale{0.92}\fi
+    }{%
+      \RequirePackage[scaled=0.92]{helvet}}
+    \renewcommand{\ttdefault}{cmtt}
+  }
+%    \end{macrocode}
+%
+% Here is the font selection cascade used for Lua\LaTeX\ and \XeLaTeX. There
+% are a few more options that come from system fonts people may have installed.
+% We have to be a little careful when mixing OTF and Type 1 fonts.
+%
+% Here is the Baskerville/Lucida selection:
 %
 %    \begin{macrocode}
 \else
   \RequirePackage{fontspec}
-  \IfFileExists{newtxtext.sty}{%
-    \setmainfont{TeXGyreTermesX}
+  \ifdefstring{\dccp@variant}{baskerville}{%
+    \IfFontExistsTF{Baskerville}{%
+      \setmainfont{Baskerville}
+      \RequirePackage[baskerville,vvarbb]{newtxmath}
+    }{%
+      \IfFileExists{baskervillef.sty}{%
+        \setmainfont{BaskervilleF}
+        \RequirePackage[baskerville,vvarbb]{newtxmath}
+      }{%
+        \IfFileExists{Baskervaldx.sty}{%
+          \setmainfont{baskervaldx}
+          \RequirePackage[baskervaldx,vvarbb]{newtxmath}
+        }{%
+          \IfFileExists{baskervald.sty}{%
+            \RequirePackage[T1]{fontenc}
+            \RequirePackage{baskervald}
+            \RequirePackage[baskervaldx,vvarbb]{newtxmath}
+          }{}
+        }
+      }
+    }
+    \IfFontExistsTF{Lucida Sans}{%
+      \setsansfont[Scale=.83]{Lucida Sans}
+    }{
+      \IfFontExistsTF{LucidaSansOT}{%
+        \setsansfont[Scale=.83]{LucidaSansOT}
+      }{%
+        \IfFileExists{GoSans.sty}{%
+          \RequirePackage[scale=.8]{GoSans}
+        }{%
+          \@ifpackageloaded{fontenc}{}{%
+            \appto\sffamily{\fontencoding{T1}\selectfont}
+          }
+          \RequirePackage[scaled=0.85]{helvet}
+        }
+      }
+    }
+  }{%
 %    \end{macrocode}
+%
+% Here is the Times/Helvetica selection:
+%
+%    \begin{macrocode}
+    \IfFileExists{newtxtext.sty}{%
+      \setmainfont{TeXGyreTermesX}
+      \RequirePackage{newtxmath}
+    }{%
+      \RequirePackage[T1]{fontenc}
+      \RequirePackage{mathptmx}
+    }
+    \IfFontExistsTF{texgyreheros-regular.otf}{%
+      \setsansfont{texgyreheros}%
+        [ Extension = .otf
+        , UprightFont = *-regular
+        , ItalicFont = *-italic
+        , BoldFont = *-bold
+        , BoldItalicFont = *-bolditalic
+        , Scale = 0.92
+        ]
+    }{%
+      \IfFileExists{newtxtext.sty}{%
+        \appto\sffamily{\fontencoding{T1}\selectfont}%
+      }{}
+      \RequirePackage[scaled=0.92]{helvet}
+    }
+  }
+%    \end{macrocode}
+%
+% In both variants, the monospaced font is left untouched as the \pkg{fontspec}
+% default.
 %
 % Using \textsf{newtxmath} for mathematics generally works, but the package assumes
 % certain characters will fall back to text equivalents, which works under T1 encoding
@@ -1457,7 +1652,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % answer on TeX.se: \url{https://tex.stackexchange.com/a/394139}.
 %
 %    \begin{macrocode}
-    \RequirePackage{newtxmath}
+  \@ifpackageloaded{newtxmath}{%
     \DeclareSymbolFont{oldoperators}{OT1}{ntxtlf}{m}{n}
     \SetSymbolFont{oldoperators}{bold}{OT1}{ntxtlf}{b}{n}
     \AtBeginDocument{%
@@ -1503,33 +1698,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \DeclareMathAccent{\dot}{\mathalpha}{oldoperators}{"5F}%
 \DeclareMathAccent{\mathring}{\mathalpha}{oldoperators}{"17}%
 \DeclareMathSymbol{\mathdollar}{\mathord}{operators}{"24}%
-    }
-%    \end{macrocode}
-%
-% If \pkg{newtx} is not installed we admit defeat and revert to \pkg{mathptmx}.
-% If \TeX\ Gyre Heros is available in OTF form we use that, otherwise we fall
-% back to \pkg{helvet}; we use a gentle hack to force the the right encoding.
-% The monospaced font is left untouched as the \pkg{fontspec} default.
-%
-%    \begin{macrocode}
-  }{%
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage{mathptmx}
-  }
-  \IfFontExistsTF{texgyreheros-regular.otf}{%
-    \setsansfont{texgyreheros}%
-      [ Extension = .otf
-      , UprightFont = *-regular
-      , ItalicFont = *-italic
-      , BoldFont = *-bold
-      , BoldItalicFont = *-bolditalic
-      , Scale = 0.92
-      ]
-  }{%
-    \IfFileExists{newtxtext.sty}{%
-      \appto\sffamily{\fontencoding{T1}\selectfont}%
-    }{}
-    \RequirePackage[scaled=0.92]{helvet}
+    }%
   }
 \fi
 %    \end{macrocode}
@@ -1946,12 +2115,16 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@dates{\emph{Received} #1}}
 \newcommand*{\revised}[1]{%
   \appto\dccp@dates{%
-    \space\space\space\textbar\space\space\space
+    \space\space\space
+    \ifdefstring{\dccp@variant}{baskerville}{$\sim$}{\textbar}%
+    \space\space\space
     \emph{Revision received} #1}%
   }
 \newcommand*{\accepted}[1]{%
   \appto\dccp@dates{%
-    \space\space\space\textbar\space\space\space
+    \space\space\space
+    \ifdefstring{\dccp@variant}{baskerville}{$\sim$}{\textbar}%
+    \space\space\space
     \emph{Accepted} #1}%
   }
 %    \end{macrocode}
@@ -2057,7 +2230,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\@oddhead{%
     \begin{minipage}{\textwidth}%
       \centering
-      \LARGE\bfseries\color{struct}%
+      \ifdefstring{\dccp@variant}{baskerville}{\huge\sffamily}{\LARGE\bfseries}%
+      \color{struct}%
       \ifx\dccp@type\dccp@editorial
         \dccp@publ@long
       \else
@@ -2163,7 +2337,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   }%
   \let\NormalHead=\@oddhead
   \def\@oddfoot{\begin{minipage}[b]{\textwidth}
-    \centering\bfseries\normalsize\color{struct}
+    \centering\ifdefstring{\dccp@variant}{baskerville}{\sffamily}{\bfseries}%
+    \normalsize\color{struct}
     \ifx\dccp@type\dccp@editorial
       \dccp@publ@long
     \else
@@ -2263,7 +2438,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \null\nobreak\vspace*{-0.528\baselineskip}%
   \begingroup
     \centering
-    {\Large\thetitle\par}
+    {\Large\ifdefstring{\dccp@variant}{baskerville}{\bfseries}{}\thetitle\par}
     \vspace{0.7\baselineskip}
     \AuthorBlock\par
     \vspace{1.7\baselineskip}

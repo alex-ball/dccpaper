@@ -1,9 +1,12 @@
 # The dccpaper bundle: LaTeX classes for submissions to IJDC and IDCC
 
-The dccpaper bundle consists of two very similar classes.
+The dccpaper bundle consists of three very similar classes.
+
+ijdc-v14.cls corresponds to the template used by the
+[International Journal of Digital Curation], beginning with volume 14.
 
 ijdc-v9.cls corresponds to the template used by the
-[International Journal of Digital Curation], beginning with volume 9.
+[International Journal of Digital Curation] for volumes 9 to 13 inclusive.
 
 idcc.cls corresponds to the template used for the
 [International Digital Curation Conference], beginning with IDCC15.
@@ -71,7 +74,7 @@ A makefile is provided which you can use with the Make utility:
 
 ## Licence
 
-Copyright 2019 Digital Curation Centre, University of Edinburgh.
+Copyright 2020 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
