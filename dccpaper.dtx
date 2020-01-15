@@ -1523,11 +1523,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \RequirePackage[T1]{fontenc}
   \ifdefstring{\dccp@variant}{baskerville}{%
     \IfFileExists{baskervillef.sty}{
-      \RequirePackage{baskervillef}
+      \RequirePackage[scaled=.95]{baskervillef}
       \RequirePackage[baskerville,vvarbb]{newtxmath}
     }{
       \IfFileExists{Baskervaldx.sty}{
-        \RequirePackage{baskervaldx}
+        \RequirePackage[scaled=.95]{baskervaldx}
         \RequirePackage[baskervaldx,vvarbb]{newtxmath}
       }{
         \IfFileExists{baskervald.sty}{
@@ -1538,12 +1538,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     }
     \IfFileExists{lsr.pfb}{%
       \renewcommand{\sfdefault}{hls}
-      \def\hls@scale{0.83}
+      \def\hls@scale{0.805}
     }{%
       \IfFileExists{GoSans.sty}{%
         \RequirePackage[scale=.8]{GoSans}
       }{%
-        \RequirePackage[scaled=0.85]{helvet}}}
+        \RequirePackage[scaled=0.82]{helvet}}}
   }{%
 %    \end{macrocode}
 %
@@ -1581,11 +1581,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
       \RequirePackage[baskerville,vvarbb]{newtxmath}
     }{%
       \IfFileExists{baskervillef.sty}{%
-        \setmainfont{BaskervilleF}
+        \setmainfont[Scale=.95]{BaskervilleF}
         \RequirePackage[baskerville,vvarbb]{newtxmath}
       }{%
         \IfFileExists{Baskervaldx.sty}{%
-          \setmainfont{baskervaldx}
+          \setmainfont[Scale=.95]{baskervaldx}
           \RequirePackage[baskervaldx,vvarbb]{newtxmath}
         }{%
           \IfFileExists{baskervald.sty}{%
@@ -1597,10 +1597,10 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
       }
     }
     \IfFontExistsTF{Lucida Sans}{%
-      \setsansfont[Scale=.83]{Lucida Sans}
+      \setsansfont[Scale=.805]{Lucida Sans}
     }{
       \IfFontExistsTF{LucidaSansOT}{%
-        \setsansfont[Scale=.83]{LucidaSansOT}
+        \setsansfont[Scale=.805]{LucidaSansOT}
       }{%
         \IfFileExists{GoSans.sty}{%
           \RequirePackage[scale=.8]{GoSans}
@@ -1608,7 +1608,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
           \@ifpackageloaded{fontenc}{}{%
             \appto\sffamily{\fontencoding{T1}\selectfont}
           }
-          \RequirePackage[scaled=0.85]{helvet}
+          \RequirePackage[scaled=0.82]{helvet}
         }
       }
     }
