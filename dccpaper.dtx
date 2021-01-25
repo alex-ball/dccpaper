@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %<*internal|ijdc9|ijdc14|idcc|base>
-\def\Version{2020/01/15 v2.0}
+\def\Version{2021/01/25 v2.1}
 %</internal|ijdc9|ijdc14|idcc|base>
 %<*internal>
 \iffalse
@@ -247,7 +247,7 @@ See:     http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Copyright (C) 2020 Digital Curation Centre, University of Edinburgh
+Copyright (C) 2021 Digital Curation Centre, University of Edinburgh
 <info@dcc.ac.uk>
 \endpostamble
 
@@ -540,8 +540,8 @@ The class is loaded in the usual way with
 \lstinline|\documentclass[$\meta{options}$]{idcc}|.
 Two types of option are available. The first relates to the conference to which the submission will be made:
 \begin{description}[font=\normalfont]
-  \item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}, \key{20}]
-  Use this to select the year of the conference, e.g.\@ \key{20} for 2020.
+  \item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}, \key{20}, \key{21}]
+  Use this to select the year of the conference, e.g.\@ \key{21} for 2021.
 \end{description}
 
 The second relates to the type of submission:
@@ -554,16 +554,16 @@ Use this for full research papers.
 Use this for full practice papers. This becomes the default if you select one of the options for the 2015 to 2018 conferences inclusive.
 \item[lightning]
 Use this for lightning talk proposals.
-\item[data]
-(Legacy.) Use this for data paper abstracts and full data papers.
 \item[poster]
 Use this for poster proposals.
 \item[demo]
-Use this for demonstration proposals.
+(Legacy.) Use this for demonstration proposals.
 \item[bof]
 (Legacy.) Use this for Birds of a Feather session proposals.
 \item[workshop]
-Use this for workshop proposals.
+(Legacy.) Use this for workshop proposals.
+\item[data]
+(Legacy.) Use this for data paper abstracts and full data papers.
 \end{description}
 
 \section{Preamble Commands}
@@ -856,8 +856,10 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v2.1] 2021-01-25\\
+Added details of IDCC 2021.
 \item[v2.0] 2020-01-15\\
-Added new formatting for IJDC volume 14 and IDCC 20.
+Added new formatting for IJDC volume 14 and IDCC 2020.
 \item[v1.8.1] 2019-10-07\\
 Updated to work with changed \LaTeX\ internals.
 \item[v1.8] 2019-03-08\\
@@ -1070,7 +1072,7 @@ Fully funded, part funded (subsidised) or delegate fee.
 %<readme>## Licence
 %<readme>
 %<*driver|readme>
-Copyright 2020 Digital Curation Centre, University of Edinburgh.
+Copyright 2021 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
@@ -1428,6 +1430,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 15th \dccp@publ@long\ takes place on 17--20 February
     2020 in Dublin. URL: \url{http://www.dcc.ac.uk/events/idcc20/}}
   \def\dccp@subject{15th \dccp@publ@long, 2020}
+}
+\DeclareOption{21}{%
+  \def\dccp@publ@short{IDCC}
+  \def\dccp@publ@msg{The 16th \dccp@publ@long\ takes place on 19 April
+    2021, Edinburgh, Scotland.\par\bigskip URL: \url{https://dcc.ac.uk/events/idcc2021}}
+  \def\dccp@subject{16th \dccp@publ@long, 2021}
 }
 \ProcessOptions\relax
 
