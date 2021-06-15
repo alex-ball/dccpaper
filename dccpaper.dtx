@@ -2921,10 +2921,20 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \end{macrocode}
 %
 % We now embed the Creative Commons licence information in the PDF using an XMP
-% packet. To do this, we employ the same technique as Scott Pakin's
-% \pkg{hyperxmp} (2014/01/02 v2.4). In order to avoid avoid a bug whereby
-% Adobe Acrobat confuses the XMP author information and the regular author
-% information, though, we \emph{only} embed the licence information.
+% packet. In order to avoid a bug whereby Adobe Acrobat confuses the XMP author
+% information and the regular author information, though, we \emph{only} embed
+% the licence information. We can use \pkg{hyperxmp} for this, but we have to
+% discard the information collected by that package and construct our own
+% packet.
+%
+%    \begin{macrocode}
+\RequirePackage{hyperxmp}
+\hypersetup{keeppdfinfo}
+\def\cc@xmp@packet{}
+\def\hyxmp@construct@packet{%
+  \let\hyxmp@xml\cc@xmp@packet
+}
+%    \end{macrocode}
 %
 % We need to make sure that any characters to appear verbatim in the XMP packet
 % are treated as ordinary characters and not active ones. The likely active
@@ -2961,7 +2971,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %
 %    \begin{macrocode}
   \long\gdef\cc@xmp@packet{%
-<?xpacket begin='' id=''?>^^J%
+<?xpacket begin="\hyxmp@bom" id="W5M0MpCehiHzreSzNTczkc9d"?>^^J%
 <x:xmpmeta xmlns:x='adobe:ns:meta/'>^^J%
 <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>^^J%
 \sp<rdf:Description rdf:about=''^^J%
@@ -2982,190 +2992,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \sp</rdf:Description>^^J%
 </rdf:RDF>^^J%
 </x:xmpmeta>^^J%
-<?xpacket end='r'?>^^J%
+\hyxmp@padding
+<?xpacket end="w"?>^^J%
   }%
 }
 \endgroup
-%    \end{macrocode}
-%
-% Different workflows require the XMP packet to be embedded in different ways.
-%
-% \begin{macro}{ccxmp@embed@packet@pdftex}
-% Pdf\TeX\ can inject objects into PDFs natively.
-%
-%    \begin{macrocode}
-\newcommand*{\ccxmp@embed@packet@pdftex}{%
-  \bgroup
-    \pdfcompresslevel=0
-    \immediate\pdfobj stream attr {%
-      /Type /Metadata
-      /Subtype /XML
-    }{\cc@xmp@packet}%
-    \pdfcatalog {/Metadata \the\pdflastobj\space 0 R}%
-  \egroup
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{ccxmp@embed@packet@pdfmark}
-% The \cs{pdfmark} command defined by \pkg{hyperref} is respected by tools such
-% as Dvipdf, Dvips, Dvipsone, etc.
-%
-%    \begin{macrocode}
-\newcommand*{\ccxmp@embed@packet@pdfmark}{%
-  \pdfmark{%
-    pdfmark=/NamespacePush
-  }%
-  \pdfmark{%
-    pdfmark=/OBJ,
-    Raw={/_objdef \string{ccxmp@packet\string} /type /stream}%
-  }%
-  \pdfmark{%
-    pdfmark=/PUT,
-    Raw={\string{ccxmp@packet\string}
-      2 dict begin
-        /Type /Metadata def
-        /Subtype /XML def
-        currentdict
-      end
-    }%
-  }%
-  \pdfmark{%
-    pdfmark=/PUT,
-    Raw={\string{ccxmp@packet\string} (\cc@xmp@packet)}%
-  }%
-  \pdfmark{%
-    pdfmark=/Metadata,
-    Raw={\string{Catalog\string} \string{ccxmp@packet\string}}%
-  }%
-  \pdfmark{%
-    pdfmark=/NamespacePop
-  }%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% Dvipdfm has its own \cs{special} command for inserting PDF objects, but
-% it is a bit basic and requires advance knowledge of how long (in characters)
-% the object is.
-%
-% \begin{macro}{ccxmp@count@spaces}
-% The \cs{ccxmp@count@spaces} macro counts the number of spaces in its parameter
-% through a process of iteration, adding this figure to \cs{@tempcnta}.
-%
-%    \begin{macrocode}
-\def\ccxmp@count@spaces#1 {%
-  \def\ccxmp@one@token{#1}%
-  \ifx\ccxmp@one@token\@empty
-    \advance\@tempcnta by -1
-  \else
-    \advance\@tempcnta by 1
-    \expandafter\ccxmp@count@spaces
-  \fi
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{ccxmp@count@non@spaces}
-% The \cs{ccxmp@count@non@spaces} command counts the number of non-spaces in its
-% argument through a process of iteration, adding this figure to \cs{@tempcnta}.
-%
-%    \begin{macrocode}
-\newcommand*{\ccxmp@count@non@spaces}[1]{%
-  \def\ccxmp@one@token{#1}%
-  \ifx\ccxmp@one@token\@empty
-  \else
-    \advance\@tempcnta by 1
-    \expandafter\ccxmp@count@non@spaces
-  \fi
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{ccxmp@string@len}
-% The \cs{ccxmp@string@len} command sets \cs{@tempcnta} to the number of characters
-% (spaces + non-spaces) in its argument.
-%
-%    \begin{macrocode}
-\newcommand*{\ccxmp@string@len}[1]{%
-  \@tempcnta=0
-  \expandafter\ccxmp@count@spaces#1 {} %
-  \expandafter\ccxmp@count@non@spaces#1{}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{ccxmp@embed@packet@dvipdfm}
-% So now, finally, is the command for embedding the packet using Dvipdfm.
-%
-%    \begin{macrocode}
-\newcommand*{\ccxmp@embed@packet@dvipdfm}{%
-  \ccxmp@string@len{\cc@xmp@packet}%
-  \special{pdf: object @ccxmp@packet
-    <<
-      /Type /Metadata
-      /Subtype /XML
-      /Length \the\@tempcnta
-    >>
-    stream^^J\cc@xmp@packet endstream%
-  }%
-  \special{pdf: docview
-    <<
-      /Metadata @ccxmp@packet
-    >>
-  }%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{ccxmp@embed@packet@xetex}
-% \XeTeX\ creates PDFs with Xdvipdfmx, which supports a simpler \cs{special} for
-% inserting objects that does not require us to count characters.
-%
-%    \begin{macrocode}
-\newcommand*{\ccxmp@embed@packet@xetex}{%
-  \special{pdf:stream @ccxmp@packet (\cc@xmp@packet)
-    <<
-      /Type /Metadata
-      /Subtype /XML
-    >>
-  }%
-  \special{pdf:put @catalog
-    <<
-      /Metadata @ccxmp@packet
-    >>
-  }%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% We rely on \pkg{hyperref} to tell us how the PDF will be generated (after
-% all, it may not be done in the current pass) and use the respective technique
-% to embed the XMP packet.
-%
-%    \begin{macrocode}
-\AtBeginDocument{%
-  \begingroup
-  \def\ccxmp@driver{hpdftex}%
-  \ifx\ccxmp@driver\Hy@driver
-    \ccxmp@embed@packet@pdftex
-  \else
-    \def\ccxmp@driver{hdvipdfm}%
-    \ifx\ccxmp@driver\Hy@driver
-      \ccxmp@embed@packet@dvipdfm
-    \else
-      \def\ccxmp@driver{hxetex}%
-      \ifx\ccxmp@driver\Hy@driver
-        \ccxmp@embed@packet@xetex
-      \else
-        \@ifundefined{pdfmark}{}{%
-          \ccxmp@embed@packet@pdfmark
-        }%
-      \fi
-    \fi
-  \fi
-  \endgroup
-}
 %    \end{macrocode}
 % \iffalse
 %</base>
