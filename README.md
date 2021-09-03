@@ -18,8 +18,8 @@ independently of the above classes.
 The classes are suitable for submissions to the respective review
 boards, but can also be used to produce the final camera-ready papers.
 
-[International Journal of Digital Curation]: http://www.ijdc.net/index.php/ijdc
-[International Digital Curation Conference]: http://www.dcc.ac.uk/events/international-digital-curation-conference-idcc
+[International Journal of Digital Curation]: http://www.ijdc.net/
+[International Digital Curation Conference]: https://www.dcc.ac.uk/events/idcc
 
 ## Installation
 
