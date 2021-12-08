@@ -541,8 +541,8 @@ The class is loaded in the usual way with
 \lstinline|\documentclass[$\meta{options}$]{idcc}|.
 Two types of option are available. The first relates to the conference to which the submission will be made:
 \begin{description}[font=\normalfont]
-  \item[\key{15}, \key{16}, \key{17}, \key{18}, \key{19}, \key{20}, \key{21}]
-  Use this to select the year of the conference, e.g.\@ \key{21} for 2021.
+  \item[\key{15}, \key{16}, .~.~.~, \key{21}, \key{22}]
+  Use this to select the year of the conference, e.g.\@ \key{22} for 2022.
 \end{description}
 
 The second relates to the type of submission:
@@ -857,6 +857,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v2.3] 2021-12-08\\
+Added details of IDCC 2022.
 \item[v2.2] 2021-09-03\\
 Updated procedure for inserting XMP packet into PDF output.
 \item[v2.1] 2021-01-25\\
@@ -1439,6 +1441,12 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 16th \dccp@publ@long\ takes place on 19 April
     2021, Edinburgh, Scotland.\par\bigskip URL: \url{https://dcc.ac.uk/events/idcc2021}}
   \def\dccp@subject{16th \dccp@publ@long, 2021}
+}
+\DeclareOption{22}{%
+  \def\dccp@publ@short{IDCC}
+  \def\dccp@publ@msg{The 17th \dccp@publ@long\ takes place on 13--16 June
+    2022, venue TBC.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc2022}}
+  \def\dccp@subject{17th \dccp@publ@long, 2022}
 }
 \ProcessOptions\relax
 
