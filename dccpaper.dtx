@@ -424,7 +424,8 @@ Copyright (C) 2021 Digital Curation Centre, University of Edinburgh
 \usepackage[iso,british]{isodate}
 \usepackage[expansion=false]{microtype}
 \ifXeTeX\else\DisableLigatures{family=tt*}\fi
-\usepackage[tightLists=false,plain]{markdown}
+\undef\Bbbk  % Work around conflict with amsmath, loaded by markdown
+\usepackage[tightLists=false]{markdown}
 \markdownSetup{rendererPrototypes={%
  link = {#1\footnote{\ifx\empty#4\empty\else#4:
  \fi\url{#3}}}%
