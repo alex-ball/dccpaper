@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %<*internal|ijdc9|ijdc14|idcc|base>
-\def\Version{2022/01/27 v2.3}
+\def\Version{2023/08/11 v2.4}
 %</internal|ijdc9|ijdc14|idcc|base>
 %<*internal>
 \iffalse
@@ -247,7 +247,7 @@ See:     http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Copyright (C) 2022 Digital Curation Centre, University of Edinburgh
+Copyright (C) 2023 Digital Curation Centre, University of Edinburgh
 <info@dcc.ac.uk>
 \endpostamble
 
@@ -326,7 +326,11 @@ Copyright (C) 2022 Digital Curation Centre, University of Edinburgh
   , mathescape
   }
 \newcommand*{\pkg}[1]{\href{http://www.ctan.org/pkg/#1}{\textsf{#1}}}
-\newcommand*{\cs}[1]{\textcolor{Command}{\texttt{\textbackslash#1}}}
+\ifcsname cs\endcsname
+  \renewcommand*{\cs}[1]{\textcolor{Command}{\texttt{\textbackslash#1}}}
+\else
+  \newcommand*{\cs}[1]{\textcolor{Command}{\texttt{\textbackslash#1}}}
+\fi
 \newcommand*{\env}[1]{\textcolor{Environment}{\ttfamily #1}}
 \newcommand*{\key}[1]{\textcolor{Option}{\ttfamily #1}}
 \newcommand*{\val}[1]{\textcolor{Value}{\ttfamily #1}}
@@ -420,7 +424,7 @@ Copyright (C) 2022 Digital Curation Centre, University of Edinburgh
 
 \let\maketitle=\DccpaperMaketitle
 
-\usepackage{dcolumn,csquotes}
+\usepackage{dcolumn,csquotes,framed}
 \usepackage[iso,british]{isodate}
 \usepackage[expansion=false]{microtype}
 \ifXeTeX\else\DisableLigatures{family=tt*}\fi
@@ -462,7 +466,7 @@ Copyright (C) 2022 Digital Curation Centre, University of Edinburgh
 This is the documentation for the \pkg{dccpaper} bundle, consisting of the following classes:
 \begin{itemize}
 \item\textsf{ijdc-v14}, which corresponds to the template used by the International Journal of Digital Curation, beginning with volume 14.
-\item\textsf{ijdc-v9}, which corresponds to the template used by the International Journal of Digital Curation for volumes 9 and 13 inclusive.
+\item\textsf{ijdc-v9}, which corresponds to the template used by the International Journal of Digital Curation for volumes 9 to 13 inclusive.
 \item\textsf{idcc}, which corresponds to the template used for the International Digital Curation Conference, beginning with IDCC15.
 \end{itemize}
 
@@ -539,28 +543,33 @@ Use this for a conference preprint.
 
 \subsection{International Digital Curation Conference}
 
+\begin{framed}
+For the 2024 conference, papers (extended abstracts and full) should use the
+\textsf{ijdc-v14} class with the \key{conference} option.
+\end{framed}
+
 The class is loaded in the usual way with
 \lstinline|\documentclass[$\meta{options}$]{idcc}|.
 Two types of option are available. The first relates to the conference to which the submission will be made:
 \begin{description}[font=\normalfont]
-  \item[\key{15}, \key{16}, .~.~.~, \key{21}, \key{22}]
-  Use this to select the year of the conference, e.g.\@ \key{22} for 2022.
+  \item[\key{15}, \key{16}, .~.~.~, \key{22}, \key{24}]
+  Use this to select the year of the conference, e.g.\@ \key{24} for 2024.
 \end{description}
 
 The second relates to the type of submission:
 \begin{description}[font=\normalfont\key]
-\item[abstract]
-Use this for research and practice paper extended abstracts. It is normally the default.
-\item[research]
-Use this for full research papers.
-\item[practice]
-Use this for full practice papers. This becomes the default if you select one of the options for the 2015 to 2018 conferences inclusive.
 \item[lightning]
 Use this for lightning talk proposals.
 \item[poster]
 Use this for poster proposals.
 \item[workshop]
 Use this for workshop proposals.
+\item[abstract]
+(Legacy.) Use this for conference paper extended abstracts. It is normally the default.
+\item[research]
+(Legacy.) Use this for full research papers.
+\item[practice]
+(Legacy.) Use this for full practice papers. This becomes the default if you select one of the options for the 2015 to 2018 conferences inclusive.
 \item[demo]
 (Legacy.) Use this for demonstration proposals.
 \item[bof]
@@ -607,14 +616,15 @@ The affiliation (institution, company) of the immediately preceding author(s). T
 Name, address and email address of the corresponding author. This information appears in the footer of the cover page.
 \end{description}
 
-If an IJDC submission is a reworked conference paper (that has not already been formally published), for reasons of transparency the name of the conference should be given.
+If an IJDC submission is a conference paper (that has not already been formally published), for reasons of transparency the name of the conference should be given.
 
 \begin{description}
 \item[]
 \hskip-\labelsep
-\lstinline|\conference{$\meta{name of conference}$}|
+\lstinline|\conference{$\meta{name of conference}$}|\\\hspace*{\dimexpr-\leftmargini}%
+\lstinline|\conference*{$\meta{name of conference}$}|
 \hskip\labelsep
-The conference at which the earlier version of the paper was presented, e.g.\ ‘the 10th International Digital Curation Conference’.
+The conference at which the earlier version of the paper was presented, e.g.\ ‘the International Digital Curation Conference IDCC24, 19-21 February 2024’. Use the unstarred command if this paper is a reworked version of the conference paper; use the starred command for IDCC papers (2024 onwards), or if the paper is unchanged from the conference version.
 \end{description}
 
 For IDCC papers, authors are invited to record the date on which they made their submission.
@@ -859,6 +869,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v2.4] 2023-08-11\\
+Added details of and update documentation for IDCC 2024.
 \item[v2.3] 2022-01-27\\
 Added details of IDCC 2022. Added \texttt{conference} option to \textsf{ijdc-v14} class.
 \item[v2.2] 2021-09-03\\
@@ -981,16 +993,19 @@ A makefile is provided which you can use with the Make utility:
 The following code demonstrates how to use \pkg{dccpaper} to write an IDCC conference paper.
 
 \begin{lstlisting}[frame=single]
-\documentclass[research,15]{idcc}
+\documentclass[conference]{ijdc-v14}
 
 \title{How to write a conference paper}
 \author{First Author}
 \affil{First Author's Affiliation}
 \author{Second Author}
 \affil{Second Author's Affiliation}
-\correspondence{Your Name, Institution, Postal address. Email: \email{ab@example.com}}
+\correspondence{Your Name, Institution, Postal address. Email:
+  \email{ab@example.com}}
 
-\submitted{1 October 2014}
+\conference*{the International Digital Curation Conference IDCC24,
+  19-21 February 2024}
+\submitted{1 September 2023}
 
 \usepackage[style=apa]{biblatex}
 \addbibresource{references.bib}
@@ -1019,10 +1034,10 @@ Any acknowledgements should be placed here\dots
 \end{lstlisting}
 
 \newpage
-If submitting a workshop proposal to the IDCC, there is a specific set of information you need to include. The following code provides the bare bones of the 2019 template; please refer to the latest corresponding Word template for the information you need to provide and the headings to use.
+If submitting a workshop proposal to the IDCC, there is a specific set of information you need to include. The following code provides the bare bones of the 2024 template; please refer to the latest corresponding Word template for the information you need to provide and the headings to use.
 
 \begin{lstlisting}[frame=single]
-\documentclass[workshop,19]{idcc}
+\documentclass[workshop,24]{idcc}
 
 \title{Getting your workshop accepted}
 \author{First Author}
@@ -1031,7 +1046,7 @@ If submitting a workshop proposal to the IDCC, there is a specific set of inform
 \affil{Second Author's Affiliation}
 \correspondence{Your Name, Institution, Postal address. Email: \email{ab@example.com}}
 
-\submitted{1 July 2018}
+\submitted{1 September 2023}
 
 \usepackage[style=apa]{biblatex}
 \addbibresource{references.bib}
@@ -1060,7 +1075,8 @@ Minimum for viability, maximum for workability.
 Number.
 
 \item[Equipment requirements:]~\\
-Projectors, sound, flipcharts, whiteboards etc.
+Anything beyond projector/screen, mic/PA system, lectern, e.g. flipcharts,
+whiteboards.
 
 \item[Workshop length:]~\\
 Half day or full day.
@@ -1079,7 +1095,7 @@ Fully funded, part funded (subsidised) or delegate fee.
 %<readme>## Licence
 %<readme>
 %<*driver|readme>
-Copyright 2022 Digital Curation Centre, University of Edinburgh.
+Copyright 2023 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
@@ -1136,6 +1152,18 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 %
 %    \begin{macrocode}
 \newif\ifdcp@proposal
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{ifdcp@mast@ul}
+% \begin{macro}{dcp@mast@ultrue}
+% \begin{macro}{dcp@mast@ulfalse}
+% We provide a boolean for whether to underline the masthead.
+%
+%    \begin{macrocode}
+\newif\ifdcp@mast@ul
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1343,6 +1371,33 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{ifdcp@mast@ul}
+% \begin{macro}{dcp@mast@ultrue}
+% \begin{macro}{dcp@mast@ulfalse}
+% We provide a boolean for whether to underline the masthead.
+%
+%    \begin{macrocode}
+\newif\ifdcp@mast@ul
+\dcp@mast@ultrue
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{ifdcp@wplong}
+% \begin{macro}{dcp@wplongtrue}
+% \begin{macro}{dcp@wplongfalse}
+% We provide a boolean for deciding whether to print `Workshop` or `Workshop
+% Proposal`.
+%
+%    \begin{macrocode}
+\newif\ifdcp@wplong
+\dcp@wplongtrue
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 % \begin{optionkey}{abstract}
 % \begin{optionkey}{research}
 % \begin{optionkey}{lightning}
@@ -1353,7 +1408,6 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \begin{optionkey}{workshop}
 % \begin{optionkey}{practice}
 % These options set the value of \cs{dccp@type} appropriately.
-% The \key{practice} option is redundant, but included for symmetry.
 %
 %    \begin{macrocode}
 \DeclareOption{abstract}{\def\dccp@type{Extended Abstract}}
@@ -1363,7 +1417,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \DeclareOption{poster}{\def\dccp@type{Poster}\dcp@proposaltrue}
 \DeclareOption{demo}{\def\dccp@type{Demonstration}\dcp@proposaltrue}
 \DeclareOption{bof}{\def\dccp@type{Birds of a Feather}\dcp@proposaltrue}
-\DeclareOption{workshop}{\def\dccp@type{Workshop}\dcp@proposaltrue}
+\DeclareOption{workshop}{\def\dccp@type{Workshop\ifdcp@wplong\space Proposal\fi}\dcp@proposaltrue}
 \DeclareOption{practice}{\def\dccp@type{Practice Paper}\dcp@proposaltrue}
 %    \end{macrocode}
 % \end{optionkey}
@@ -1403,6 +1457,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@subject{10th \dccp@publ@long, 2015}
   \def\dccp@type@fallback{Practice Paper}
   \def\dccp@variant{times}
+  \dcp@mast@ulfalse
+  \dcp@wplongfalse
 }
 \DeclareOption{16}{%
   \def\dccp@publ@short{IDCC16}
@@ -1411,6 +1467,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@subject{11th \dccp@publ@long, 2016}
   \def\dccp@type@fallback{Practice Paper}
   \def\dccp@variant{times}
+  \dcp@mast@ulfalse
+  \dcp@wplongfalse
 }
 \DeclareOption{17}{%
   \def\dccp@publ@short{IDCC17}
@@ -1419,6 +1477,8 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@subject{12th \dccp@publ@long, 2017}
   \def\dccp@type@fallback{Practice Paper}
   \def\dccp@variant{times}
+  \dcp@mast@ulfalse
+  \dcp@wplongfalse
 }
 \DeclareOption{18}{%
   \def\dccp@publ@short{IDCC18}
@@ -1427,6 +1487,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@subject{13th \dccp@publ@long, 2018}
   \def\dccp@type@fallback{Practice Paper}
   \def\dccp@variant{times}
+  \dcp@mast@ulfalse
 }
 \DeclareOption{19}{%
   \def\dccp@publ@short{IDCC19}
@@ -1434,6 +1495,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     2019 in Melbourne. URL: \url{http://www.dcc.ac.uk/events/idcc19/}}
   \def\dccp@subject{14th \dccp@publ@long, 2019}
   \def\dccp@variant{times}
+  \dcp@mast@ulfalse
 }
 \DeclareOption{20}{%
   \def\dccp@publ@short{IDCC20}
@@ -1450,8 +1512,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \DeclareOption{22}{%
   \def\dccp@publ@short{IDCC}
   \def\dccp@publ@msg{The 17th \dccp@publ@long\ takes place on 13--16 June
-    2022, Edinburgh, Scotland.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc2022}}
+    2022, Edinburgh, Scotland.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc22}}
   \def\dccp@subject{17th \dccp@publ@long, 2022}
+}
+\DeclareOption{24}{%
+  \def\dccp@publ@short{IDCC}
+  \def\dccp@publ@msg{The 18th \dccp@publ@long\ takes place on 19--21 February
+    2024 in Edinburgh, Scotland.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/18th-international-digital-curation-conference}}
+  \def\dccp@subject{18th \dccp@publ@long, 2024}
 }
 \ProcessOptions\relax
 
@@ -2158,18 +2226,29 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \end{macro}
 %
 % \begin{macro}{dccp@conf}
+% \begin{macro}{ifdccp@revision}
+% \begin{macro}{dccp@revisiontrue}
+% \begin{macro}{dccp@revisionfalse}
 % \begin{macro}{conference}
 % IJDC papers need to say if they had a previous life as a conference paper.
 % This statement goes in \cs{dccp@conf}, which is initially empty. The user
-% command for setting this text is \cs{conference}.
+% command for setting this text is \cs{conference}. The starred variant gives
+% slightly less verbose wording. 
 %
 %    \begin{macrocode}
 \let\dccp@conf=\empty
-\newcommand*{\conference}[1]{%
+\newif\ifdccp@revision
+\newcommand*{\conference@nostar}[1]{%
   \renewcommand*{\dccp@conf}{An earlier version of this paper was presented at #1.}%
 }
-
+\newcommand*{\conference@star}[1]{%
+  \renewcommand*{\dccp@conf}{This paper was presented at #1.}%
+}
+\newcommand*{\conference}{\@ifstar\conference@star\conference@nostar}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -2262,6 +2341,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
         \dccp@publ@short\space\space\textbar\space\space\emph{\dccp@type}%
       \fi
       \par
+      \ifdcp@mast@ul\rule[0.4em]{\textwidth}{0.5pt}\fi
     \end{minipage}%
   }%
   \let\@evenhead=\@oddhead
