@@ -15,8 +15,7 @@ As the classes are so similar, their common features are abstracted out
 into dccpaper-base.sty; please do not attempt to use this package
 independently of the above classes.
 
-The classes are suitable for submissions to the respective review
-boards, but can also be used to produce the final camera-ready papers.
+The classes are able to produce both submissions and camera-ready papers.
 
 [International Journal of Digital Curation]: http://www.ijdc.net/
 [International Digital Curation Conference]: https://www.dcc.ac.uk/events/idcc

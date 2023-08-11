@@ -23,8 +23,7 @@ As the classes are so similar, their common features are abstracted out
 into dccpaper-base.sty; please do not attempt to use this package
 independently of the above classes.
 
-The classes are suitable for submissions to the respective review
-boards, but can also be used to produce the final camera-ready papers.
+The classes are able to produce both submissions and camera-ready papers.
 
 [International Journal of Digital Curation]: http://www.ijdc.net/
 [International Digital Curation Conference]: https://www.dcc.ac.uk/events/idcc
@@ -465,23 +464,26 @@ Copyright (C) 2023 Digital Curation Centre, University of Edinburgh
 \begin{abstract}
 This is the documentation for the \pkg{dccpaper} bundle, consisting of the following classes:
 \begin{itemize}
-\item\textsf{ijdc-v14}, which corresponds to the template used by the International Journal of Digital Curation, beginning with volume 14.
+\item\textsf{ijdc-v14}, which corresponds to the template used by the International Journal of Digital Curation (IJDC), beginning with volume 14.
 \item\textsf{ijdc-v9}, which corresponds to the template used by the International Journal of Digital Curation for volumes 9 to 13 inclusive.
 \item\textsf{idcc}, which corresponds to the template used for the International Digital Curation Conference, beginning with IDCC15.
 \end{itemize}
 
 The version to which it relates is \fileversion, last revised \printdateTeX{\filedate}.
 
-The code for this bundle is maintained at \url{https://github.com/DigitalCurationCentre/dccpaper}.
-
-Versions of the templates are also available that target Microsoft Word and LibreOffice\slash OpenOffice.org.
+The code for this bundle is maintained at \url{https://github.com/alex-ball/dccpaper}.
 
 Please note that the DOI attached to this document is fake and should not be used for identification purposes.
+
+\bigskip
+\begin{framed}\noindent
+\textbf{Disclaimer:} Only the Microsoft Word templates are officially supported at the time of writing (though the IJDC accepts conversions to ODT format). These \LaTeX\ classes are maintained primarily to support legacy documents.
+\end{framed}
 \end{abstract}
 
 \section{Introduction}
 
-The \LaTeX\ class \textsf{ijdc-v14} produces camera-ready papers and articles suitable for inclusion in the International Journal of Digital Curation, with applicability from volume 14 onwards. This is a minor change to the template used for volumes 9--13, which remains available as \textsf{ijdc-v9}. The similar \textsf{idcc} class can be used for submissions to the International Digital Curation Conference, beginning with the 2015 conference. This document explains how to use these classes.
+The \LaTeX\ class \textsf{ijdc-v14} produces camera-ready papers and articles suitable for inclusion in the International Journal of Digital Curation (IJDC), with applicability from volume 14 onwards. This is a minor change to the template used for volumes 9--13, which remains available as \textsf{ijdc-v9}. The similar \textsf{idcc} class produces submissions for the International Digital Curation Conference (IDCC), beginning with the 2015 conference. This document explains how to use these classes.
 
 \section{Dependencies}
 
@@ -543,9 +545,9 @@ Use this for a conference preprint.
 
 \subsection{International Digital Curation Conference}
 
-\begin{framed}
-For the 2024 conference, papers (extended abstracts and full) should use the
-\textsf{ijdc-v14} class with the \key{conference} option.
+\begin{framed}\noindent
+To emulate a 2024 conference paper/extended abstract, use the \textsf{ijdc-v14}
+class with the \key{conference} option.
 \end{framed}
 
 The class is loaded in the usual way with
