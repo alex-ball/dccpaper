@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %<*internal|ijdc9|ijdc14|idcc|base>
-\def\Version{2023/08/11 v2.4}
+\def\Version{2024/08/23 v2.5}
 %</internal|ijdc9|ijdc14|idcc|base>
 %<*internal>
 \iffalse
@@ -246,7 +246,7 @@ See:     http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Copyright (C) 2023 Digital Curation Centre, University of Edinburgh
+Copyright (C) 2024 Digital Curation Centre, University of Edinburgh
 <info@dcc.ac.uk>
 \endpostamble
 
@@ -546,16 +546,16 @@ Use this for a conference preprint.
 \subsection{International Digital Curation Conference}
 
 \begin{framed}\noindent
-To emulate a 2024 conference paper/extended abstract, use the \textsf{ijdc-v14}
-class with the \key{conference} option.
+To emulate a conference paper/extended abstract from 2024 onwards, use the
+\textsf{ijdc-v14} class with the \key{conference} option.
 \end{framed}
 
 The class is loaded in the usual way with
 \lstinline|\documentclass[$\meta{options}$]{idcc}|.
 Two types of option are available. The first relates to the conference to which the submission will be made:
 \begin{description}[font=\normalfont]
-  \item[\key{15}, \key{16}, .~.~.~, \key{22}, \key{24}]
-  Use this to select the year of the conference, e.g.\@ \key{24} for 2024.
+  \item[\key{15}, \key{16}, .~.~.~, \key{24}, \key{25}]
+  Use this to select the year of the conference, e.g.\@ \key{25} for 2025.
 \end{description}
 
 The second relates to the type of submission:
@@ -871,6 +871,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v2.5] 2024-08-23\\
+Added details of IDCC 2025.
 \item[v2.4] 2023-08-11\\
 Added details of and update documentation for IDCC 2024.
 \item[v2.3] 2022-01-27\\
@@ -1097,7 +1099,7 @@ Fully funded, part funded (subsidised) or delegate fee.
 %<readme>## Licence
 %<readme>
 %<*driver|readme>
-Copyright 2023 Digital Curation Centre, University of Edinburgh.
+Copyright 2024 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
@@ -1520,8 +1522,14 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 \DeclareOption{24}{%
   \def\dccp@publ@short{IDCC}
   \def\dccp@publ@msg{The 18th \dccp@publ@long\ takes place on 19--21 February
-    2024 in Edinburgh, Scotland.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/18th-international-digital-curation-conference}}
+    2024 in Edinburgh, Scotland.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc24}}
   \def\dccp@subject{18th \dccp@publ@long, 2024}
+}
+\DeclareOption{25}{%
+  \def\dccp@publ@short{IDCC25}
+  \def\dccp@publ@msg{The 19th \dccp@publ@long\ takes place on 17--19 February
+    2025 in The Hague, Netherlands.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc25}}
+  \def\dccp@subject{19th \dccp@publ@long, 2025}
 }
 \ProcessOptions\relax
 

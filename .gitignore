@@ -1,6 +1,3 @@
-## CTAN zip packages
-dccpaper-v*.zip
-
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -96,3 +93,12 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+## Generated files
+dccpaper-v*.zip
+dccpaper-*.bib
+dccpaper-base.sty
+dccpaper.pdf
+idcc.cls
+ijdc-v14.cls
+ijdc-v9.cls
