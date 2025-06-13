@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %<*internal|ijdc9|ijdc14|idcc|base>
-\def\Version{2024/08/23 v2.5}
+\def\Version{2025/06/13 v2.6}
 %</internal|ijdc9|ijdc14|idcc|base>
 %<*internal>
 \iffalse
@@ -246,7 +246,7 @@ See:     http://www.latex-project.org/lppl.txt
 \endpreamble
 \postamble
 
-Copyright (C) 2024 Digital Curation Centre, University of Edinburgh
+Copyright (C) 2025 Digital Curation Centre, University of Edinburgh
 <info@dcc.ac.uk>
 \endpostamble
 
@@ -547,29 +547,26 @@ Use this for a conference preprint.
 
 \subsection{International Digital Curation Conference}
 
-\begin{framed}\noindent
-To emulate a conference paper/extended abstract from 2024 onwards, use the
-\textsf{ijdc-v14} class with the \key{conference} option.
-\end{framed}
-
 The class is loaded in the usual way with
 \lstinline|\documentclass[$\meta{options}$]{idcc}|.
 Two types of option are available. The first relates to the conference to which the submission will be made:
 \begin{description}[font=\normalfont]
-  \item[\key{15}, \key{16}, .~.~.~, \key{24}, \key{25}]
-  Use this to select the year of the conference, e.g.\@ \key{25} for 2025.
+  \item[\key{15}, \key{16}, .~.~.~, \key{25}, \key{26}]
+  Use this to select the year of the conference, e.g.\@ \key{26} for 2026.
 \end{description}
 
 The second relates to the type of submission:
 \begin{description}[font=\normalfont\key]
 \item[lightning]
 Use this for lightning talk proposals.
+\item[paper]
+Use this for conference papers and extended abstracts. It is normally the default.
 \item[poster]
 Use this for poster proposals.
 \item[workshop]
 Use this for workshop proposals.
 \item[abstract]
-(Legacy.) Use this for conference paper extended abstracts. It is normally the default.
+(Legacy.) Use this for conference paper extended abstracts. This becomes the default if you select one of the options for the 2019 to 2022 conferences inclusive.
 \item[research]
 (Legacy.) Use this for full research papers.
 \item[practice]
@@ -581,6 +578,12 @@ Use this for workshop proposals.
 \item[data]
 (Legacy.) Use this for data paper abstracts and full data papers.
 \end{description}
+
+\begin{framed}\noindent
+To emulate a conference paper/extended abstract from 2024,
+use the \textsf{ijdc-v14} class with the \key{conference} option,
+rather than the \textsf{idcc} class.
+\end{framed}
 
 \section{Preamble Commands}
 
@@ -628,7 +631,7 @@ If an IJDC submission is a conference paper (that has not already been formally 
 \lstinline|\conference{$\meta{name of conference}$}|\\\hspace*{\dimexpr-\leftmargini}%
 \lstinline|\conference*{$\meta{name of conference}$}|
 \hskip\labelsep
-The conference at which the earlier version of the paper was presented, e.g.\ ‘the International Digital Curation Conference IDCC24, 19-21 February 2024’. Use the unstarred command if this paper is a reworked version of the conference paper; use the starred command for IDCC papers (2024 onwards), or if the paper is unchanged from the conference version.
+The conference at which the earlier version of the paper was presented, e.g.\ ‘the International Digital Curation Conference IDCC24, 19-21 February 2024’. Use the unstarred command if this paper is a reworked version of the conference paper; use the starred command if the paper is unchanged from the conference version.
 \end{description}
 
 For IDCC papers, authors are invited to record the date on which they made their submission.
@@ -873,6 +876,8 @@ Any acknowledgements should be placed in a section immediately before the refere
 \section{Appendix A: Change History}
 
 \begin{description}
+\item[v2.6] 2025-06-13\\
+Added details of IDCC 2026 and \texttt{paper} option to \textsf{idcc} class. Added \texttt{brief} option to \textsf{ijdc-v14} class. Removed some unused internal settings.
 \item[v2.5] 2024-08-23\\
 Added details of IDCC 2025.
 \item[v2.4] 2023-08-11\\
@@ -996,10 +1001,10 @@ A makefile is provided which you can use with the Make utility:
 \section{Appendix D: Sample Documents}
 \label{sec:samples}
 
-The following code demonstrates how to use \pkg{dccpaper} to write an IDCC conference paper.
+The following code demonstrates one way to write an IDCC conference paper.
 
 \begin{lstlisting}[frame=single]
-\documentclass[conference]{ijdc-v14}
+\documentclass[25,paper]{idcc}
 
 \title{How to write a conference paper}
 \author{First Author}
@@ -1009,8 +1014,6 @@ The following code demonstrates how to use \pkg{dccpaper} to write an IDCC confe
 \correspondence{Your Name, Institution, Postal address. Email:
   \email{ab@example.com}}
 
-\conference*{the International Digital Curation Conference IDCC24,
-  19-21 February 2024}
 \submitted{1 September 2023}
 
 \usepackage[style=apa]{biblatex}
@@ -1037,6 +1040,19 @@ Any acknowledgements should be placed here\dots
 
 \printbibliography
 \end{document}
+\end{lstlisting}
+
+This can be converted to an IJDC paper by making the following changes.
+(This was the submission format for IDCC24.)
+
+\begin{lstlisting}[frame=single]
+\documentclass[conference]{ijdc-v14}
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,firstnumber=11]
+\conference*{the International Digital Curation Conference IDCC24,
+  19-21 February 2024}
+\submitted{1 September 2023}
 \end{lstlisting}
 
 \newpage
@@ -1101,7 +1117,7 @@ Fully funded, part funded (subsidised) or delegate fee.
 %<readme>## Licence
 %<readme>
 %<*driver|readme>
-Copyright 2024 Digital Curation Centre, University of Edinburgh.
+Copyright 2025 Digital Curation Centre, University of Edinburgh.
 
 This work consists of the image files dccpaper-by.eps and
 dccpaper-by.pdf, the documented LaTeX file dccpaper.dtx and a Makefile.
@@ -1147,19 +1163,6 @@ The file dccpaper.pdf, generated by this work, is licensed as shown on page 1.
 \def\dccp@type{General Article}
 \def\dccp@editorial{Editorial}
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{ifdcp@proposal}
-% \begin{macro}{dcp@proposaltrue}
-% \begin{macro}{dcp@proposalfalse}
-% We provide a boolean for switching formatting depending on whether this
-% document is an IDCC proposal or not.
-%
-%    \begin{macrocode}
-\newif\ifdcp@proposal
-%    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -1355,31 +1358,6 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{dccp@type@fallback}
-% \begin{macro}{dccp@type}
-% Paper type is recorded in \cs{dccp@type}. The values can be
-% `Research Paper', `Practice Paper', `Poster', `Demonstration', or `Workshop'.
-%
-%    \begin{macrocode}
-\def\dccp@type@fallback{Extended Abstract}
-\def\dccp@type{\dccp@type@fallback}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{ifdcp@proposal}
-% \begin{macro}{dcp@proposaltrue}
-% \begin{macro}{dcp@proposalfalse}
-% We provide a boolean for switching formatting depending on whether this
-% document is an IDCC proposal or not.
-%
-%    \begin{macrocode}
-\newif\ifdcp@proposal
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
 % \begin{macro}{ifdcp@mast@ul}
 % \begin{macro}{dcp@mast@ultrue}
 % \begin{macro}{dcp@mast@ulfalse}
@@ -1407,6 +1385,23 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{dccp@type@fallback}
+% \begin{macro}{dccp@type}
+% Paper type is recorded in \cs{dccp@type}. The values are normally set by
+% an option key. Over the years there are have been several different
+% default values (representing the most popular submission type).
+%
+%    \begin{macrocode}
+\def\dccp@type@practice{Practice Paper}
+\def\dccp@type@abstract{Extended Abstract}
+\def\dccp@type@paper{Conference Paper}
+\def\dccp@type@fallback{\dccp@type@paper}
+\def\dccp@type{\dccp@type@fallback}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{optionkey}{abstract}
 % \begin{optionkey}{abstract}
 % \begin{optionkey}{research}
 % \begin{optionkey}{lightning}
@@ -1419,16 +1414,18 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % These options set the value of \cs{dccp@type} appropriately.
 %
 %    \begin{macrocode}
-\DeclareOption{abstract}{\def\dccp@type{Extended Abstract}}
+\DeclareOption{abstract}{\def\dccp@type{\dccp@type@abstract}}
+\DeclareOption{paper}{\def\dccp@type{\dccp@type@paper}}
 \DeclareOption{research}{\def\dccp@type{Research Paper}}
-\DeclareOption{lightning}{\def\dccp@type{Lightning Talk}\dcp@proposaltrue}
+\DeclareOption{lightning}{\def\dccp@type{Lightning Talk}}
 \DeclareOption{data}{\def\dccp@type{Data Paper}}
-\DeclareOption{poster}{\def\dccp@type{Poster}\dcp@proposaltrue}
-\DeclareOption{demo}{\def\dccp@type{Demonstration}\dcp@proposaltrue}
-\DeclareOption{bof}{\def\dccp@type{Birds of a Feather}\dcp@proposaltrue}
-\DeclareOption{workshop}{\def\dccp@type{Workshop\ifdcp@wplong\space Proposal\fi}\dcp@proposaltrue}
-\DeclareOption{practice}{\def\dccp@type{Practice Paper}\dcp@proposaltrue}
+\DeclareOption{poster}{\def\dccp@type{Poster}}
+\DeclareOption{demo}{\def\dccp@type{Demonstration}}
+\DeclareOption{bof}{\def\dccp@type{Birds of a Feather}}
+\DeclareOption{workshop}{\def\dccp@type{Workshop\ifdcp@wplong\space Proposal\fi}}
+\DeclareOption{practice}{\def\dccp@type{\dccp@type@practice}}
 %    \end{macrocode}
+% \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
@@ -1454,6 +1451,11 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
 % \begin{optionkey}{18}
 % \begin{optionkey}{19}
 % \begin{optionkey}{20}
+% \begin{optionkey}{21}
+% \begin{optionkey}{22}
+% \begin{optionkey}{24}
+% \begin{optionkey}{25}
+% \begin{optionkey}{26}
 % The details for each conference are slightly different, so they each have an
 % associated option for overriding the fallback definitions for
 % \cs{dccp@publ@short}, \cs{dccp@publ@msg} and \cs{dccp@subject}.
@@ -1464,7 +1466,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 10th \dccp@publ@long\ takes place on 9--12 February
   2015 in London. URL: \url{http://www.dcc.ac.uk/events/idcc15/}}
   \def\dccp@subject{10th \dccp@publ@long, 2015}
-  \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@type@fallback{\dccp@type@practice}
   \def\dccp@variant{times}
   \dcp@mast@ulfalse
   \dcp@wplongfalse
@@ -1474,7 +1476,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 11th \dccp@publ@long\ takes place on 22--25 February
   2016 in Amsterdam. URL: \url{http://www.dcc.ac.uk/events/idcc16/}}
   \def\dccp@subject{11th \dccp@publ@long, 2016}
-  \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@type@fallback{\dccp@type@practice}
   \def\dccp@variant{times}
   \dcp@mast@ulfalse
   \dcp@wplongfalse
@@ -1484,7 +1486,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 12th \dccp@publ@long\ takes place on 20--23 February
   2017 in Edinburgh. URL: \url{http://www.dcc.ac.uk/events/idcc17/}}
   \def\dccp@subject{12th \dccp@publ@long, 2017}
-  \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@type@fallback{\dccp@type@practice}
   \def\dccp@variant{times}
   \dcp@mast@ulfalse
   \dcp@wplongfalse
@@ -1494,7 +1496,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 13th \dccp@publ@long\ takes place on 19--22 February
     2018 in Barcelona. URL: \url{http://www.dcc.ac.uk/events/idcc18/}}
   \def\dccp@subject{13th \dccp@publ@long, 2018}
-  \def\dccp@type@fallback{Practice Paper}
+  \def\dccp@type@fallback{\dccp@type@practice}
   \def\dccp@variant{times}
   \dcp@mast@ulfalse
 }
@@ -1503,6 +1505,7 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 14th \dccp@publ@long\ takes place on 4--7 February
     2019 in Melbourne. URL: \url{http://www.dcc.ac.uk/events/idcc19/}}
   \def\dccp@subject{14th \dccp@publ@long, 2019}
+  \def\dccp@type@fallback{\dccp@type@abstract}
   \def\dccp@variant{times}
   \dcp@mast@ulfalse
 }
@@ -1511,18 +1514,21 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
   \def\dccp@publ@msg{The 15th \dccp@publ@long\ takes place on 17--20 February
     2020 in Dublin. URL: \url{http://www.dcc.ac.uk/events/idcc20/}}
   \def\dccp@subject{15th \dccp@publ@long, 2020}
+  \def\dccp@type@fallback{\dccp@type@abstract}
 }
 \DeclareOption{21}{%
   \def\dccp@publ@short{IDCC}
   \def\dccp@publ@msg{The 16th \dccp@publ@long\ takes place on 19 April
     2021, Edinburgh, Scotland.\par\bigskip URL: \url{https://dcc.ac.uk/events/idcc2021}}
   \def\dccp@subject{16th \dccp@publ@long, 2021}
+  \def\dccp@type@fallback{\dccp@type@abstract}
 }
 \DeclareOption{22}{%
   \def\dccp@publ@short{IDCC}
   \def\dccp@publ@msg{The 17th \dccp@publ@long\ takes place on 13--16 June
     2022, Edinburgh, Scotland.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc22}}
   \def\dccp@subject{17th \dccp@publ@long, 2022}
+  \def\dccp@type@fallback{\dccp@type@abstract}
 }
 \DeclareOption{24}{%
   \def\dccp@publ@short{IDCC}
@@ -1536,9 +1542,20 @@ the University of Edinburgh on behalf of the Digital Curation Centre. ISSN:
     2025 in The Hague, Netherlands.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc25}}
   \def\dccp@subject{19th \dccp@publ@long, 2025}
 }
+\DeclareOption{26}{%
+  \def\dccp@publ@short{IDCC26}
+  \def\dccp@publ@msg{The 20th \dccp@publ@long\ takes place on 16--18 February
+    2026 in Zagreb, Croatia.\par\bigskip URL: \url{https://www.dcc.ac.uk/events/idcc26}}
+  \def\dccp@subject{20th \dccp@publ@long, 2026}
+}
 \ProcessOptions\relax
 
 %    \end{macrocode}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
+% \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
 % \end{optionkey}
